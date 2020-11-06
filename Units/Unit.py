@@ -4,3 +4,7 @@ class Unit:
     x = 0
     y = 0
     pass
+
+
+if __name__ == "__main__":
+    print("This module is not for direct call!")
