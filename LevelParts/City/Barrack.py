@@ -1,4 +1,4 @@
-from City.Building import *
+from LevelParts.City.Building import *
 
 
 class Barrack(Building):

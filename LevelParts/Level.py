@@ -1,4 +1,6 @@
 from LevelParts.Map import *
+from Draws.LevelDraws import *
+from LevelParts.City.City import *
 
 
 class Level:
@@ -8,8 +10,8 @@ class Level:
 
     Class of game level
     :field map: Map
-    :field down_city: City of first player
-    :field up_city:
+    :field left_city: City of first player
+    :field right_city:
 
     """
 
@@ -21,6 +23,22 @@ class Level:
 
         """
         self.map = Map(map_file, x=1, y=1, w=1, h=1)
+        self.left_city = City("left")
+        self.right_city = City("right")
+
+    def update(self, screen):
+        """
+
+        Update level
+        :param screen:
+        :return:
+        """
+        level_draw(self,screen)
+        map_draw(self.map,screen)
+        self.left_city.update(screen)
+        self.right_city.update(screen)
+
+
 
 
 if __name__ == "__main__":

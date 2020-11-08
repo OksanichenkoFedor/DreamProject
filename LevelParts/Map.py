@@ -30,5 +30,6 @@ class Map:
         file_obj = open(file_name)
 
 
+
 if __name__ == "__main__":
     print("This module is not for direct call!")
