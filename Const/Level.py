@@ -14,7 +14,7 @@ WHT = (255, 255, 255)
 YLW = (255, 255, 0)
 BLC = (0, 0, 0)
 RED = (255, 0, 0)
-map_drawer = "map1.txt"
+map_drawer = "Widgets/MapEditor/map2.txt"
 NumberOfRoads = 3
 
 

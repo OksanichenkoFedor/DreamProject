@@ -22,7 +22,7 @@ class Level:
         :param map_file: File with information about map
 
         """
-        self.map = Map(map_file, x=1, y=1, w=1, h=1)
+        self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize / 2 - MapYSize / 2, MapXSize, MapYSize)
         self.left_city = City("left")
         self.right_city = City("right")
 
@@ -33,12 +33,10 @@ class Level:
         :param screen:
         :return:
         """
-        level_draw(self,screen)
-        map_draw(self.map,screen)
+        level_draw(self, screen)
+        map_draw(self.map, screen)
         self.left_city.update(screen)
         self.right_city.update(screen)
-
-
 
 
 if __name__ == "__main__":
