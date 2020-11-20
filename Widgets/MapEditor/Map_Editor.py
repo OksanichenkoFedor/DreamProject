@@ -33,6 +33,24 @@ from pygame.draw import *
 Пользуйтесь на здоровье!!!
 """
 
+
+def minrad(a, b, r):
+    """
+
+    :param a: Tuple, which contains coordinates of first point
+    :param b: Tuple, which contains coordinates of second point
+    :param r: Radius, that we check
+    :return: Boolean, which is:
+                               1.) True, if distance between a and b is not less, than r.
+                               2.) False, if distance between a and b is less, than r.
+
+    """
+    if (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 < r * r:
+        return False
+    else:
+        return True
+
+
 pygame.init()
 screen = pygame.display.set_mode((MapXSize, MapYSize))
 pygame.display.update()
@@ -46,32 +64,54 @@ UpPolygon = []
 NumLRd = 0
 NumRRd = 0
 SideIndex = "left"
-DontDoneSixHours = True
-DontDoneTwelveHours = True
+minimum_dist = 8
 screen.fill(WHT)
-
+ButtonDown = False
 while not finished:
     pygame.display.update()
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                if SideIndex == "left":
+                ButtonDown = True
+        elif event.type == pygame.MOUSEBUTTONUP:
+            ButtonDown = False
+        elif ButtonDown:
+            if SideIndex == "left":
+                if len(LeftRoads[NumLRd]) == 0:
                     LeftRoads[NumLRd].append(event.pos)
                     circle(screen, (0, int(255 * (1.0 * NumberOfRoads - 1.0 * NumLRd) / (1.0 * NumberOfRoads)),
                                     int(255 * (1.0 * NumLRd + 1.0) / (1.0 * NumberOfRoads))),
                            [event.pos[0], event.pos[1]], 2)
-                elif SideIndex == "right":
+                elif minrad(LeftRoads[NumLRd][len(LeftRoads[NumLRd]) - 1], event.pos, minimum_dist):
+                    LeftRoads[NumLRd].append(event.pos)
+                    circle(screen, (0, int(255 * (1.0 * NumberOfRoads - 1.0 * NumLRd) / (1.0 * NumberOfRoads)),
+                                    int(255 * (1.0 * NumLRd + 1.0) / (1.0 * NumberOfRoads))),
+                           [event.pos[0], event.pos[1]], 2)
+            elif SideIndex == "right":
+                if len(RightRoads[NumRRd]) == 0:
                     RightRoads[NumRRd].append(event.pos)
                     circle(screen, (int(255 * (1.0 * NumberOfRoads - 1.0 * NumRRd) / (1.0 * NumberOfRoads)),
                                     int(255 * (1.0 * NumRRd + 1.0) / (1.0 * NumberOfRoads)), 0),
                            [event.pos[0], event.pos[1]], 2)
-                elif SideIndex == "down":
+                elif minrad(RightRoads[NumRRd][len(RightRoads[NumRRd]) - 1], event.pos, minimum_dist):
+                    RightRoads[NumRRd].append(event.pos)
+                    circle(screen, (int(255 * (1.0 * NumberOfRoads - 1.0 * NumRRd) / (1.0 * NumberOfRoads)),
+                                    int(255 * (1.0 * NumRRd + 1.0) / (1.0 * NumberOfRoads)), 0),
+                           [event.pos[0], event.pos[1]], 2)
+            elif SideIndex == "down":
+                if len(DownPolygon) == 0:
                     DownPolygon.append(event.pos)
                     circle(screen, BLC, [event.pos[0], event.pos[1]], 2)
-                else:
+                elif minrad(DownPolygon[len(DownPolygon) - 1], event.pos, minimum_dist):
+                    DownPolygon.append(event.pos)
+                    circle(screen, BLC, [event.pos[0], event.pos[1]], 2)
+            else:
+                if len(UpPolygon) == 0:
                     UpPolygon.append(event.pos)
                     circle(screen, BLC, [event.pos[0], event.pos[1]], 2)
-
+                elif minrad(UpPolygon[len(UpPolygon) - 1], event.pos, minimum_dist):
+                    UpPolygon.append(event.pos)
+                    circle(screen, BLC, [event.pos[0], event.pos[1]], 2)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 print("Space")
