@@ -1,6 +1,7 @@
 from LevelParts.Map import *
 from Draws.LevelDraws import *
 from LevelParts.City.City import *
+import pygame
 
 
 class Level:
@@ -11,7 +12,7 @@ class Level:
     Class of game level
     :field map: Map
     :field left_city: City of first player
-    :field right_city:
+    :field right_city: Сity of second player
 
     """
 
@@ -23,8 +24,8 @@ class Level:
 
         """
         self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize / 2 - MapYSize / 2, MapXSize, MapYSize)
-        self.left_city = City("left")
-        self.right_city = City("right")
+        self.left_order_city = City("left", "order", LevelXSize / 2 - MapXSize / 2 - CityXSize, LevelYSize / 2 - CityYSize / 2)
+        self.right_union_city = City("right", "union", LevelXSize / 2 + MapXSize / 2, LevelYSize / 2 - CityYSize / 2)
 
     def update(self, screen):
         """
@@ -35,8 +36,16 @@ class Level:
         """
         level_draw(self, screen)
         map_draw(self.map, screen)
-        self.left_city.update(screen)
-        self.right_city.update(screen)
+        self.left_order_city.update(screen)
+        self.right_union_city.update(screen)
+
+
+    def game_event (self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                pass
+            elif event.key == pygame.K_RIGHT:
+                pass
 
 
 if __name__ == "__main__":

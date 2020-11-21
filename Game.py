@@ -15,6 +15,7 @@ while not finished:
     Test_Level.update(level_screen)
     pygame.display.update()
     for event in pygame.event.get():
+        Test_Level.game_event(event)
         if event.type == pygame.QUIT:
             finished = True
 pygame.quit()
