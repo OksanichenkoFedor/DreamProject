@@ -1,6 +1,6 @@
-from LevelParts.Map import *
 from Draws.LevelDraws import *
 from LevelParts.City.City import *
+from LevelParts.Map import *
 import pygame
 
 
@@ -11,8 +11,8 @@ class Level:
 
     Class of game level
     :field map: Map
-    :field left_city: City of first player
-    :field right_city: Сity of second player
+    :field first_city: City of first player
+    :field second_city: Сity of second player
 
     """
 
@@ -24,8 +24,9 @@ class Level:
 
         """
         self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize / 2 - MapYSize / 2, MapXSize, MapYSize)
-        self.left_order_city = City("left", "order", LevelXSize / 2 - MapXSize / 2 - CityXSize, LevelYSize / 2 - CityYSize / 2)
-        self.right_union_city = City("right", "union", LevelXSize / 2 + MapXSize / 2, LevelYSize / 2 - CityYSize / 2)
+        self.first_city = City(("order", "left"), LevelXSize / 2 - MapXSize / 2 - CityXSize,
+                                    LevelYSize / 2 - CityYSize / 2)
+        self.second_city = City(("union", "right"), LevelXSize / 2 + MapXSize / 2, LevelYSize / 2 - CityYSize / 2)
 
     def update(self, screen):
         """
@@ -36,16 +37,15 @@ class Level:
         """
         level_draw(self, screen)
         map_draw(self.map, screen)
-        self.left_order_city.update(screen)
-        self.right_union_city.update(screen)
+        self.first_city.update(screen, self)
+        self.second_city.update(screen, self)
 
-
-    def game_event (self, event):
+    def game_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                pass
+                self.first_city.add_unit(SwordsmanType)
             elif event.key == pygame.K_RIGHT:
-                pass
+                self.second_city.add_unit(SwordsmanType)
 
 
 if __name__ == "__main__":

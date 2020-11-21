@@ -9,8 +9,8 @@ class CityCentre(District):
     District "City Centre"
 
     """
-    def __init__(self, coord_side, side, x, y):
-        super().__init__(coord_side, side, CityCentreLife, x, y)
+    def __init__(self, side, x, y):
+        super().__init__(side, CityCentreLife, x, y)
 
     def update(self, screen):
         """
@@ -19,7 +19,7 @@ class CityCentre(District):
         :return: Draw city centre
 
         """
-        if self.side == "order":
+        if self.side[0] == "order":
             order_city_centre_draw(self, screen)
         else:
             union_city_centre_draw(self, screen)

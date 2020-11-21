@@ -13,7 +13,7 @@ def order_city_draw(city, screen):
     :param screen:
     :return:
     """
-    if city.coord_side == "left" :
+    if city.side[1] == "left" :
         rect(screen, RED,
              (city.x, city.y, CityXSize, CityYSize))
     else :
@@ -29,7 +29,7 @@ def union_city_draw(city, screen):
     :return:
     """
     pass
-    if city.coord_side == "left":
+    if city.side[1] == "left":
         rect(screen, YLW,
              (city.x, city.y, CityXSize, CityYSize))
     else:
