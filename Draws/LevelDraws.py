@@ -3,11 +3,8 @@ from Const.Level import *
 from LevelParts.Map import *
 from pygame.draw import *
 
-# TODO Написать здесь функции, которые будут рисовать уровень игры
-
 
 def map_draw(level_map: Map, screen):
-    # TODO Написать функцию отрисовки карты
     """
 
     Draw map
@@ -26,23 +23,14 @@ def map_draw(level_map: Map, screen):
 
 
 def level_draw(level, screen):
-    # TODO Написать функцию отрисовки уровня
     """
 
-    Draw map
-    :param level: Object of class Level
+    Draw level: all without all objects (in this function you don't need to draw map, city and another objects)
+    :param level: Object of class Level, that we will draw
     :param screen: Surface, where the picture is rendered
 
     """
     rect(screen, BLC, (0, 0, LevelXSize, LevelXSize))
-
-
-def swordsman_draw(unit, level, screen):
-    if(unit.side[0]=="order"):
-        circle(screen, RED, (int(unit.coord[1] + level.map.x), int(unit.coord[2] + level.map.y)), 15)
-    else:
-        circle(screen, YLW, (int(unit.coord[1] + level.map.x), int(unit.coord[2] + level.map.y)), 15)
-
 
 
 if __name__ == "__main__":

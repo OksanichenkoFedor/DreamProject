@@ -11,8 +11,7 @@ class Map:
     :field number_of_right_roads: Number of right roads
     :field Right_Roads: Massive of right roads, each road has number of tuple, which contains coordinates of nodes of road
     :field Pole_Points: Massive of point of battle pole
-    :method __init__: Initialise level map
-    :method draw
+    :method __init__: Initialise level map. Receives file_name, x, y, w, h
 
     """
 
@@ -20,7 +19,6 @@ class Map:
     def __init__(self, file_name, x, y, w, h):
         """
 
-        Initialise level map
         :param file_name: Name of the file where we will get information about the map
         :param x: First coordinate of left up corner of map
         :param y: Second coordinate of left up corner of map

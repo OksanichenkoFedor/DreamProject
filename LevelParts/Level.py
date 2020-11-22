@@ -10,9 +10,14 @@ class Level:
     """
 
     Class of game level
-    :field map: Map
-    :field first_city: City of first player
-    :field second_city: Сity of second player
+
+    : field map: Map of the game
+    : field first_city: City of first player
+    : field second_city: Сity of second player
+
+    : method __init__(map_file): Initialise level. Receives map_file (for the initialisation of map)
+    : method update(screen): Update level and its parts. Redraw level and map
+    : method game_event(event): Handle the pygame event
 
     """
 
@@ -31,9 +36,8 @@ class Level:
     def update(self, screen):
         """
 
-        Update level
-        :param screen:
-        :return:
+        :param screen: Surface, where the picture is rendered
+
         """
         level_draw(self, screen)
         map_draw(self.map, screen)
@@ -41,6 +45,11 @@ class Level:
         self.second_city.update(screen, self)
 
     def game_event(self, event):
+        """
+
+        :param event: Pygame event
+
+        """
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 self.first_city.add_unit(SwordsmanType)

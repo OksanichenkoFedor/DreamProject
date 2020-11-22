@@ -1,5 +1,10 @@
 import pygame
 from LevelParts.Level import *
+"""
+
+Do the whole program
+
+"""
 
 
 # файл запуска программы

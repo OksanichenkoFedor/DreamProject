@@ -6,7 +6,11 @@ from Const.City import *
 class CityCentre(District):
     """
 
-    District "City Centre"
+    Class of district "City Centre"
+
+    : method __init__(side, x, y): Initialise City Centre. Do the super()__init__() life = life of city centre.
+                                   Receives side, x, y
+    : method update(screen): Update district and redraw it
 
     """
     def __init__(self, side, x, y):
@@ -16,12 +20,11 @@ class CityCentre(District):
         """
 
         :param screen: Surface, where the picture is rendered
-        :return: Draw city centre
 
         """
         if self.side[0] == "order":
-            order_city_centre_draw(self, screen)
+            order_city_centre_draw(self, self.side[1], screen)
         else:
-            union_city_centre_draw(self, screen)
+            union_city_centre_draw(self, self.side[1], screen)
         pass
 
