@@ -1,6 +1,6 @@
 from Const.Units import *
 from LevelParts.City.CityCentre import *
-from LevelParts.Units.Swordsman import Swordsman
+from LevelParts.Units.LightInfantry import LightInfantry
 
 
 class City:
@@ -50,13 +50,13 @@ class City:
         self.city_centre.update(screen)
 
     def add_unit(self, type):
-        if type == SwordsmanType:
+        if type == LightInfantryType:
             x0 = 0
             if self.side[1] == "right":
                 x0 = MapXSize
-            if self.money >= SwordsmanCost:
-                self.Units.append(Swordsman(self.side, [0, x0, int(MapYSize / 2)]))
-                self.money -= SwordsmanCost
+            if self.money >= LightInfantryCost:
+                self.Units.append(LightInfantry(self.side, [0, x0, int(MapYSize / 2)]))
+                self.money -= LightInfantryCost
 
 
 if __name__ == "__main__":

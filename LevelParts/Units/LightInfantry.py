@@ -2,13 +2,13 @@ from Draws.UnitDraws import swordsman_draw
 from LevelParts.Units.UnitAI.UnitAI import *
 
 
-class Swordsman(Unit):
+class LightInfantry(Unit):
 
     """
 
-    Class of first unit swordsman
+    Class of first unit light infantry
 
-    : method __init__(): Initialise City Centre. Do the super()__init__()
+    : method __init__(): Initialise Light infantry. Do the super()__init__()
                                    life = life of swordsman
                                    unit_type = "swordsman"
                                    Receives side, coord
@@ -18,7 +18,7 @@ class Swordsman(Unit):
     """
 
     def __init__(self, side, coord):
-        super().__init__(side, SwordsmanLife, coord, SwordsmanType)
+        super().__init__(side, LightInfantryLife, coord, LightInfantryType)
 
     def update(self, screen, level):
         """
@@ -40,6 +40,6 @@ class Swordsman(Unit):
         solution = unitAI(info)
         if solution == "move forward":
             if self.side[1] == "left":
-                self.coord[1] += SwordsmanSpeed
+                self.coord[1] += LightInfantrySpeed
             else:
-                self.coord[1] -= SwordsmanSpeed
+                self.coord[1] -= LightInfantrySpeed

@@ -52,9 +52,9 @@ class Level:
         """
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                self.first_city.add_unit(SwordsmanType)
+                self.first_city.add_unit(LightInfantryType)
             elif event.key == pygame.K_RIGHT:
-                self.second_city.add_unit(SwordsmanType)
+                self.second_city.add_unit(LightInfantryType)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-from Const.Units import SwordsmanType
+from Const.Units import LightInfantryType
 from LevelParts.City.District import *
 from LevelParts.Units.Unit import Unit
 from LevelParts.Units.UnitAI.Info import Info
@@ -14,7 +14,7 @@ def unitAI(info: Info):
     :return: Solution: what this unit will do
 
     """
-    if info.unit.type == SwordsmanType:
+    if info.unit.type == LightInfantryType:
         solution = " "
         if info.unit.side[1] == "left":
             if info.unit.coord[1] >= MapXSize:
