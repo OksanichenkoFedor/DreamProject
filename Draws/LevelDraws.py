@@ -15,10 +15,16 @@ def map_draw(level_map: Map, screen):
     rect(screen, WHT, (level_map.x, level_map.y, level_map.width, level_map.height))
     for i in level_map.Left_Roads:
         for j in i:
-            circle(screen, BLC, j, 5)
+            circle(screen, BLC, j, 50)
     for i in level_map.Right_Roads:
         for j in i:
-            circle(screen, BLC, j, 5)
+            circle(screen, BLC, j, 50)
+    for i in level_map.Left_Roads:
+        for j in i:
+            circle(screen, WHT, j, 40)
+    for i in level_map.Right_Roads:
+        for j in i:
+            circle(screen, WHT, j, 40)
     polygon(screen, BLC, level_map.Pole_Points)
 
 
