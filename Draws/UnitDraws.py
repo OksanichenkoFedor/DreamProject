@@ -3,7 +3,7 @@ from Const.Level import *
 from pygame.draw import *
 
 
-def swordsman_draw(unit, unit_side, unit_position, screen):
+def lightinfantry_draw(unit, unit_side, unit_position, screen):
     """
 
     :param unit: Object Swordsman (we use class unit to avoid circle import)
