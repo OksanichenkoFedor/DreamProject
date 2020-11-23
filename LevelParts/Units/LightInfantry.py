@@ -1,4 +1,4 @@
-from Draws.UnitDraws import swordsman_draw
+from Draws.UnitDraws import lightinfantry_draw
 from LevelParts.Units.UnitAI.UnitAI import *
 
 
@@ -27,7 +27,7 @@ class LightInfantry(Unit):
         :param level: Level of the game
 
         """
-        swordsman_draw(self, self.side, self.position(level), screen)
+        lightinfantry_draw(self, self.side, self.position(level), screen)
         self.reaction(level)
 
     def reaction(self, level):
