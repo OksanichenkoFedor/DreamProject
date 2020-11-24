@@ -49,7 +49,12 @@ class City:
         pass
         self.city_centre.update(screen)
 
-    def add_unit(self, type):
+    def add_unit(self, type, road=0):
+        """
+
+        :param type: Type of the unit
+        :param road: Number of start road from up to down
+        """
         if type == LightInfantryType:
             x0 = 0
             if self.side[1] == "right":
