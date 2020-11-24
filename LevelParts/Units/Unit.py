@@ -1,4 +1,3 @@
-
 class Unit:
     """
 
@@ -86,13 +85,8 @@ class Unit:
                     t = (self.coord[2] - level.map.total_coords_R[self.coord[1]][i - 1]) / (level.map.total_coords_R[self.coord[1]][i] - level.map.total_coords_R[self.coord[1]][i - 1])
 
                     return int(x_prev + t * (x_next - x_prev) + level.map.x), int(y_prev + t * (y_next - y_prev) + level.map.y)
-
-
         elif self.coord[0] == "battle_pole":
             return int(self.self.coord[1] + level.map.x), int(self.coord[2] + level.map.y)
-
-
-        return int(self.coord[1] + level.map.x), int(self.coord[2] + level.map.y)
 
 
 if __name__ == "__main__":
