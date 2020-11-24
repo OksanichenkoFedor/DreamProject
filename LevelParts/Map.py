@@ -33,6 +33,7 @@ class Map:
         self.height = h
         file_obj = open(file_name, "r")
 
+
         self.number_of_left_roads = int(file_obj.readline())
         self.number_of_right_roads = int(file_obj.readline())
         self.Left_Roads = []
@@ -51,6 +52,20 @@ class Map:
         self.polygon_points_number = int(file_obj.readline())
         for i in range(self.polygon_points_number):
             self.Pole_Points.append((int(file_obj.readline()) + int(x), int(file_obj.readline()) + int(y)))
+
+
+        total_lenght_L = []
+        total_lenght_R = []
+        total_coords_L = []
+        total_coords_R = []
+
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
