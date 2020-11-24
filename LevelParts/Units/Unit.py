@@ -53,8 +53,39 @@ class Unit:
         """
         if self.coord[0] == "left":
 
+            for i in range(1, len(level.map.total_coords_L[self.coord[1]])):
+                point_coord_next = level.map.total_coords_L[self.coord[1]][i]
+                point_coord_cur = level.map.total_coords_L[self.coord[1]][i-1]
+                if (self.coord[2] - point_coord_next)*(self.coord[2] - point_coord_cur) <= 0:
+
+                    x_next = level.map.Left_Roads[i][0]
+                    y_next = level.map.Left_Roads[i][1]
+                    x_prev = level.map.Left_Roads[i-1][0]
+                    y_prev = level.map.Left_Roads[i-1][0]
+
+                    t = (self.coord[2] - level.map.total_coords_L[self.coord[1]][i-1]) / (level.map.total_coords_L[self.coord[1]][i] - level.map.total_coords_L[self.coord[1]][i-1])
+
+                    return int(x_prev + t*(x_next - x_prev) + level.map.x), int(y_prev + t*(y_next - y_prev) + level.map.y)
+
+
+
+
+
 
         elif self.coord[0] == "right":
+            for i in range(1, len(level.map.total_coords_R[self.coord[1]])):
+                point_coord_next = level.map.total_coords_R[self.coord[1]][i]
+                point_coord_cur = level.map.total_coords_R[self.coord[1]][i - 1]
+                if (self.coord[2] - point_coord_next)*(self.coord[2] - point_coord_cur) <= 0:
+
+                    x_next = level.map.Right_Roads[i][0]
+                    y_next = level.map.Right_Roads[i][1]
+                    x_prev = level.map.Right_Roads[i - 1][0]
+                    y_prev = level.map.Right_Roads[i - 1][0]
+
+                    t = (self.coord[2] - level.map.total_coords_R[self.coord[1]][i - 1]) / (level.map.total_coords_R[self.coord[1]][i] - level.map.total_coords_R[self.coord[1]][i - 1])
+
+                    return int(x_prev + t * (x_next - x_prev) + level.map.x), int(y_prev + t * (y_next - y_prev) + level.map.y)
 
 
         elif self.coord[0] == "battle_pole":
