@@ -28,16 +28,17 @@ class LightInfantry(Unit):
 
         """
         lightinfantry_draw(self, self.side, self.position(level), screen)
-        self.reaction(level)
-
-    def reaction(self, level):
-        """
-
-        :param level: Level of the game
-
-        """
-        info = Info(self,level)
+        info = Info(self, level)
         solution = unitAI(info)
+        self.reaction(solution)
+
+    def reaction(self, solution):
+        """
+
+        :param solution: Level of the game
+
+        """
+
         if solution == "move forward":
             if self.side[1] == "left":
                 self.coord[1] += LightInfantrySpeed
