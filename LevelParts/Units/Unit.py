@@ -1,4 +1,3 @@
-
 class Unit:
     """
 
@@ -51,15 +50,12 @@ class Unit:
         :param level: Level of this game
 
         """
-        if self.coord[0] == "left":
-
-
+        """if self.coord[0] == "left":
+            pass
         elif self.coord[0] == "right":
-
-
+            pass
         elif self.coord[0] == "battle_pole":
-            return int(self.self.coord[1] + level.map.x), int(self.coord[2] + level.map.y)
-
+            return int(self.self.coord[1] + level.map.x), int(self.coord[2] + level.map.y)"""
 
         return int(self.coord[1] + level.map.x), int(self.coord[2] + level.map.y)
 

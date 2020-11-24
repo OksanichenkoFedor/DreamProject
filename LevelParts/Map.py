@@ -1,3 +1,4 @@
+from math import sqrt
 class Map:
     """
 
@@ -53,11 +54,33 @@ class Map:
         for i in range(self.polygon_points_number):
             self.Pole_Points.append((int(file_obj.readline()) + int(x), int(file_obj.readline()) + int(y)))
 
+        self.total_length_L = []
+        self.total_length_R = []
+        self.total_coords_L = []
+        self.total_coords_R = []
 
-        total_lenght_L = []
-        total_lenght_R = []
-        total_coords_L = []
-        total_coords_R = []
+        for i in range(len(self.Left_Roads)):
+            self.total_length_L.append(0)
+            self.total_coords_L.append([])
+            self.total_coords_L[i].append(0)
+            for j in range(1, len(self.Left_Roads[i]), 1):
+                r = sqrt((self.Left_Roads[i][j][0]-self.Left_Roads[i][j-1][0])**2+(self.Left_Roads[i][j][1]-self.Left_Roads[i][j-1][1])**2)
+                self.total_length_L[i] += r
+                self.total_coords_L[i].append(self.total_length_L[i])
+            for j in range(len(self.Left_Roads[i])):
+                self.total_coords_L[i][j] = (1.0*self.total_coords_L[i][j]) / (1.0*self.total_length_L[i])
+
+        for i in range(len(self.Right_Roads)):
+            self.total_length_R.append(0)
+            self.total_coords_R.append([])
+            self.total_coords_R[i].append(0)
+            for j in range(1, len(self.Right_Roads[i]), 1):
+                r = sqrt((self.Right_Roads[i][j][0]-self.Right_Roads[i][j-1][0])**2+(self.Right_Roads[i][j][1]-self.Right_Roads[i][j-1][1] )**2)
+                self.total_length_R[i] += r
+                self.total_coords_R[i].append(self.total_length_R[i])
+            for j in range(len(self.Right_Roads[i])):
+                self.total_coords_R[i][j] = (1.0*self.total_coords_R[i][j]) / (1.0*self.total_length_R[i])
+
 
 
 
