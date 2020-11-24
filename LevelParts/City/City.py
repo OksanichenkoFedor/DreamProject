@@ -60,7 +60,7 @@ class City:
             if self.side[1] == "right":
                 x0 = MapXSize
             if self.money >= LightInfantryCost:
-                self.Units.append(LightInfantry(self.side, [0, x0, int(MapYSize / 2)]))
+                self.Units.append(LightInfantry(self.side, ["pole", x0, int(MapYSize / 2)]))
                 self.money -= LightInfantryCost
 
 
