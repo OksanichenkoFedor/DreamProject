@@ -4,6 +4,7 @@ from LevelParts.Units.Unit import Unit
 from LevelParts.Units.UnitAI.Info import Info
 from Const.Level import *
 from Const.Units import *
+from Const.City import *
 
 
 def unitAI(info: Info):
@@ -17,19 +18,33 @@ def unitAI(info: Info):
 
 
     """
+    #print(info.enemy_districts[CityCentreNumber].life)
     if info.unit.type == LightInfantryType:
         solution = []
-        solution.append(" ")
         if info.unit.side[1] == "left":
             if info.unit.coord[1] >= MapXSize:
-                solution[0] = "attack district"
+                solution.append("attack district")
+                # solution[1] = district
+                # solution[2] = action
+                solution.append(info.enemy_districts[CityCentreNumber])
+                solution.append(("attacked", LightInfantryDamage))
+                solution.append(CityCentreNumber)
             else:
-                solution[0] = "move forward"
+                solution.append("move forward")
         else:
             if info.unit.coord[1] <= 0:
-                solution[0] = "attack district"
+                solution.append("attack district")
+                # solution[1] = district
+                # solution[2] = action
+                solution.append(info.enemy_districts[CityCentreNumber])
+                solution.append(("attacked", LightInfantryDamage))
+                solution.append(CityCentreNumber)
             else:
-                solution[0] = "move forward"
+                solution.append("move forward")
+    # если атакуем юнита, то
+    # solution[1] = номер юнита
+    # solution[2] = объект юнита
+    # solution[3] = action
     return solution
 
 

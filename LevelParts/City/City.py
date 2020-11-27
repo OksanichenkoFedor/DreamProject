@@ -11,6 +11,8 @@ class City(Interactable):
     : field self.y: Second coord of left-up point of city
     : field self.city_centre: District "City Centre" of the city
     : field self.money: Number of money of this city
+    : field self.Units: Massive of units of the city
+    : field self.Districts: Massive of districts of the city
 
     : method self.__init__(side, x, y): Initialise City. Receives side, x, y
     : method self.update(screen, level): Update all parts of city (units, districts) and redraw city
@@ -20,11 +22,14 @@ class City(Interactable):
 
     def __init__(self, side, x, y):
         super().__init__(side, CityLife)
-        self.city_centre = CityCentre(side, x + CityCentreX, y + CityCentreY)
+        city_centre = CityCentre(side, x + CityCentreX, y + CityCentreY)
         self.x = x
         self.y = y
         self.money = 100
         self.Units = []
+        self.Districts = []
+        self.Districts.append(city_centre)
+        print(len(self.Districts))
 
     def update(self, screen, level):
         """
@@ -35,19 +40,23 @@ class City(Interactable):
         :param level: Level of the game
 
         """
+        Cash = []
         for unit in self.Units:
-            unit.update(screen, level)
+            Cash.append(unit.update(screen, level))
 
         if self.side[0] == "order":
             order_city_draw(self, self.side[1], screen)
         else:
             union_city_draw(self, self.side[1], screen)
-        pass
-        self.city_centre.update(screen)
 
-        if self.city_centre.life < 0:
-            self.life += self.city_centre.life
-            self.city_centre.life = 0
+        for i in range(len(self.Districts)):
+            self.Districts[i].update(screen)
+            print(self.Districts[i].life)
+            if self.Districts[i].life < 0:
+                self.life += self.Districts[i].life
+                self.Districts[i].life = 0
+
+        return Cash
 
     def add_unit(self, type, road=0):
         """

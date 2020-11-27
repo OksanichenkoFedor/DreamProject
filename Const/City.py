@@ -10,10 +10,12 @@ CityCentreX = 100
 CityCentreY = 100
 CityCentreXSize = 50
 CityCentreYSize = 200
+CityCentreNumber = 0
 WHT = (255, 255, 255)
 YLW = (255, 255, 0)
 RED = (255, 0, 0)
 BLC = (0, 0, 0)
+
 
 
 if __name__ == "__main__":
