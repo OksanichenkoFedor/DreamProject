@@ -18,7 +18,7 @@ def unitAI(info: Info):
 
 
     """
-    #print(info.enemy_districts[CityCentreNumber].life)
+
     if info.unit.type == LightInfantryType:
         solution = []
         first = " "

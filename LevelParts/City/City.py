@@ -50,7 +50,6 @@ class City(Interactable):
 
         for district in self.Districts:
             district.update(screen)
-            print(self.life)
             if district.life < 0:
                 self.life += district.life
                 district.life = 0

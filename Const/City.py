@@ -6,9 +6,9 @@ Constants for the city
 
 CityLife = 100
 CityCentreLife = 100
-CityCentreX = 100
-CityCentreY = 100
-CityCentreXSize = 50
+CityCentreX = 80
+CityCentreY = 350
+CityCentreXSize = 100
 CityCentreYSize = 200
 CityCentreNumber = 0
 WHT = (255, 255, 255)

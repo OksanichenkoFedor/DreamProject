@@ -3,28 +3,25 @@ from LevelParts.Level import *
 """
 
 Do the whole program
-Hii!
+
 """
 
 
 # файл запуска программы
 pygame.init()
-level_screen = pygame.display.set_mode((LevelXSize, LevelYSize))
+level_screen = pygame.display.set_mode((LevelXSize, LevelYSize),pygame.FULLSCREEN)
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
 flag = False
-Test_Level = Level(map_drawer)
+Test_Level = Level(map_drawer,level_screen)
 
 while not finished:
     Test_Level.update(level_screen)
     pygame.display.update()
     for event in pygame.event.get():
-        Test_Level.game_event(event)
+        finished = Test_Level.game_event(event)
         if event.type == pygame.QUIT:
             finished = True
 pygame.quit()
 
-#Test11
-#Test1
-#Еуые228
