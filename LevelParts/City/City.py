@@ -40,23 +40,20 @@ class City(Interactable):
         :param level: Level of the game
 
         """
-        Cash = []
         for unit in self.Units:
-            Cash.append(unit.update(screen, level))
+            unit.update(screen, level)
 
         if self.side[0] == "order":
             order_city_draw(self, self.side[1], screen)
         else:
             union_city_draw(self, self.side[1], screen)
 
-        for i in range(len(self.Districts)):
-            self.Districts[i].update(screen)
-            print(self.Districts[i].life)
-            if self.Districts[i].life < 0:
-                self.life += self.Districts[i].life
-                self.Districts[i].life = 0
-
-        return Cash
+        for district in self.Districts:
+            district.update(screen)
+            print(self.life)
+            if district.life < 0:
+                self.life += district.life
+                district.life = 0
 
     def add_unit(self, type, road=0):
         """

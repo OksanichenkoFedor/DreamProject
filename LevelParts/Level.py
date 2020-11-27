@@ -41,9 +41,8 @@ class Level:
         """
         level_draw(self, screen)
         map_draw(self.map, screen)
-        Cash1 = self.first_city.update(screen, self)
-        Cash2 = self.second_city.update(screen, self)
-        # написать обновление объектов в соответствии с Cash_i
+        self.first_city.update(screen, self)
+        self.second_city.update(screen, self)
 
     def game_event(self, event):
         """

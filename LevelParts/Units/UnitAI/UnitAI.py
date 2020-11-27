@@ -23,28 +23,22 @@ def unitAI(info: Info):
         solution = []
         if info.unit.side[1] == "left":
             if info.unit.coord[1] >= MapXSize:
-                solution.append("attack district")
+                solution.append("attack")
                 # solution[1] = district
                 # solution[2] = action
                 solution.append(info.enemy_districts[CityCentreNumber])
                 solution.append(("attacked", LightInfantryDamage))
-                solution.append(CityCentreNumber)
             else:
                 solution.append("move forward")
         else:
             if info.unit.coord[1] <= 0:
-                solution.append("attack district")
+                solution.append("attack")
                 # solution[1] = district
                 # solution[2] = action
                 solution.append(info.enemy_districts[CityCentreNumber])
                 solution.append(("attacked", LightInfantryDamage))
-                solution.append(CityCentreNumber)
             else:
                 solution.append("move forward")
-    # если атакуем юнита, то
-    # solution[1] = номер юнита
-    # solution[2] = объект юнита
-    # solution[3] = action
     return solution
 
 

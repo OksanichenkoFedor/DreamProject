@@ -51,15 +51,25 @@ class Unit(Interactable):
         """
 
         if solution[0] == "move forward":
+            # Написать нормальное перемещение по дорогам
             if self.side[1] == "left":
                 self.coord[1] += LightInfantrySpeed
             else:
                 self.coord[1] -= LightInfantrySpeed
-            return 0
-        elif solution[0] == "attack district":
-            return self.interaction_with_district(solution[1], solution[2])
-        elif solution[0] == "attack unit":
-            return self.interaction_with_unit(solution[1], solution[2], solution[3])
+        elif solution[0] == "attack":
+            solution[1].process_interaction(solution[2])
+
+    def interaction_with_district(self, district: Interactable, action):
+        """
+        Function, that realise interaction with district
+        :param district: District that will be attacked
+        :param action: Action, that we perform in relation to the object
+                              1.) String, that say, what, we will do
+                              2.) Parameters, dependent on what we would do
+        :return: Changed district
+        """
+        district.process_interaction(action)
+        return district
 
     def position(self, level):
         """
@@ -103,32 +113,6 @@ class Unit(Interactable):
                         y_prev + t * (y_next - y_prev) + level.map.y)
         elif self.coord[0] == "battle_pole":
             return int(self.coord[1] + level.map.x), int(self.coord[2] + level.map.y)
-
-    def interaction_with_district(self, district: Interactable, action):
-        """
-
-        Function, that realise interaction with district
-        :param district: District that will be attacked
-        :param action: Action, that we perform in relation to the object
-                              1.) String, that say, what, we will do
-                              2.) Parameters, dependent on what we would do
-        :return: Changed district
-
-        """
-        district.process_interaction(action)
-        return district
-
-    def interaction_with_unit(self, unit, number, action):
-        """
-
-        :param unit:
-        :param number:
-        :param action:
-        :return: 1.) Changed unit
-                 2.) Number of this unit in Units
-        """
-        unit.process_interaction(action)
-        return unit,number
 
 
 if __name__ == "__main__":
