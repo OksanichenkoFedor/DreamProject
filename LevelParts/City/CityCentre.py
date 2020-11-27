@@ -14,7 +14,7 @@ class CityCentre(District):
 
     """
     def __init__(self, side, x, y):
-        super().__init__(side, CityCentreLife, x, y)
+        super().__init__(side, CityCentreLife, x, y, CityCentreNumber)
 
     def update(self, screen):
         """

@@ -43,11 +43,11 @@ class Unit(Interactable):
 
     def reaction(self, solution):
         """
+        :param solution: Solution, which tell unit what to do. Massive:
+                                                               1.) String, that say, what, we will do
+                                                               2.) Parameters, dependent on what we would do
 
-        :return: Solution: Solution, which tell unit what to do. Massive:
-                                                             1.) String, that say, what, we will do
-                                                             2.) Parameters, dependent on what we would do
-
+        :return: Something that depends on the solution. if nothing to return, return 0
         """
 
         if solution[0] == "move forward":
@@ -55,6 +55,11 @@ class Unit(Interactable):
                 self.coord[1] += LightInfantrySpeed
             else:
                 self.coord[1] -= LightInfantrySpeed
+            return 0
+        elif solution[0] == "attack district":
+            return self.interaction_with_district(solution[1], solution[2])
+        elif solution[0] == "attack unit":
+            return self.interaction_with_unit(solution[1], solution[2], solution[3])
 
     def position(self, level):
         """
@@ -99,26 +104,31 @@ class Unit(Interactable):
         elif self.coord[0] == "battle_pole":
             return int(self.coord[1] + level.map.x), int(self.coord[2] + level.map.y)
 
-    def interaction_with_interactable(self, interactable, number, action):
+    def interaction_with_district(self, district: Interactable, action):
         """
 
-        Function, that realise interaction with object (unit or district)
-        :param interactable: Interactable that will be attacked
-        :param number: Number of index of object, that we will attack, in massive
+        Function, that realise interaction with district
+        :param district: District that will be attacked
         :param action: Action, that we perform in relation to the object
                               1.) String, that say, what, we will do
                               2.) Parameters, dependent on what we would do
-        :return: 1.) Changed interactable
-                 2.) Number of index of object, that we will attack, in massive
-                 3.) is_attack: If interact with enemy object (check, by comparing fields side[1] of self and object), then
-                                True, else False
+        :return: Changed district
+
         """
-        if self.side[1] == interactable.side[1]:
-            interactable.process_interaction(action)
-            return interactable, number, False
-        else:
-            interactable.process_interaction(action)
-            return interactable, number, True
+        district.process_interaction(action)
+        return district
+
+    def interaction_with_unit(self, unit, number, action):
+        """
+
+        :param unit:
+        :param number:
+        :param action:
+        :return: 1.) Changed unit
+                 2.) Number of this unit in Units
+        """
+        unit.process_interaction(action)
+        return unit,number
 
 
 if __name__ == "__main__":

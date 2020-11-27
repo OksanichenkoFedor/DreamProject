@@ -11,18 +11,20 @@ class District(Interactable):
     : field self.x: First coord of left-up point of district
     : field self.y: Second coord of left-up point of district
     : field self.level: Level of the district
+    : field self.number: Integer, that identifies the area
 
     : method self.__init__(side ,life, x, y): Initialise District. Receives side, life, x, y
     : method self.under_attack(damage): Processes taking damage (amount of damage is given (damage) )
 
     """
 
-    def __init__(self, side, life, x, y):
+    def __init__(self, side, life, x, y, number):
         super().__init__(side, life)
         self.level = 1
         self.master = 0
         self.x = x
         self.y = y
+        self.number = number
 
     def under_attack(self, damage):
         self.life -= damage
@@ -35,7 +37,8 @@ class District(Interactable):
                               1.) String, that say, what, we will do
                               2.) Parameters, dependent on what we would do
         """
-        self.life -= action[1]
+        if action[0] == "attacked":
+            self.life -= action[1]
 
 
 if __name__ == "__main__":
