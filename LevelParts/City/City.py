@@ -3,29 +3,23 @@ from LevelParts.City.CityCentre import *
 from LevelParts.Units.LightInfantry import LightInfantry
 
 
-class City:
+class City(Interactable):
     """
 
     Class of city
-    : field self.side[1]: A string that tells which side the given city is located on.
-                            If side=="left", than this is city, located in the left side of the level
-                            If side=="right", than this is city, located in the right side of the level
-    : field self.side[0]: String, which say, what type of city we have: "Order" , "Union"
-    : field self.life: Life of the city
     : field self.x: First coord of left-up point of city
     : field self.y: Second coord of left-up point of city
     : field self.city_centre: District "City Centre" of the city
     : field self.money: Number of money of this city
 
     : method self.__init__(side, x, y): Initialise City. Receives side, x, y
-    : method self.update(screen, level) Update all parts of city (units, districts) and redraw city
-    : method self.add_unit(type) Add unit of given type (type)
+    : method self.update(screen, level): Update all parts of city (units, districts) and redraw city
+    : method self.add_unit(type): Add unit of given type (type)
 
     """
 
     def __init__(self, side, x, y):
-        self.side = side
-        self.life = CityLife
+        super().__init__(side, CityLife)
         self.city_centre = CityCentre(side, x + CityCentreX, y + CityCentreY)
         self.x = x
         self.y = y
@@ -35,6 +29,8 @@ class City:
     def update(self, screen, level):
         """
 
+        Update city. If life of city district under zero, than this district refill this life to zero,
+                     pulling them from city.
         :param screen: Surface, where the picture is rendered
         :param level: Level of the game
 
@@ -48,6 +44,10 @@ class City:
             union_city_draw(self, self.side[1], screen)
         pass
         self.city_centre.update(screen)
+
+        if self.city_centre.life < 0:
+            self.life += self.city_centre.life
+            self.city_centre.life = 0
 
     def add_unit(self, type, road=0):
         """

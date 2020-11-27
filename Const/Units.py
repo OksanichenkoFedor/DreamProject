@@ -6,7 +6,7 @@ Constants for the units
 LightInfantrySpeed = 5
 LightInfantryType = "swordsman"
 LightInfantryLife = 10
-LightInfantryDamage = 10
+LightInfantryDamage = 1
 LightInfantryCost = 10
 
 if __name__ == "__main__":

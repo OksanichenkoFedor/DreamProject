@@ -11,39 +11,25 @@ def unitAI(info: Info):
 
     Make decision for unit
     :param info: Object Info, which contains necessary information
-    :return: Solution: what this unit will do
+    :return: Solution: Solution, which tell unit what to do. Massive:
+                                                             1.) String, that say, what, we will do
+                                                             2.) Parameters, dependent on what we would do
+
 
     """
     if info.unit.type == LightInfantryType:
-        solution = " "
+        solution = []
+        solution.append(" ")
         if info.unit.side[1] == "left":
             if info.unit.coord[1] >= MapXSize:
-                pass
+                solution[0] = "attack district"
             else:
-                solution = "move forward"
+                solution[0] = "move forward"
         else:
             if info.unit.coord[1] <= 0:
-                pass
+                solution[0] = "attack district"
             else:
-                solution = "move forward"
+                solution[0] = "move forward"
     return solution
 
 
-def attack_unit(unit: Unit):
-    #TODO написать атаку, (придумать как отсюда влиять на объекты)
-    """
-
-    Function, that realise attack on unit
-    :param unit: Unit that will be attacked
-    :return:
-    """
-    pass
-
-
-def attack_district(dist: District):
-    """
-    Function, that realise attack on district
-    :param dist: District that will be attacked
-    :return:
-    """
-    pass
