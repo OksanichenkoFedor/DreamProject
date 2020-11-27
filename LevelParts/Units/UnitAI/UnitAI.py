@@ -21,24 +21,24 @@ def unitAI(info: Info):
     #print(info.enemy_districts[CityCentreNumber].life)
     if info.unit.type == LightInfantryType:
         solution = []
+        first = " "
         if info.unit.side[1] == "left":
             if info.unit.coord[1] >= MapXSize:
-                solution.append("attack")
-                # solution[1] = district
-                # solution[2] = action
-                solution.append(info.enemy_districts[CityCentreNumber])
-                solution.append(("attacked", LightInfantryDamage))
+                first = "interact"
             else:
-                solution.append("move forward")
+                first = "move forward"
         else:
             if info.unit.coord[1] <= 0:
-                solution.append("attack")
-                # solution[1] = district
-                # solution[2] = action
-                solution.append(info.enemy_districts[CityCentreNumber])
-                solution.append(("attacked", LightInfantryDamage))
+                first = "interact"
+
             else:
-                solution.append("move forward")
+                first = "move forward"
+    solution.append(first)
+    if first == "interact":
+        # solution[1] = interactable
+        # solution[2] = action
+        solution.append(info.enemy_districts[CityCentreNumber])
+        solution.append(("attacked", LightInfantryDamage))
     return solution
 
 

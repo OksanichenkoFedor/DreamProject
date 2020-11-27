@@ -56,7 +56,7 @@ class Unit(Interactable):
                 self.coord[1] += LightInfantrySpeed
             else:
                 self.coord[1] -= LightInfantrySpeed
-        elif solution[0] == "attack":
+        elif solution[0] == "interact":
             solution[1].process_interaction(solution[2])
 
     def interaction_with_district(self, district: Interactable, action):
