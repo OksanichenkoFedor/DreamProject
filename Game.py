@@ -1,4 +1,5 @@
 import pygame
+import os
 from LevelParts.Level import *
 """
 
@@ -8,8 +9,10 @@ Do the whole program
 
 
 # файл запуска программы
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
-level_screen = pygame.display.set_mode((LevelXSize, LevelYSize),pygame.FULLSCREEN)
+level_screen = pygame.display.set_mode((LevelXSize, LevelYSize), pygame.FULLSCREEN)
+#level_screen = pygame.display.set_mode((LevelXSize, LevelYSize) если лагает переключи на это
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = False

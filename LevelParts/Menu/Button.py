@@ -15,7 +15,6 @@ class Button:
         myFont = pygame.font.SysFont("Calibri", font_size)
         myText = myFont.render(text, 1, text_color)
         surface.blit(myText, ((x + length / 2) - myText.get_width() / 2, (y + height / 2) - myText.get_height() / 2))
-        return surface
 
     def draw_button(self, surface, color, length, height, x, y, width):
         """for i in range(1, 10):
@@ -29,7 +28,6 @@ class Button:
             surface.blit(s, (x - i, y - i))"""
         pygame.draw.rect(surface, color, (x, y, length, height), 0)
         pygame.draw.rect(surface, (190, 190, 190), (x, y, length, height), 1)
-        return surface
 
     def pressed(self, mouse):
         if mouse[0] > self.rect.topleft[0]:

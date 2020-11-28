@@ -30,12 +30,11 @@ class Level:
         :param screen: Surface, where the picture is rendered
 
         """
-        self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize / 2 - MapYSize / 2, MapXSize, MapYSize)
+        self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize - MapYSize, MapXSize, MapYSize)
         self.first_city = City(("order", "left"), LevelXSize / 2 - MapXSize / 2 - CityXSize,
-                                    LevelYSize / 2 - CityYSize / 2)
-        self.second_city = City(("union", "right"), LevelXSize / 2 + MapXSize / 2, LevelYSize / 2 - CityYSize / 2)
+                               LevelYSize - CityYSize)
+        self.second_city = City(("union", "right"), LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize)
         self.but1 = Button()
-
 
     def update(self, screen):
         """
@@ -47,7 +46,7 @@ class Level:
         map_draw(self.map, screen)
         self.first_city.update(screen, self)
         self.second_city.update(screen, self)
-        self.but1.create_button(screen, BLC, 0, 0, 100, 50, 10, "Exit", WHT)
+        self.but1.create_button(screen, BLC, 0, 0, 100, 75, 10, "Exit", WHT)
 
     def game_event(self, event):
         """

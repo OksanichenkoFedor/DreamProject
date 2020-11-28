@@ -5,10 +5,10 @@ Constants for the game level
 """
 
 LevelXSize = 1500
-LevelYSize = 1200
+LevelYSize = 925
 MapXSize = 1050
-MapYSize = 1100
-CityXSize = 306
+MapYSize = 850
+CityXSize = 226
 CityYSize = MapYSize
 WHT = (255, 255, 255)
 YLW = (255, 255, 0)
