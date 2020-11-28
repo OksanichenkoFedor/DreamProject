@@ -34,7 +34,7 @@ class Level:
         self.first_city = City(("order", "left"), LevelXSize / 2 - MapXSize / 2 - CityXSize,
                                LevelYSize - CityYSize)
         self.second_city = City(("union", "right"), LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize)
-        self.but1 = Button()
+        self.but1 = Button(BLC, 0, 0, 100, 75, 10, "Exit", WHT)
 
     def update(self, screen):
         """
@@ -46,7 +46,7 @@ class Level:
         map_draw(self.map, screen)
         self.first_city.update(screen, self)
         self.second_city.update(screen, self)
-        self.but1.create_button(screen, BLC, 0, 0, 100, 75, 10, "Exit", WHT)
+        self.but1.update_button(screen)
 
     def game_event(self, event):
         """
@@ -57,15 +57,13 @@ class Level:
         finished = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                if self.but1.pressed(event.pos):
+                if self.but1.is_pressed(event.pos):
                     finished = True
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
                 self.first_city.add_unit(LightInfantryType)
             elif event.key == pygame.K_RIGHT:
                 self.second_city.add_unit(LightInfantryType)
-            elif event.key == pygame.K_1:
-                finished = True
         return finished
 
 

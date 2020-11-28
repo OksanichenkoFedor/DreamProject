@@ -1,35 +1,43 @@
 import pygame
-
-pygame.init()
+from Draws.LevelDraws import button_draw
 
 
 class Button:
-    def create_button(self, surface, color, x, y, length, height, width, text, text_color):
-        self.draw_button(surface, color, length, height, x, y, width)
-        self.write_text(surface, text, text_color, length, height, x, y)
-        self.rect = pygame.Rect(x, y, length, height)
-        return surface
+    """
 
-    def write_text(self, surface, text, text_color, length, height, x, y):
-        font_size = int(length // len(text))
-        myFont = pygame.font.SysFont("Calibri", font_size)
-        myText = myFont.render(text, 1, text_color)
-        surface.blit(myText, ((x + length / 2) - myText.get_width() / 2, (y + height / 2) - myText.get_height() / 2))
+    Simple button
 
-    def draw_button(self, surface, color, length, height, x, y, width):
-        """for i in range(1, 10):
-            s = pygame.Surface((length + (i * 2), height + (i * 2)))
-            s.fill(color)
-            alpha = (255 / (i + 2))
-            if alpha <= 0:
-                alpha = 1
-            s.set_alpha(alpha)
-            pygame.draw.rect(s, color, (x - i, y - i, length + i, height + i), width)
-            surface.blit(s, (x - i, y - i))"""
-        pygame.draw.rect(surface, color, (x, y, length, height), 0)
-        pygame.draw.rect(surface, (190, 190, 190), (x, y, length, height), 1)
+    :field color: Color of button body
+    :field x: First coordinate of button
+    :field y: Second coordinate of button
+    :field length: X-side of button body
+    :field height: Y-side of button body
+    :field width: Argument for drawing sides of button
+    :field text: String, that we will draw on button
+    :field text_color: Color of button text
 
-    def pressed(self, mouse):
+    :method __init__: Initialise Button. Receives color, x, y, length, height, width, text, text_color.
+    :method update(): Update the button and draw it
+    :method is_pressed: Tell information about is button pressed (True) or no(False)
+
+    """
+
+    def __init__(self, color, x, y, length, height, width, text, text_color):
+        self.color = color
+        self.x = x
+        self.y = y
+        self.length = length
+        self.height = height
+        self.width = width
+        self.text = text
+        self.text_color = text_color
+        self.rect = pygame.Rect(self.x, self.y, self.length, self.height)
+
+    def update_button(self, screen):
+        button_draw(screen, self)
+        self.rect = pygame.Rect(self.x, self.y, self.length, self.height)
+
+    def is_pressed(self, mouse):
         if mouse[0] > self.rect.topleft[0]:
             if mouse[1] > self.rect.topleft[1]:
                 if mouse[0] < self.rect.bottomright[0]:

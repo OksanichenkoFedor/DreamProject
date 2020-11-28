@@ -19,24 +19,24 @@ class Unit(Interactable):
                                 b.) If unit on pole, say second coord in map
     : field self.type: Tell us, which type this unit is. We need this for AI
     : field self.armor: Armor of unit (damage -> max(damage-armor,0))
+    : field self.attack_range: Range of unit attack
 
     : method __init__(side, life, coord, unit_type, armor): Initialise Unit. Receives side, life, coord, unit_type,
-                                                            armor.
+                                                            armor, range
     : method update(screen, level): Update unit, and redraw it. Also in this function we analise situation.
                                     Receives screen, level.
     : method reaction(solution): Realise an action determined by the solution
     : method position(): Give position x, y, of this soldier in whole screen
-    : method interaction_with_interactable(object, number, action): Function, that realise interaction (action) self with
-                                                          object(object, number). Object can be Unit of District
 
 
     """
 
-    def __init__(self, side, life, coord, unit_type, armor=0):
+    def __init__(self, side, life, coord, unit_type, armor= 0, attack_range= 1):
         super().__init__(side, life)
         self.coord = coord
         self.type = unit_type
         self.armor = armor
+        self.range = range
 
     def update(self, screen, level):
         pass
@@ -58,18 +58,6 @@ class Unit(Interactable):
                 self.coord[1] -= LightInfantrySpeed
         elif solution[0] == "interact":
             solution[1].process_interaction(solution[2])
-
-    def interaction_with_district(self, district: Interactable, action):
-        """
-        Function, that realise interaction with district
-        :param district: District that will be attacked
-        :param action: Action, that we perform in relation to the object
-                              1.) String, that say, what, we will do
-                              2.) Parameters, dependent on what we would do
-        :return: Changed district
-        """
-        district.process_interaction(action)
-        return district
 
     def position(self, level):
         """
