@@ -92,6 +92,24 @@ class Map:
             for j in range(len(self.Right_Roads[i])):
                 self.total_coords_R[i][j] = (1.0 * self.total_coords_R[i][j]) / (1.0 * self.total_length_R[i])
 
+    def nearest_road(self, x, y, side_param):    #Получает на вход координаты x,y и сторона города, из которого вышел юнит
+        nearest_road_num = 0
+        if side_param == "right":
+            distance = ((x-self.Left_Roads[0][-1][0])**2 + (y-self.Left_Roads[0][-1][1])**2)**0.5
+            for i in range(len(self.Left_Roads)):
+                d = ((x-self.Left_Roads[i][-1][0])**2 + (y-self.Left_Roads[i][-1][1])**2)**0.5
+                if d < distance:
+                    nearest_road_num = i
+                    distance = d
+
+        elif side_param == "left":
+            distance = ((x - self.Right_Roads_Roads[0][-1][0]) ** 2 + (y - self.Right_Roads_Roads[0][-1][1]) ** 2) ** 0.5
+            for i in range(len(self.Right_Roads_Roads)):
+                d = ((x - self.Right_Roads_Roads[i][-1][0]) ** 2 + (y - self.Right_Roads_Roads[i][-1][1]) ** 2) ** 0.5
+                if d < distance:
+                    nearest_road_num = i
+                    distance = d
+        return (nearest_road_num, distance)    #На выходе кортеж из номера ближайшей дороги и расстояния до ее крайнего узла
 
 if __name__ == "__main__":
     print("This module is not for direct call!")
