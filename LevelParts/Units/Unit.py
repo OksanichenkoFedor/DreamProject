@@ -50,17 +50,49 @@ class Unit(Interactable):
 
         :return: Something that depends on the solution. if nothing to return, return 0
         """
-
+        # Написать нормальное перемещение по дорогам
         if solution[0] == "move forward":
-            # Написать нормальное перемещение по дорогам
-            if self.side[1] == "left":
-                road_num  = self.coord[1]
-                road_length = level.map.total_length_L[road_num]
-                self.coord[2] += LightInfantrySpeed/road_length
-            else:
-                road_num = self.coord[1]
-                road_length = level.map.total_length_R[road_num]
-                self.coord[2] -= LightInfantrySpeed/road_length
+
+            if self.side[1] == "left":    #Юнит из левого города
+                if self.coord[0] == "left":    #Юнит на левой дороге
+                    if self.coord[2] < 1:
+                        road_num  = self.coord[1]
+                        road_length = level.map.total_length_L[road_num]
+                        self.coord[2] += LightInfantrySpeed/road_length
+                    else:
+                        self.coord[1] = "battle_pole"
+
+                elif self.coord[0] == "right":    #Юнит на правой дороге
+                    if self.coord[2] < 1:
+                        road_num = self.coord[1]
+                        road_length = level.map.total_length_R[road_num]
+                        self.coord[2] -= LightInfantrySpeed / road_length
+                    else:
+                        self.coord[1] = "battle_pole"
+
+
+            elif self.side[1] == "right":    #Юнит из правого города
+
+                if self.coord[0] == "left":    #Юнит на левой дороге
+                    if self.coord[2] < 1:
+                        road_num = self.coord[1]
+                        road_length = level.map.total_length_L[road_num]
+                        self.coord[2] -= LightInfantrySpeed/road_length
+                    else:
+                        self.coord[1] = "battle_pole"
+
+                elif self.coord[0] == "right":    #Юнит на правой дороге
+                    if self.coord[2] < 1:
+                        road_num = self.coord[1]
+                        road_length = level.map.total_length_R[road_num]
+                        self.coord[2] += LightInfantrySpeed/road_length
+                    else:
+                        self.coord[1] = "battle_pole"
+
+
+
+
+
         elif solution[0] == "interact":
             solution[1].process_interaction(solution[2])
 
