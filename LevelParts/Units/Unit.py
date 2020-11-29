@@ -41,11 +41,12 @@ class Unit(Interactable):
     def update(self, screen, level):
         pass
 
-    def reaction(self, solution):
+    def reaction(self, solution, level):
         """
         :param solution: Solution, which tell unit what to do. Massive:
                                                                1.) String, that say, what, we will do
                                                                2.) Parameters, dependent on what we would do
+               level: Level of this game
 
         :return: Something that depends on the solution. if nothing to return, return 0
         """
@@ -53,9 +54,13 @@ class Unit(Interactable):
         if solution[0] == "move forward":
             # Написать нормальное перемещение по дорогам
             if self.side[1] == "left":
-                self.coord[1] += LightInfantrySpeed
+                road_num  = self.coord[1]
+                road_length = level.map.total_length_L[road_num]
+                self.coord[2] += LightInfantrySpeed/road_length
             else:
-                self.coord[1] -= LightInfantrySpeed
+                road_num = self.coord[1]
+                road_length = level.map.total_length_R[road_num]
+                self.coord[2] -= LightInfantrySpeed/road_length
         elif solution[0] == "interact":
             solution[1].process_interaction(solution[2])
 
