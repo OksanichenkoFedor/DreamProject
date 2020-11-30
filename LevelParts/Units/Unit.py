@@ -111,7 +111,7 @@ class Unit(Interactable):
                     x_next = level.map.Left_Roads[self.coord[1]][i][0]
                     y_next = level.map.Left_Roads[self.coord[1]][i][1]
                     x_prev = level.map.Left_Roads[self.coord[1]][i - 1][0]
-                    y_prev = level.map.Left_Roads[self.coord[1]][i - 1][0]
+                    y_prev = level.map.Left_Roads[self.coord[1]][i - 1][1]
 
                     t = (self.coord[2] - level.map.total_coords_L[self.coord[1]][i - 1]) / (
                             level.map.total_coords_L[self.coord[1]][i] - level.map.total_coords_L[self.coord[1]][
