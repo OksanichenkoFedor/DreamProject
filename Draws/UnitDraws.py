@@ -3,6 +3,12 @@ from Const.Level import *
 from pygame.draw import *
 
 
+def massive_multiply(j, a):
+    j1 = []
+    for i in range(len(j)):
+        j1.append(int(j[i]*a))
+    return j1
+
 def lightinfantry_draw(unit, unit_side, unit_position, screen):
     """
 
@@ -20,14 +26,14 @@ def lightinfantry_draw(unit, unit_side, unit_position, screen):
     """
     if unit_side[0] == "order":
         if unit_side[1] == "left":
-            circle(screen, RED, unit_position, 15)
+            circle(screen, RED, massive_multiply(unit_position, DrawingCoefficient), int(15*DrawingCoefficient))
         else:
-            circle(screen, RED, unit_position, 15)
+            circle(screen, RED, massive_multiply(unit_position, DrawingCoefficient), int(15*DrawingCoefficient))
     else:
         if unit_side[1] == "left":
-            circle(screen, YLW, unit_position, 15)
+            circle(screen, YLW, massive_multiply(unit_position, DrawingCoefficient), int(15*DrawingCoefficient))
         else:
-            circle(screen, YLW, unit_position, 15)
+            circle(screen, YLW, massive_multiply(unit_position, DrawingCoefficient), int(15*DrawingCoefficient))
 
 
 if __name__ == "__main__":

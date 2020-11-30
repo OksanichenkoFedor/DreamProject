@@ -3,6 +3,13 @@ from Const.City import *
 from pygame.draw import *
 
 
+def massive_multiply(j, a):
+    j1 = []
+    for i in range(len(j)):
+        j1.append(int(j[i]*a))
+    return j1
+
+
 def order_city_draw(city, pole_side, screen):
     """
 
@@ -15,11 +22,7 @@ def order_city_draw(city, pole_side, screen):
 
     """
 
-    if pole_side == "left":
-        rect(screen, RED,
-             (city.x, city.y, CityXSize, CityYSize))
-    else :
-        rect(screen, RED, (city.x, city.y, CityXSize, CityYSize))
+    rect(screen, RED, massive_multiply((city.x, city.y, CityXSize, CityYSize), DrawingCoefficient))
 
 
 def union_city_draw(city, pole_side, screen):
@@ -34,11 +37,7 @@ def union_city_draw(city, pole_side, screen):
 
     """
 
-    if pole_side == "left":
-        rect(screen, YLW,
-             (city.x, city.y, CityXSize, CityYSize))
-    else:
-        rect(screen, YLW, (city.x, city.y, CityXSize, CityYSize))
+    rect(screen, YLW, massive_multiply((city.x, city.y, CityXSize, CityYSize), DrawingCoefficient))
 
 
 def order_city_centre_draw(city_centre, pole_side, screen):
@@ -53,12 +52,7 @@ def order_city_centre_draw(city_centre, pole_side, screen):
 
     """
 
-    if pole_side == "left":
-        rect(screen, YLW,
-             (city_centre.x, city_centre.y, CityCentreXSize, CityCentreYSize))
-    else :
-        rect(screen, YLW,
-             (city_centre.x, city_centre.y, CityCentreXSize, CityCentreYSize))
+    rect(screen, YLW, massive_multiply((city_centre.x, city_centre.y, CityCentreXSize, CityCentreYSize), DrawingCoefficient))
 
 
 def union_city_centre_draw(city_centre, pole_side, screen):
@@ -73,12 +67,7 @@ def union_city_centre_draw(city_centre, pole_side, screen):
 
     """
 
-    if pole_side == "left":
-        rect(screen, RED,
-             (city_centre.x, city_centre.y, CityCentreXSize, CityCentreYSize))
-    else :
-        rect(screen, RED,
-             (city_centre.x, city_centre.y, CityCentreXSize, CityCentreYSize))
+    rect(screen, RED, massive_multiply((city_centre.x, city_centre.y, CityCentreXSize, CityCentreYSize), DrawingCoefficient))
 
 
 if __name__ == "__main__":

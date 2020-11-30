@@ -6,8 +6,7 @@ def stttttt (a):
     a.life = 200
     return a
 
-A = CityCentre(["order","left"],0,0)
+A = (1,1)
+A = A*2
 
-print(A.life)
-sttt(A)
-print(A.life)
+print(A)

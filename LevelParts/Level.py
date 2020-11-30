@@ -54,10 +54,12 @@ class Level:
         :param event: Pygame event
 
         """
+
         finished = False
         if event.type == pygame.MOUSEBUTTONDOWN:
+            pos = ((event.pos[0] * 1.0) / (DrawingCoefficient * 1.0),(event.pos[1] * 1.0) / (DrawingCoefficient * 1.0))
             if event.button == 1:
-                if self.but1.is_pressed(event.pos):
+                if self.but1.is_pressed(pos):
                     finished = True
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
