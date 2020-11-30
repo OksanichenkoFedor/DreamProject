@@ -1,6 +1,6 @@
 from Const.Units import *
 from LevelParts.Interactable import Interactable
-
+from Const.Level import *
 
 class Unit(Interactable):
     """
@@ -33,7 +33,10 @@ class Unit(Interactable):
 
     def __init__(self, side, life, coord, unit_type, armor= 0, attack_range= 1):
         super().__init__(side, life)
-        self.coord = coord
+        self.coord = []
+        self.coord.append(coord[0])
+        self.coord.append(coord[1])
+        self.coord.append(coord[2])
         self.type = unit_type
         self.armor = armor
         self.range = range
@@ -41,21 +44,90 @@ class Unit(Interactable):
     def update(self, screen, level):
         pass
 
-    def reaction(self, solution):
+    def reaction(self, solution, level):
         """
         :param solution: Solution, which tell unit what to do. Massive:
                                                                1.) String, that say, what, we will do
                                                                2.) Parameters, dependent on what we would do
+               level: Level of this game
 
         :return: Something that depends on the solution. if nothing to return, return 0
         """
-
+        # Написать нормальное перемещение по дорогам
         if solution[0] == "move forward":
-            # Написать нормальное перемещение по дорогам
-            if self.side[1] == "left":
-                self.coord[1] += LightInfantrySpeed
-            else:
-                self.coord[1] -= LightInfantrySpeed
+
+            if self.side[1] == "left":    #Юнит из левого города
+                if self.coord[0] == "left":    #Юнит на левой дороге
+                    if self.coord[2] < 1:
+                        road_num  = self.coord[1]
+                        road_length = level.map.total_length_L[road_num]
+                        self.coord[2] += LightInfantrySpeed/road_length
+                        self.coord[2] = min(1, self.coord[2])
+                    else:
+                        self.coord[0] = "battle_pole"
+                        _ = self.coord[1]
+                        self.coord[1] = level.map.Left_Roads[_][-1][0]
+                        self.coord[2] = level.map.Left_Roads[_][-1][1]
+
+
+
+                elif self.coord[0] == "right":    #Юнит на правой дороге
+                    if self.coord[2] > 0:
+                        road_num = self.coord[1]
+                        road_length = level.map.total_length_R[road_num]
+                        self.coord[2] -= LightInfantrySpeed / road_length
+                        self.coord[2] = max(0, self.coord[2])
+
+
+                elif self.coord[0] == "battle_pole":
+                    road_num, distance = level.map.nearest_road(self.coord[1], self.coord[2], "left")
+                    if (distance - LightInfantrySpeed) > 0:
+                        cos = (level.map.Right_Roads[road_num][-1][0] - self.coord[1]) / distance
+                        sin = (level.map.Right_Roads[road_num][-1][1] - self.coord[2]) / distance
+                        self.coord[1] += LightInfantrySpeed * cos
+                        self.coord[2] += LightInfantrySpeed * sin
+                    else:
+                        self.coord[0] = "right"
+                        self.coord[1] = road_num
+                        self.coord[2] = 1
+
+            elif self.side[1] == "right":    #Юнит из правого города
+
+                if self.coord[0] == "left":    #Юнит на левой дороге
+                    if self.coord[2] > 0:
+                        road_num = self.coord[1]
+                        road_length = level.map.total_length_L[road_num]
+                        self.coord[2] -= LightInfantrySpeed/road_length
+                        self.coord[2] = max(0, self.coord[2])
+
+
+                elif self.coord[0] == "right":    #Юнит на правой дороге
+                    if self.coord[2] < 1:
+                        road_num = self.coord[1]
+                        road_length = level.map.total_length_R[road_num]
+                        self.coord[2] += LightInfantrySpeed/road_length
+                        self.coord[2] = min(1, self.coord[2])
+                    else:
+                        self.coord[0] = "battle_pole"
+                        _ = self.coord[1]
+                        self.coord[1] = level.map.Right_Roads[_][-1][0]
+                        self.coord[2] = level.map.Right_Roads[_][-1][1]
+
+                elif self.coord[0] == "battle_pole":
+                    road_num, distance = level.map.nearest_road(self.coord[1], self.coord[2], "right")
+                    if (distance - LightInfantrySpeed) > 0:
+                        cos = (+level.map.Left_Roads[road_num][-1][0] - self.coord[1]) / distance
+                        sin = (level.map.Left_Roads[road_num][-1][1] - self.coord[2]) / distance
+                        self.coord[1] += LightInfantrySpeed * cos
+                        self.coord[2] += LightInfantrySpeed * sin
+                    else:
+                        self.coord[0] = "left"
+                        self.coord[1] = road_num
+                        self.coord[2] = 1
+
+
+
+
         elif solution[0] == "interact":
             solution[1].process_interaction(solution[2])
 
@@ -71,36 +143,31 @@ class Unit(Interactable):
                 point_coord_next = level.map.total_coords_L[self.coord[1]][i]
                 point_coord_cur = level.map.total_coords_L[self.coord[1]][i - 1]
                 if (self.coord[2] - point_coord_next) * (self.coord[2] - point_coord_cur) <= 0:
-                    x_next = level.map.Left_Roads[i][0]
-                    y_next = level.map.Left_Roads[i][1]
-                    x_prev = level.map.Left_Roads[i - 1][0]
-                    y_prev = level.map.Left_Roads[i - 1][0]
+                    x_next = level.map.Left_Roads[self.coord[1]][i][0]
+                    y_next = level.map.Left_Roads[self.coord[1]][i][1]
+                    x_prev = level.map.Left_Roads[self.coord[1]][i - 1][0]
+                    y_prev = level.map.Left_Roads[self.coord[1]][i - 1][1]
 
-                    t = (self.coord[2] - level.map.total_coords_L[self.coord[1]][i - 1]) / (
-                            level.map.total_coords_L[self.coord[1]][i] - level.map.total_coords_L[self.coord[1]][
-                        i - 1])
-
-                    return int(x_prev + t * (x_next - x_prev) + level.map.x), int(
-                        y_prev + t * (y_next - y_prev) + level.map.y)
+                    t = (self.coord[2] - level.map.total_coords_L[self.coord[1]][i - 1]) / (level.map.total_coords_L[self.coord[1]][i] - level.map.total_coords_L[self.coord[1]][i - 1])
+                    print(self.coord[2])
+                    return (int(x_prev + t * (x_next - x_prev) ), int(y_prev + t * (y_next - y_prev) ))
 
         elif self.coord[0] == "right":
             for i in range(1, len(level.map.total_coords_R[self.coord[1]])):
                 point_coord_next = level.map.total_coords_R[self.coord[1]][i]
                 point_coord_cur = level.map.total_coords_R[self.coord[1]][i - 1]
                 if (self.coord[2] - point_coord_next) * (self.coord[2] - point_coord_cur) <= 0:
-                    x_next = level.map.Right_Roads[i][0]
-                    y_next = level.map.Right_Roads[i][1]
-                    x_prev = level.map.Right_Roads[i - 1][0]
-                    y_prev = level.map.Right_Roads[i - 1][0]
+                    x_next = level.map.Right_Roads[self.coord[1]][i][0]
+                    y_next = level.map.Right_Roads[self.coord[1]][i][1]
+                    x_prev = level.map.Right_Roads[self.coord[1]][i - 1][0]
+                    y_prev = level.map.Right_Roads[self.coord[1]][i - 1][1]
 
-                    t = (self.coord[2] - level.map.total_coords_R[self.coord[1]][i - 1]) / (
-                            level.map.total_coords_R[self.coord[1]][i] - level.map.total_coords_R[self.coord[1]][
-                        i - 1])
+                    t = (self.coord[2] - level.map.total_coords_R[self.coord[1]][i - 1]) / (level.map.total_coords_R[self.coord[1]][i] - level.map.total_coords_R[self.coord[1]][i - 1])
+                    print(self.coord[2])
 
-                    return int(x_prev + t * (x_next - x_prev) + level.map.x), int(
-                        y_prev + t * (y_next - y_prev) + level.map.y)
+                    return (int(x_prev + t * (x_next - x_prev)), int(y_prev + t * (y_next - y_prev)))
         elif self.coord[0] == "battle_pole":
-            return int(self.coord[1] + level.map.x), int(self.coord[2] + level.map.y)
+            return (int(self.coord[1] ), int(self.coord[2]))
 
 
 if __name__ == "__main__":

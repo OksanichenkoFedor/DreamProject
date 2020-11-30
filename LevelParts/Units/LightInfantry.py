@@ -35,7 +35,7 @@ class LightInfantry(Unit):
         lightinfantry_draw(self, self.side, self.position(level), screen)
         info = Info(self, level)
         solution = unitAI(info)
-        return self.reaction(solution)
+        return self.reaction(solution, level)
 
     def process_interaction(self, action):
         pass

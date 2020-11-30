@@ -65,7 +65,7 @@ class City(Interactable):
             if self.side[1] == "right":
                 x0 = MapXSize
             if self.money >= LightInfantryCost:
-                self.Units.append(LightInfantry(self.side, ["battle_pole", x0, int(MapYSize / 2)]))
+                self.Units.append(LightInfantry(self.side, (self.side[1], 0, 0 )))
                 self.money -= LightInfantryCost
 
 
