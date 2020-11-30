@@ -108,10 +108,10 @@ class Unit(Interactable):
                 point_coord_next = level.map.total_coords_L[self.coord[1]][i]
                 point_coord_cur = level.map.total_coords_L[self.coord[1]][i - 1]
                 if (self.coord[2] - point_coord_next) * (self.coord[2] - point_coord_cur) <= 0:
-                    x_next = level.map.Left_Roads[i][0]
-                    y_next = level.map.Left_Roads[i][1]
-                    x_prev = level.map.Left_Roads[i - 1][0]
-                    y_prev = level.map.Left_Roads[i - 1][0]
+                    x_next = level.map.Left_Roads[self.coord[1]][i][0]
+                    y_next = level.map.Left_Roads[self.coord[1]][i][1]
+                    x_prev = level.map.Left_Roads[self.coord[1]][i - 1][0]
+                    y_prev = level.map.Left_Roads[self.coord[1]][i - 1][0]
 
                     t = (self.coord[2] - level.map.total_coords_L[self.coord[1]][i - 1]) / (
                             level.map.total_coords_L[self.coord[1]][i] - level.map.total_coords_L[self.coord[1]][
