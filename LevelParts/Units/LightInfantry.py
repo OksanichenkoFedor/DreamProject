@@ -22,8 +22,8 @@ class LightInfantry(Unit):
     : method process_interaction(action):
     """
 
-    def __init__(self, side, coord):
-        super().__init__(side, LightInfantryLife, coord, LightInfantryType)
+    def __init__(self, side, coord, image):
+        super().__init__(side, LightInfantryLife, coord, LightInfantryType, image)
 
     def update(self, screen, level):
         """
@@ -32,7 +32,7 @@ class LightInfantry(Unit):
         :param level: Level of the game
 
         """
-        lightinfantry_draw(self, self.side, self.position(level), screen)
+        lightinfantry_draw(self, self.side, self.position(level), screen, self.image)
         info = Info(self, level)
         solution = unitAI(info)
         return self.reaction(solution, level)

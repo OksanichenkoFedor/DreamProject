@@ -7,6 +7,9 @@ Do the whole program
 
 """
 
+#Импорт картинок
+
+
 
 # файл запуска программы
 os.environ['SDL_VIDEO_CENTERED'] = '1'

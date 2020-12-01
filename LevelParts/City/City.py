@@ -22,16 +22,17 @@ class City(Interactable):
 
     """
 
-    def __init__(self, side, x, y):
+    def __init__(self, side, x, y, image_bruschatka, image_castle, image_square, unit_image):
         super().__init__(side, CityLife)
-        city_centre = CityCentre(side, x + CityCentreX, y + CityCentreY)
+        self.image_bruschatka = image_bruschatka
+        city_centre = CityCentre(side, x + CityCentreX, y + CityCentreY, image_castle, image_square)
         self.x = x
         self.y = y
         self.money = 100
         self.Units = []
         self.Districts = []
         self.Districts.append(city_centre)
-        print(len(self.Districts))
+        self.unit_image = unit_image
 
     def update(self, screen, level):
         """
@@ -46,9 +47,9 @@ class City(Interactable):
             unit.update(screen, level)
 
         if self.side[0] == "order":
-            order_city_draw(self, self.side[1], screen)
+            order_city_draw(self, self.side[1], screen, self.image_bruschatka)
         else:
-            union_city_draw(self, self.side[1], screen)
+            union_city_draw(self, self.side[1], screen, self.image_bruschatka)
 
         for district in self.Districts:
             district.update(screen)
@@ -67,7 +68,7 @@ class City(Interactable):
             if self.side[1] == "right":
                 x0 = MapXSize
             if self.money >= LightInfantryCost:
-                self.Units.append(LightInfantry(self.side, (self.side[1], randint(0, 2), 0 )))
+                self.Units.append(LightInfantry(self.side, (self.side[1], randint(0, 2), 0),self.unit_image))
                 self.money -= LightInfantryCost
 
 

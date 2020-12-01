@@ -20,6 +20,7 @@ class Unit(Interactable):
     : field self.type: Tell us, which type this unit is. We need this for AI
     : field self.armor: Armor of unit (damage -> max(damage-armor,0))
     : field self.attack_range: Range of unit attack
+    : field self.image: Image of unit
 
     : method __init__(side, life, coord, unit_type, armor): Initialise Unit. Receives side, life, coord, unit_type,
                                                             armor, range
@@ -31,7 +32,7 @@ class Unit(Interactable):
 
     """
 
-    def __init__(self, side, life, coord, unit_type, armor= 0, attack_range= 1):
+    def __init__(self, side, life, coord, unit_type, image, armor= 0, attack_range= 1, ):
         super().__init__(side, life)
         self.coord = []
         self.coord.append(coord[0])
@@ -40,6 +41,7 @@ class Unit(Interactable):
         self.type = unit_type
         self.armor = armor
         self.range = range
+        self.image = image
 
     def update(self, screen, level):
         pass

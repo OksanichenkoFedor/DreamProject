@@ -11,7 +11,7 @@ def massive_multiply(j, a):
     return j1
 
 
-def order_city_draw(city, pole_side, screen):
+def order_city_draw(city, pole_side, screen ,image_bruschatka):
     """
 
     Function, which draw the order city. Have to draw two variants: left side and right side
@@ -25,15 +25,12 @@ def order_city_draw(city, pole_side, screen):
 
 
     #rect(screen, RED, massive_multiply((city.x, city.y, CityXSize, CityYSize), DrawingCoefficient))
-
-    image_bruschatka = image.load('Draws/bruschatka.png').convert_alpha()
     image_bruschatka = transform.scale(image_bruschatka,
-                                              (massive_multiply((CityXSize, CityYSize), DrawingCoefficient)))
-
+                                       (massive_multiply((CityXSize, CityYSize), DrawingCoefficient)))
     screen.blit(image_bruschatka, massive_multiply((city.x, city.y), DrawingCoefficient))
 
 
-def union_city_draw(city, pole_side, screen):
+def union_city_draw(city, pole_side, screen,image_bruschatka):
     """
 
     Function, which draw the union city. Have to draw two variants: left side and right side
@@ -44,15 +41,13 @@ def union_city_draw(city, pole_side, screen):
     :param screen: Surface, where the picture is rendered
 
     """
-
-    image_bruschatka = image.load('Draws/bruschatka.png').convert_alpha()
     image_bruschatka = transform.scale(image_bruschatka,
                                        (massive_multiply((CityXSize, CityYSize), DrawingCoefficient)))
 
     screen.blit(image_bruschatka, massive_multiply((city.x, city.y), DrawingCoefficient))
 
 
-def order_city_centre_draw(city_centre, pole_side, screen):
+def order_city_centre_draw(city_centre, pole_side, screen, image_castle_orden ,image_square):
     """
 
     Function, which draw the order city centre. Have to draw two variants: left side and right side
@@ -63,22 +58,20 @@ def order_city_centre_draw(city_centre, pole_side, screen):
     :param screen: Surface, where the picture is rendered
 
     """
-    image_castle_orden = image.load('Draws/zdanie_orden.png').convert_alpha()
     image_castle_orden = transform.scale(image_castle_orden,
                                        (massive_multiply((CityCentreXSize/2, CityCentreYSize/2), DrawingCoefficient)))
     screen.blit(image_castle_orden, massive_multiply((city_centre.x+CityCentreXSize/2, city_centre.y),DrawingCoefficient))
 
-    image_castle_orden = image.load('Draws/ploschad.png').convert_alpha()
-    image_castle_orden = transform.scale(image_castle_orden,
+    image_square = transform.scale(image_square,
                                          (massive_multiply((CityCentreXSize / 2, CityCentreYSize / 2),
                                                            DrawingCoefficient)))
-    screen.blit(image_castle_orden,
+    screen.blit(image_square,
                 massive_multiply((city_centre.x, city_centre.y + CityCentreYSize / 2),
                                  DrawingCoefficient))
 
 
 
-def union_city_centre_draw(city_centre, pole_side, screen):
+def union_city_centre_draw(city_centre, pole_side, screen,image_castle_union, image_square):
     """
 
     Function, which draw the order city centre. Have to draw two variants: left side and right side
@@ -90,16 +83,15 @@ def union_city_centre_draw(city_centre, pole_side, screen):
 
     """
 
-    image_castle_orden = image.load('Draws/zdanie_soyuz.png').convert_alpha()
-    image_castle_orden = transform.scale(image_castle_orden,
+
+    image_castle_union = transform.scale(image_castle_union,
                                          (massive_multiply((CityCentreXSize/2, CityCentreYSize/2), DrawingCoefficient)))
-    screen.blit(image_castle_orden, massive_multiply((city_centre.x, city_centre.y), DrawingCoefficient))
-    image_castle_orden = image.load('Draws/ploschad.png').convert_alpha()
-    image_castle_orden = transform.scale(image_castle_orden,
-                                         (massive_multiply((CityCentreXSize / 2, CityCentreYSize / 2),
-                                                           DrawingCoefficient)))
-    screen.blit(image_castle_orden,
-                massive_multiply((city_centre.x + CityCentreXSize/2, city_centre.y + CityCentreYSize / 2),
+    screen.blit(image_castle_union, massive_multiply((city_centre.x, city_centre.y), DrawingCoefficient))
+    image_square = transform.scale(image_square,
+                                   (massive_multiply((CityCentreXSize / 2, CityCentreYSize / 2),
+                                                     DrawingCoefficient)))
+    screen.blit(image_square,
+                massive_multiply((city_centre.x, city_centre.y + CityCentreYSize / 2),
                                  DrawingCoefficient))
 
 

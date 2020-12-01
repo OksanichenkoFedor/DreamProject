@@ -3,6 +3,7 @@
 Constants for the city
 
 """
+from pygame import image
 
 CityLife = 100
 CityCentreLife = 100
@@ -15,6 +16,8 @@ WHT = (255, 255, 255)
 YLW = (255, 255, 0)
 RED = (255, 0, 0)
 BLC = (0, 0, 0)
+
+
 
 
 

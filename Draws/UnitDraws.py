@@ -12,7 +12,7 @@ def massive_multiply(j, a):
         j1.append(int(j[i]*a))
     return j1
 
-def lightinfantry_draw(unit, unit_side, unit_position, screen):
+def lightinfantry_draw(unit, unit_side, unit_position, screen,image_unit_pexota):
     """
 
     :param unit: Object Swordsman (we use class unit to avoid circle import)
@@ -27,32 +27,20 @@ def lightinfantry_draw(unit, unit_side, unit_position, screen):
     :param screen: Surface, where the picture is rendered
 
     """
+    image_unit_pexota = transform.scale(image_unit_pexota,
+                                        (massive_multiply((LightInfantrySideX, LightInfantrySideY),
+                                                          DrawingCoefficient)))
+    screen.blit(image_unit_pexota, massive_multiply(unit_position, DrawingCoefficient))
     if unit_side[0] == "order":
         if unit_side[1] == "left":
-            image_unit_pexota_orden = image.load('Draws/pekhota_orden.png').convert_alpha()
-            image_unit_pexota_orden = transform.scale(image_unit_pexota_orden,
-                                                 (massive_multiply((LightInfantrySideX, LightInfantrySideY),
-                                                                   DrawingCoefficient)))
-            screen.blit(image_unit_pexota_orden, massive_multiply(unit_position, DrawingCoefficient))
+            pass
         else:
-            image_unit_pexota_orden = image.load('Draws/pekhota_orden.png').convert_alpha()
-            image_unit_pexota_orden = transform.scale(image_unit_pexota_orden,
-                                                      (massive_multiply((LightInfantrySideX, LightInfantrySideY),
-                                                                        DrawingCoefficient)))
-            screen.blit(image_unit_pexota_orden, massive_multiply(unit_position, DrawingCoefficient))
+            pass
     else:
         if unit_side[1] == "left":
-            image_unit_pexota_orden = image.load('Draws/pekhota_soyuz.png').convert_alpha()
-            image_unit_pexota_orden = transform.scale(image_unit_pexota_orden,
-                                                      (massive_multiply((LightInfantrySideX, LightInfantrySideY),
-                                                                        DrawingCoefficient)))
-            screen.blit(image_unit_pexota_orden, massive_multiply(unit_position, DrawingCoefficient))
+            pass
         else:
-            image_unit_pexota_orden = image.load('Draws/pekhota_soyuz.png').convert_alpha()
-            image_unit_pexota_orden = transform.scale(image_unit_pexota_orden,
-                                                      (massive_multiply((LightInfantrySideX, LightInfantrySideY),
-                                                                        DrawingCoefficient)))
-            screen.blit(image_unit_pexota_orden, massive_multiply(unit_position, DrawingCoefficient))
+            pass
 
 
 if __name__ == "__main__":

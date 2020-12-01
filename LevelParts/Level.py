@@ -30,11 +30,19 @@ class Level:
         :param screen: Surface, where the picture is rendered
 
         """
+        image_bruschatka = image.load('Draws/bruschatka.png').convert_alpha()
+        image_castle_order = image.load('Draws/zdanie_orden.png').convert_alpha()
+        image_castle_union = image.load('Draws/zdanie_soyuz.png').convert_alpha()
+        image_square = image.load('Draws/ploschad.png').convert_alpha()
+        image_unit_pexota_order = image.load('Draws/pekhota_orden.png').convert_alpha()
+        image_unit_pexota_union = image.load('Draws/pekhota_soyuz.png').convert_alpha()
         self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize - MapYSize, MapXSize, MapYSize)
         self.first_city = City(("union", "left"), LevelXSize / 2 - MapXSize / 2 - CityXSize,
-                               LevelYSize - CityYSize)
-        self.second_city = City(("order", "right"), LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize)
+                               LevelYSize - CityYSize,image_bruschatka, image_castle_union, image_square,image_unit_pexota_union)
+        self.second_city = City(("order", "right"), LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize,image_bruschatka,image_castle_order, image_square,image_unit_pexota_order)
         self.but1 = Button(BLC, 0, 0, 100, 75, 10, "Exit", WHT)
+
+
 
     def update(self, screen):
         """
