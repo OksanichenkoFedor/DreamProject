@@ -6,8 +6,9 @@ Constants for the units
 
 LightInfantrySpeed = 5
 LightInfantryType = "swordsman"
-LightInfantryLife = 10
-LightInfantryDamage = 1
+LightInfantryLife = 200
+LightInfantryDamage = 10
+LightInfantryDamageSpread = 3
 LightInfantryCost = 10
 LightInfantrySideX = 40
 LightInfantrySideY = 40

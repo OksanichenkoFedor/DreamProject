@@ -28,7 +28,7 @@ class City(Interactable):
         city_centre = CityCentre(side, x + CityCentreX, y + CityCentreY, image_castle, image_square)
         self.x = x
         self.y = y
-        self.money = 100
+        self.money = 100000
         self.Units = []
         self.Districts = []
         self.Districts.append(city_centre)
@@ -48,8 +48,6 @@ class City(Interactable):
 
 
         for i in range(len(self.Units)-1, -1, -1):
-            if self.Units[i].life < 10:
-                print(self.Units[i].life)
             if self.Units[i].life < 0:
                 self.Units.pop(i)
 
@@ -75,7 +73,7 @@ class City(Interactable):
             if self.side[1] == "right":
                 x0 = MapXSize
             if self.money >= LightInfantryCost:
-                self.Units.append(LightInfantry(self.side, (self.side[1], randint(0, 2), 0),self.unit_image))
+                self.Units.append(LightInfantry(self.side, (self.side[1], road, 0),self.unit_image))
                 self.money -= LightInfantryCost
 
 

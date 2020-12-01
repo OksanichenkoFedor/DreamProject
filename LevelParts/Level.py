@@ -80,10 +80,18 @@ class Level:
                 if self.but1.is_pressed(pos):
                     finished = True
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                self.first_city.add_unit(LightInfantryType)
+            if event.key == pygame.K_1:
+                self.first_city.add_unit(LightInfantryType, 0)
+            elif event.key == pygame.K_2:
+                self.first_city.add_unit(LightInfantryType, 1)
+            elif event.key == pygame.K_3:
+                self.first_city.add_unit(LightInfantryType, 2)
+            elif event.key == pygame.K_LEFT:
+                self.second_city.add_unit(LightInfantryType, 0)
+            elif event.key == pygame.K_DOWN:
+                self.second_city.add_unit(LightInfantryType, 1)
             elif event.key == pygame.K_RIGHT:
-                self.second_city.add_unit(LightInfantryType)
+                self.second_city.add_unit(LightInfantryType, 2)
         return finished
 
 

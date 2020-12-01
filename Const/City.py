@@ -5,7 +5,7 @@ Constants for the city
 """
 from pygame import image
 
-CityLife = 100
+CityLife = 2000
 CityCentreLife = 100
 CityCentreX = 80
 CityCentreY = 350

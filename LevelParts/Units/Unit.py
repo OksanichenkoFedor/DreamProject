@@ -134,7 +134,7 @@ class Unit(Interactable):
         elif solution[0] == "moving to unit":
             if self.coord[0] == "battle_pole":
                 self.coord[1] += solution[1]*LightInfantrySpeed
-                self.coord[1] += solution[2]*LightInfantrySpeed
+                self.coord[2] += solution[2]*LightInfantrySpeed
             elif self.coord[0] == "left":
                 road_num = self.coord[1]
                 road_length = level.map.total_length_L[road_num]
@@ -190,7 +190,7 @@ class Unit(Interactable):
                                       2.) Parameters, dependent on what we would do
                 """
         if action[0] == "attacked":
-            self.life -= max(action[1]-self.armor,0)
+            self.life -= action[1]
 
 
 if __name__ == "__main__":
