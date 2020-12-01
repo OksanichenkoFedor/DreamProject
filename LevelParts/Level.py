@@ -30,17 +30,21 @@ class Level:
         :param screen: Surface, where the picture is rendered
 
         """
-        image_bruschatka = image.load('Draws/bruschatka.png').convert_alpha()
-        image_castle_order = image.load('Draws/zdanie_orden.png').convert_alpha()
-        image_castle_union = image.load('Draws/zdanie_soyuz.png').convert_alpha()
-        image_square = image.load('Draws/ploschad.png').convert_alpha()
-        image_unit_pexota_order = image.load('Draws/pekhota_orden.png').convert_alpha()
-        image_unit_pexota_union = image.load('Draws/pekhota_soyuz.png').convert_alpha()
+        self.image_import()
         self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize - MapYSize, MapXSize, MapYSize)
         self.first_city = City(("union", "left"), LevelXSize / 2 - MapXSize / 2 - CityXSize,
-                               LevelYSize - CityYSize,image_bruschatka, image_castle_union, image_square,image_unit_pexota_union)
-        self.second_city = City(("order", "right"), LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize,image_bruschatka,image_castle_order, image_square,image_unit_pexota_order)
+                               LevelYSize - CityYSize,self.image_bruschatka, self.image_castle_union, self.image_square,self.image_unit_pexota_union)
+        self.second_city = City(("order", "right"), LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize, self.image_bruschatka, self.image_castle_order, self.image_square,self.image_unit_pexota_order)
         self.but1 = Button(BLC, 0, 0, 100, 75, 10, "Exit", WHT)
+
+
+    def image_import(self):
+        self.image_bruschatka = image.load('images/bruschatka.png').convert_alpha()
+        self.image_castle_order = image.load('images/zdanie_orden.png').convert_alpha()
+        self.image_castle_union = image.load('images/zdanie_soyuz.png').convert_alpha()
+        self.image_square = image.load('images/ploschad.png').convert_alpha()
+        self.image_unit_pexota_order = image.load('images/pekhota_orden.png').convert_alpha()
+        self.image_unit_pexota_union = image.load('images/pekhota_soyuz.png').convert_alpha()
 
 
 
@@ -55,6 +59,12 @@ class Level:
         self.first_city.update(screen, self)
         self.second_city.update(screen, self)
         self.but1.update_button(screen)
+        if self.first_city.life<0:
+            return 1
+        elif self.second_city.life<0:
+            return 2
+        else:
+            return 0
 
     def game_event(self, event):
         """

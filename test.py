@@ -1,3 +1,4 @@
 from random import *
 
-randint(0, 2)
+for i in range(2-1,-1,-1):
+    print(i)

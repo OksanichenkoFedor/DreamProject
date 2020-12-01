@@ -43,8 +43,10 @@ class City(Interactable):
         :param level: Level of the game
 
         """
-        for unit in self.Units:
-            unit.update(screen, level)
+        for i in range(len(self.Units)-1, -1, -1):
+            self.Units[i].update(screen, level)
+            if self.Units[i].life < 0:
+                self.Units.pop(i)
 
         if self.side[0] == "order":
             order_city_draw(self, self.side[1], screen, self.image_bruschatka)

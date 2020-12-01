@@ -10,6 +10,8 @@ class Info:
     : field self.enemies: Massive of enemy units
     : field self.friendly_districts: Massive of friendly districts
     : field self.enemy_districts: Massive of enemy districts
+    : field self.total_length_L: Length of left roads
+    : field self.total_length_R: Length of right roads
 
     : method __init__(unit, level): Initialise Info. Put information to the Info. Receives side, life, x, y.
 
@@ -21,6 +23,8 @@ class Info:
         self.enemies = []
         self.friendly_districts = []
         self.enemy_districts = []
+        self.total_length_L = level.map.total_length_L
+        self.total_length_R = level.map.total_length_R
         if level.first_city.side[0] == self.unit.side[0]:
             self.friends = level.first_city.Units
             self.enemies = level.second_city.Units

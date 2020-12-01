@@ -32,7 +32,7 @@ class Unit(Interactable):
 
     """
 
-    def __init__(self, side, life, coord, unit_type, image, armor= 0, attack_range= 1, ):
+    def __init__(self, side, life, coord, unit_type, image, armor=0, attack_range=10, ):
         super().__init__(side, life)
         self.coord = []
         self.coord.append(coord[0])
@@ -40,7 +40,7 @@ class Unit(Interactable):
         self.coord.append(coord[2])
         self.type = unit_type
         self.armor = armor
-        self.range = range
+        self.range = attack_range
         self.image = image
 
     def update(self, screen, level):
@@ -128,10 +128,18 @@ class Unit(Interactable):
                         self.coord[2] = 1
 
 
-
-
         elif solution[0] == "interact":
             solution[1].process_interaction(solution[2])
+
+        elif solution[0] == "moving to unit":
+            if self.coord[0] == "battle pole":
+                self.coord[1] += solution[1]*LightInfantrySpeed
+                self.coord[1] += solution[2]*LightInfantrySpeed
+            else:
+                road_num = self.coord[1]
+                road_length = level.map.total_length_L[road_num]
+                self.coord[2] += (1.0*solution[1]*LightInfantrySpeed) / road_length
+
 
     def position(self, level):
         """
@@ -170,6 +178,17 @@ class Unit(Interactable):
                     return (int(x_prev + t * (x_next - x_prev)), int(y_prev + t * (y_next - y_prev)))
         elif self.coord[0] == "battle_pole":
             return (int(self.coord[1] ), int(self.coord[2]))
+
+    def process_interaction(self, action):
+        """
+
+                Function, which process interaction with self
+                :param action: Action, that we perform in relation to the unit
+                                      1.) String, that say, what, we will do
+                                      2.) Parameters, dependent on what we would do
+                """
+        if action[0] == "attacked":
+            self.life -= max(action[1]-self.armor,0)
 
 
 if __name__ == "__main__":

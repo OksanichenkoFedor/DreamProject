@@ -27,10 +27,13 @@ def lightinfantry_draw(unit, unit_side, unit_position, screen,image_unit_pexota)
     :param screen: Surface, where the picture is rendered
 
     """
+    position = []
+    position.append(unit_position[0] - LightInfantrySideX/2)
+    position.append(unit_position[1] - LightInfantrySideY/2)
     image_unit_pexota = transform.scale(image_unit_pexota,
                                         (massive_multiply((LightInfantrySideX, LightInfantrySideY),
                                                           DrawingCoefficient)))
-    screen.blit(image_unit_pexota, massive_multiply(unit_position, DrawingCoefficient))
+    screen.blit(image_unit_pexota, massive_multiply(position, DrawingCoefficient))
     if unit_side[0] == "order":
         if unit_side[1] == "left":
             pass

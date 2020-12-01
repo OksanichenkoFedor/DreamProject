@@ -26,7 +26,13 @@ Test_Level = Level(map_drawer, level_screen)
 
 while not finished:
     clock.tick(FPS)
-    Test_Level.update(level_screen)
+    a = Test_Level.update(level_screen)
+    if a==1:
+        finished = True
+        print("Победил первый город")
+    elif a==2:
+        finished = True
+        print("Победил второй город")
     pygame.display.update()
     for event in pygame.event.get():
         finished = Test_Level.game_event(event)
