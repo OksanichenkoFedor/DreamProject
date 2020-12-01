@@ -45,6 +45,9 @@ class City(Interactable):
         """
         for i in range(len(self.Units)-1, -1, -1):
             self.Units[i].update(screen, level)
+
+
+        for i in range(len(self.Units)-1, -1, -1):
             if self.Units[i].life < 0:
                 self.Units.pop(i)
 

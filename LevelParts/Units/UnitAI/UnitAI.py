@@ -30,7 +30,7 @@ def nearestUnit(info):
                     enemy_distance = r
                     enemy_index = info.enemies.index(enemy_unit)
 
-        return ((friendly_distance, friendly_index), (enemy_distance, enemy_index))
+        return [[friendly_distance, friendly_index], [enemy_distance, enemy_index]]
 
     elif info.unit.coord[0] == "left":
         friendly_distance = LevelXSize ** 2 + LevelYSize ** 2
@@ -54,7 +54,7 @@ def nearestUnit(info):
                     if r < enemy_distance:
                         enemy_distance = r
                         enemy_index = info.enemies.index(enemy_unit)
-        return ((friendly_distance, friendly_index), (enemy_distance, enemy_index))
+        return [[friendly_distance, friendly_index], [enemy_distance, enemy_index]]
 
     elif info.unit.coord[0] == "right":
         friendly_distance = LevelXSize ** 2 + LevelYSize ** 2
@@ -79,7 +79,7 @@ def nearestUnit(info):
                         enemy_distance = r
                         enemy_index = info.enemies.index(enemy_unit)
 
-        return ((friendly_distance, friendly_index), (enemy_distance, enemy_index))
+        return [[friendly_distance, friendly_index], [enemy_distance, enemy_index]]
 
 def unitAI(info: Info):
     """
@@ -94,23 +94,27 @@ def unitAI(info: Info):
     """
 
     if info.unit.type == LightInfantryType:
-        nearest_unit = nearestUnit(info)
+        nearest_unit = [[0, 0], [0, 0]]
+        nearest_unit[0][0] = nearestUnit(info)[0][0]
+        nearest_unit[0][1] = nearestUnit(info)[0][1]
+        nearest_unit[1][0] = nearestUnit(info)[1][0]
+        nearest_unit[1][1] = nearestUnit(info)[1][1]
         solution = []
         first = " "
 
         if info.unit.side[1] == "left":
-            if (nearest_unit[1][0] != False) or (info.unit.coord[0] == "right" and info.unit.coord[2]==0):
+            if ( nearest_unit[1][1] != False) or (info.unit.coord[0] == "right" and info.unit.coord[2]==0):
                 first = "interact"
             else:
                 first = "move forward"
         elif info.unit.side[1] == "right":
-            if (nearest_unit[1][0] != False) or (info.unit.coord[0] == "left" and info.unit.coord[2] == 0):
+            if (nearest_unit[1][1] != False) or (info.unit.coord[0] == "left" and info.unit.coord[2] == 0):
                 first = "interact"
             else:
                 first = "move forward"
     solution.append(first)
     if first == "interact":
-        if nearest_unit[1][0] == False:
+        if nearest_unit[1][1] == False:
             # solution[1] = interactable
             # solution[2] = action
             solution.append(info.enemy_districts[CityCentreNumber])
@@ -118,7 +122,8 @@ def unitAI(info: Info):
         else:
             if info.unit.coord[0] == "battle_pole":
                 if nearest_unit[1][0] < info.unit.range:
-                    pass
+                    solution.append(info.enemies[nearest_unit[1][1]])
+                    solution.append(("attacked", LightInfantryDamage))
                 else:
                     solution[0] = "moving to unit"
                     sin = (info.enemies[nearest_unit[1][1]].coord[2] - info.unit.coord[2])/nearest_unit[1][0]
@@ -134,9 +139,9 @@ def unitAI(info: Info):
                     else:
                         solution[0] = "moving to unit"
                         if info.unit.coord[2] < info.enemies[nearest_unit[1][1]].coord[2]:
-                            solution.append(-1)
-                        else:
                             solution.append(1)
+                        else:
+                            solution.append(-1)
 
                 elif info.unit.coord[0] == "right":
                     if nearest_unit[1][0] < info.unit.range / info.total_length_R[info.unit.coord[1]]:
@@ -145,18 +150,12 @@ def unitAI(info: Info):
                     else:
                         solution[0] = "moving to unit"
                         if info.unit.coord[2] < info.enemies[nearest_unit[1][1]].coord[2]:
-                            solution.append(-1)
-                        else:
                             solution.append(1)
+                        else:
+                            solution.append(-1)
 
 
 
     return solution
-
-
-
-
-
-
 
 

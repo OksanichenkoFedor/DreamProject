@@ -132,12 +132,16 @@ class Unit(Interactable):
             solution[1].process_interaction(solution[2])
 
         elif solution[0] == "moving to unit":
-            if self.coord[0] == "battle pole":
+            if self.coord[0] == "battle_pole":
                 self.coord[1] += solution[1]*LightInfantrySpeed
                 self.coord[1] += solution[2]*LightInfantrySpeed
-            else:
+            elif self.coord[0] == "left":
                 road_num = self.coord[1]
                 road_length = level.map.total_length_L[road_num]
+                self.coord[2] += (1.0*solution[1]*LightInfantrySpeed) / road_length
+            elif self.coord[0] == "right":
+                road_num = self.coord[1]
+                road_length = level.map.total_length_R[road_num]
                 self.coord[2] += (1.0*solution[1]*LightInfantrySpeed) / road_length
 
 
