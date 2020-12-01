@@ -12,6 +12,22 @@ def massive_multiply(j, a):
         j1.append(int(j[i]*a))
     return j1
 
+
+def health_bar(coord, life, full_life, screen):
+    """
+    Draw Health Bar
+    :param x: First coordinate of left-up point of bar
+    :param y: Second coordinate of left-up point of bar
+    :param w: Width of bar
+    :param h: Height of bar
+    :param life: Life of object
+    :param full_life: Full life of object
+    :param screen: Surface, where the picture is rendered
+    :return:
+    """
+    rect(screen,(int((255.0*(full_life-max(life,0)))/(full_life*1.0)), int((255.0*(max(life,0)))/(full_life*1.0)),0), (coord[0], coord[1], int((coord[2]*(max(life,0)))/(full_life*1.0)),coord[3]))
+    rect(screen, BLC, coord, 1)
+
 def lightinfantry_draw(unit, unit_side, unit_position, screen,image_unit_pexota):
     """
 
@@ -30,6 +46,7 @@ def lightinfantry_draw(unit, unit_side, unit_position, screen,image_unit_pexota)
     position = []
     position.append(unit_position[0] - LightInfantrySideX/2)
     position.append(unit_position[1] - LightInfantrySideY/2)
+    health_bar(massive_multiply((position[0], position[1], LightInfantrySideX, LightInfantrySideY/10), DrawingCoefficient), unit.life, LightInfantryLife, screen)
     image_unit_pexota = transform.scale(image_unit_pexota,
                                         (massive_multiply((LightInfantrySideX, LightInfantrySideY),
                                                           DrawingCoefficient)))

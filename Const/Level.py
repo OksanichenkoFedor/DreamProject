@@ -3,7 +3,7 @@
 Constants for the game level
 
 """
-FPS = 50
+FPS = 20
 DrawingCoefficient = 1
 LevelXSize = 1500
 LevelYSize = 925

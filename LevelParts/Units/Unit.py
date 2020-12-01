@@ -190,7 +190,7 @@ class Unit(Interactable):
                                       2.) Parameters, dependent on what we would do
                 """
         if action[0] == "attacked":
-            self.life -= action[1]
+            self.life -= max(action[1]-self.armor,0)
 
 
 if __name__ == "__main__":

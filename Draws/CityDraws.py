@@ -11,6 +11,22 @@ def massive_multiply(j, a):
     return j1
 
 
+def health_bar(coord, life, full_life, screen):
+    """
+    Draw Health Bar
+    :param x: First coordinate of left-up point of bar
+    :param y: Second coordinate of left-up point of bar
+    :param w: Width of bar
+    :param h: Height of bar
+    :param life: Life of object
+    :param full_life: Full life of object
+    :param screen: Surface, where the picture is rendered
+    :return:
+    """
+    rect(screen,(int((255.0*(full_life-max(life,0)))/(full_life*1.0)), int((255.0*(max(life,0)))/(full_life*1.0)),0), (coord[0], coord[1], int((coord[2]*(max(life,0)))/(full_life*1.0)),coord[3]))
+    rect(screen, BLC, coord, 1)
+
+
 def order_city_draw(city, pole_side, screen ,image_bruschatka):
     """
 
@@ -25,9 +41,14 @@ def order_city_draw(city, pole_side, screen ,image_bruschatka):
 
 
     #rect(screen, RED, massive_multiply((city.x, city.y, CityXSize, CityYSize), DrawingCoefficient))
+
     image_bruschatka = transform.scale(image_bruschatka,
                                        (massive_multiply((CityXSize, CityYSize), DrawingCoefficient)))
     screen.blit(image_bruschatka, massive_multiply((city.x, city.y), DrawingCoefficient))
+    health_bar(
+        massive_multiply((city.x + CityXSize / 6, city.y + CityYSize / 10, 2 * CityXSize / 3, CityYSize / 20),
+                         DrawingCoefficient),
+        city.life, CityLife, screen)
 
 
 def union_city_draw(city, pole_side, screen,image_bruschatka):
@@ -45,6 +66,10 @@ def union_city_draw(city, pole_side, screen,image_bruschatka):
                                        (massive_multiply((CityXSize, CityYSize), DrawingCoefficient)))
 
     screen.blit(image_bruschatka, massive_multiply((city.x, city.y), DrawingCoefficient))
+    health_bar(
+        massive_multiply((city.x + CityXSize / 6, city.y + CityYSize / 10, 2 * CityXSize / 3, CityYSize / 20),
+                         DrawingCoefficient),
+        city.life, CityLife, screen)
 
 
 def order_city_centre_draw(city_centre, pole_side, screen, image_castle_orden ,image_square):
@@ -68,6 +93,10 @@ def order_city_centre_draw(city_centre, pole_side, screen, image_castle_orden ,i
     screen.blit(image_square,
                 massive_multiply((city_centre.x, city_centre.y + CityCentreYSize / 2),
                                  DrawingCoefficient))
+    health_bar(
+        massive_multiply((city_centre.x + CityCentreXSize / 6, city_centre.y + CityCentreYSize / 10, 2 * CityCentreXSize / 3, CityCentreYSize / 20),
+                         DrawingCoefficient),
+        city_centre.life, CityCentreLife, screen)
 
 
 
@@ -93,6 +122,11 @@ def union_city_centre_draw(city_centre, pole_side, screen,image_castle_union, im
     screen.blit(image_square,
                 massive_multiply((city_centre.x, city_centre.y + CityCentreYSize / 2),
                                  DrawingCoefficient))
+    health_bar(
+        massive_multiply((city_centre.x + CityCentreXSize / 6, city_centre.y + CityCentreYSize / 10,
+                          2 * CityCentreXSize / 3, CityCentreYSize / 20),
+                         DrawingCoefficient),
+        city_centre.life, CityCentreLife, screen)
 
 
 
