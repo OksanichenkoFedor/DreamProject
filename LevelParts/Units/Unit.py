@@ -163,7 +163,6 @@ class Unit(Interactable):
                     y_prev = level.map.Left_Roads[self.coord[1]][i - 1][1]
 
                     t = (self.coord[2] - level.map.total_coords_L[self.coord[1]][i - 1]) / (level.map.total_coords_L[self.coord[1]][i] - level.map.total_coords_L[self.coord[1]][i - 1])
-                    print(self.coord[2])
                     return (int(x_prev + t * (x_next - x_prev) ), int(y_prev + t * (y_next - y_prev) ))
 
         elif self.coord[0] == "right":
@@ -177,7 +176,6 @@ class Unit(Interactable):
                     y_prev = level.map.Right_Roads[self.coord[1]][i - 1][1]
 
                     t = (self.coord[2] - level.map.total_coords_R[self.coord[1]][i - 1]) / (level.map.total_coords_R[self.coord[1]][i] - level.map.total_coords_R[self.coord[1]][i - 1])
-                    print(self.coord[2])
 
                     return (int(x_prev + t * (x_next - x_prev)), int(y_prev + t * (y_next - y_prev)))
         elif self.coord[0] == "battle_pole":

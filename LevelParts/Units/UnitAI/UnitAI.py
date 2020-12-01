@@ -19,7 +19,7 @@ def nearestUnit(info):
         for friendly_unit in info.friends:
             if friendly_unit.coord[0] == "battle_pole":
                 r = ((info.unit.coord[1]-friendly_unit.coord[1])**2 + (info.unit.coord[2]-friendly_unit.coord[2])**2)**0.5
-                if r<friendly_distance:
+                if r < friendly_distance:
                     friendly_distance = r
                     friendly_index = info.friends.index(friendly_unit)
 
@@ -103,7 +103,7 @@ def unitAI(info: Info):
         first = " "
 
         if info.unit.side[1] == "left":
-            if ( nearest_unit[1][1] != False) or (info.unit.coord[0] == "right" and info.unit.coord[2]==0):
+            if (nearest_unit[1][1] != False) or (info.unit.coord[0] == "right" and info.unit.coord[2]==0):
                 first = "interact"
             else:
                 first = "move forward"
@@ -134,6 +134,7 @@ def unitAI(info: Info):
             else:
                 if info.unit.coord[0] == "left":
                     if nearest_unit[1][0] < info.unit.range/info.total_length_L[info.unit.coord[1]]:
+                        print("attack")
                         solution.append(info.enemies[nearest_unit[1][1]])
                         solution.append(("attacked", LightInfantryDamage))
                     else:
@@ -145,6 +146,7 @@ def unitAI(info: Info):
 
                 elif info.unit.coord[0] == "right":
                     if nearest_unit[1][0] < info.unit.range / info.total_length_R[info.unit.coord[1]]:
+                        print("attack")
                         solution.append(info.enemies[nearest_unit[1][1]])
                         solution.append(("attacked", LightInfantryDamage))
                     else:
@@ -154,8 +156,8 @@ def unitAI(info: Info):
                         else:
                             solution.append(-1)
 
-
-
+    if solution[0]=="interact":
+        print(solution)
     return solution
 
 

@@ -32,9 +32,9 @@ class Level:
         """
         self.image_import()
         self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize - MapYSize, MapXSize, MapYSize)
-        self.first_city = City(("union", "left"), LevelXSize / 2 - MapXSize / 2 - CityXSize,
+        self.first_city = City(["union", "left"], LevelXSize / 2 - MapXSize / 2 - CityXSize,
                                LevelYSize - CityYSize,self.image_bruschatka, self.image_castle_union, self.image_square,self.image_unit_pexota_union)
-        self.second_city = City(("order", "right"), LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize, self.image_bruschatka, self.image_castle_order, self.image_square,self.image_unit_pexota_order)
+        self.second_city = City(["order", "right"], LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize, self.image_bruschatka, self.image_castle_order, self.image_square,self.image_unit_pexota_order)
         self.but1 = Button(BLC, 0, 0, 100, 75, 10, "Exit", WHT)
 
 
