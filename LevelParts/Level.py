@@ -31,9 +31,9 @@ class Level:
 
         """
         self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize - MapYSize, MapXSize, MapYSize)
-        self.first_city = City(("order", "left"), LevelXSize / 2 - MapXSize / 2 - CityXSize,
+        self.first_city = City(("union", "left"), LevelXSize / 2 - MapXSize / 2 - CityXSize,
                                LevelYSize - CityYSize)
-        self.second_city = City(("union", "right"), LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize)
+        self.second_city = City(("order", "right"), LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize)
         self.but1 = Button(BLC, 0, 0, 100, 75, 10, "Exit", WHT)
 
     def update(self, screen):

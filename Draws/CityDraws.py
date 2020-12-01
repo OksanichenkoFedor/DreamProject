@@ -1,5 +1,6 @@
 from Const.Level import *
 from Const.City import *
+from pygame import *
 from pygame.draw import *
 
 
@@ -22,7 +23,14 @@ def order_city_draw(city, pole_side, screen):
 
     """
 
-    rect(screen, RED, massive_multiply((city.x, city.y, CityXSize, CityYSize), DrawingCoefficient))
+
+    #rect(screen, RED, massive_multiply((city.x, city.y, CityXSize, CityYSize), DrawingCoefficient))
+
+    image_bruschatka = image.load('Draws/bruschatka.png').convert_alpha()
+    image_bruschatka = transform.scale(image_bruschatka,
+                                              (massive_multiply((CityXSize, CityYSize), DrawingCoefficient)))
+
+    screen.blit(image_bruschatka, massive_multiply((city.x, city.y), DrawingCoefficient))
 
 
 def union_city_draw(city, pole_side, screen):
@@ -37,7 +45,11 @@ def union_city_draw(city, pole_side, screen):
 
     """
 
-    rect(screen, YLW, massive_multiply((city.x, city.y, CityXSize, CityYSize), DrawingCoefficient))
+    image_bruschatka = image.load('Draws/bruschatka.png').convert_alpha()
+    image_bruschatka = transform.scale(image_bruschatka,
+                                       (massive_multiply((CityXSize, CityYSize), DrawingCoefficient)))
+
+    screen.blit(image_bruschatka, massive_multiply((city.x, city.y), DrawingCoefficient))
 
 
 def order_city_centre_draw(city_centre, pole_side, screen):
@@ -51,8 +63,19 @@ def order_city_centre_draw(city_centre, pole_side, screen):
     :param screen: Surface, where the picture is rendered
 
     """
+    image_castle_orden = image.load('Draws/zdanie_orden.png').convert_alpha()
+    image_castle_orden = transform.scale(image_castle_orden,
+                                       (massive_multiply((CityCentreXSize/2, CityCentreYSize/2), DrawingCoefficient)))
+    screen.blit(image_castle_orden, massive_multiply((city_centre.x+CityCentreXSize/2, city_centre.y),DrawingCoefficient))
 
-    rect(screen, YLW, massive_multiply((city_centre.x, city_centre.y, CityCentreXSize, CityCentreYSize), DrawingCoefficient))
+    image_castle_orden = image.load('Draws/ploschad.png').convert_alpha()
+    image_castle_orden = transform.scale(image_castle_orden,
+                                         (massive_multiply((CityCentreXSize / 2, CityCentreYSize / 2),
+                                                           DrawingCoefficient)))
+    screen.blit(image_castle_orden,
+                massive_multiply((city_centre.x, city_centre.y + CityCentreYSize / 2),
+                                 DrawingCoefficient))
+
 
 
 def union_city_centre_draw(city_centre, pole_side, screen):
@@ -67,7 +90,18 @@ def union_city_centre_draw(city_centre, pole_side, screen):
 
     """
 
-    rect(screen, RED, massive_multiply((city_centre.x, city_centre.y, CityCentreXSize, CityCentreYSize), DrawingCoefficient))
+    image_castle_orden = image.load('Draws/zdanie_soyuz.png').convert_alpha()
+    image_castle_orden = transform.scale(image_castle_orden,
+                                         (massive_multiply((CityCentreXSize/2, CityCentreYSize/2), DrawingCoefficient)))
+    screen.blit(image_castle_orden, massive_multiply((city_centre.x, city_centre.y), DrawingCoefficient))
+    image_castle_orden = image.load('Draws/ploschad.png').convert_alpha()
+    image_castle_orden = transform.scale(image_castle_orden,
+                                         (massive_multiply((CityCentreXSize / 2, CityCentreYSize / 2),
+                                                           DrawingCoefficient)))
+    screen.blit(image_castle_orden,
+                massive_multiply((city_centre.x + CityCentreXSize/2, city_centre.y + CityCentreYSize / 2),
+                                 DrawingCoefficient))
+
 
 
 if __name__ == "__main__":

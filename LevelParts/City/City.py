@@ -1,3 +1,5 @@
+from random import *
+
 from Const.Units import *
 from LevelParts.City.CityCentre import *
 from LevelParts.Units.LightInfantry import LightInfantry
@@ -65,7 +67,7 @@ class City(Interactable):
             if self.side[1] == "right":
                 x0 = MapXSize
             if self.money >= LightInfantryCost:
-                self.Units.append(LightInfantry(self.side, (self.side[1], 0, 0 )))
+                self.Units.append(LightInfantry(self.side, (self.side[1], randint(0, 2), 0 )))
                 self.money -= LightInfantryCost
 
 
