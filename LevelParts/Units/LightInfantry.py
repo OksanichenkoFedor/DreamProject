@@ -1,5 +1,6 @@
-from Draws.UnitDraws import lightinfantry_draw
+from Draws.UnitDraws import unit_draw
 from LevelParts.Units.UnitAI.UnitAI import *
+from LevelParts.Units.Unit import *
 
 
 class LightInfantry(Unit):
@@ -24,7 +25,8 @@ class LightInfantry(Unit):
 
     def __init__(self, side, coord, image):
         super().__init__(side, LightInfantryLife, coord, LightInfantryType, image, LightInfantryArmor,
-                         LightInfantryRange, LightInfantrySpeed, LightInfantryCooldown)
+                         LightInfantryRange, LightInfantrySpeed, LightInfantryCooldown, LightInfantryDamage,
+                         LightInfantryDamageSpread, LightInfantrySideX, LightInfantrySideY)
 
     def update(self, screen, level):
         """
@@ -35,7 +37,7 @@ class LightInfantry(Unit):
         """
         if self.interact_timer > 0:
             self.interact_timer -= 1
-        lightinfantry_draw(self, self.side, self.position(level), screen, self.image)
+        unit_draw(self, self.side, self.position(level), screen, self.image, self.XSize, self.YSize)
         info = Info(self, level)
         solution = unitAI(info)
         return self.reaction(solution, level)

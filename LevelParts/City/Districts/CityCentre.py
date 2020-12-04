@@ -1,5 +1,5 @@
 from Draws.CityDraws import *
-from LevelParts.City.District import *
+from LevelParts.City.Districts.District import *
 from Const.City import *
 
 
@@ -27,9 +27,5 @@ class CityCentre(District):
         :param screen: Surface, where the picture is rendered
 
         """
-        if self.side[0] == "order":
-            order_city_centre_draw(self, self.side[1], screen, self.image_castle, self.image_square)
-        else:
-            union_city_centre_draw(self, self.side[1], screen, self.image_castle, self.image_square)
-        pass
+        city_centre_draw(self, self.side[0], screen, self.image_castle, self.image_square)
 

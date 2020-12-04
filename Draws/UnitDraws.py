@@ -28,7 +28,7 @@ def health_bar(coord, life, full_life, screen):
     rect(screen,(int((255.0*(full_life-max(life,0)))/(full_life*1.0)), int((255.0*(max(life,0)))/(full_life*1.0)),0), (coord[0], coord[1], int((coord[2]*(max(life,0)))/(full_life*1.0)),coord[3]))
     rect(screen, BLC, coord, 1)
 
-def lightinfantry_draw(unit, unit_side, unit_position, screen,image_unit_pexota):
+def unit_draw(unit, unit_side, unit_position, screen, image_unit, XSize, YSize):
     """
 
     :param unit: Object Swordsman (we use class unit to avoid circle import)
@@ -44,13 +44,13 @@ def lightinfantry_draw(unit, unit_side, unit_position, screen,image_unit_pexota)
 
     """
     position = []
-    position.append(unit_position[0] - LightInfantrySideX/2)
-    position.append(unit_position[1] - LightInfantrySideY/2)
-    health_bar(massive_multiply((position[0], position[1], LightInfantrySideX, LightInfantrySideY/10), DrawingCoefficient), unit.life, LightInfantryLife, screen)
-    image_unit_pexota = transform.scale(image_unit_pexota,
-                                        (massive_multiply((LightInfantrySideX, LightInfantrySideY),
+    position.append(unit_position[0] - XSize/2)
+    position.append(unit_position[1] - YSize/2)
+    health_bar(massive_multiply((position[0], position[1], XSize, YSize/10), DrawingCoefficient), unit.life, LightInfantryLife, screen)
+    image_unit = transform.scale(image_unit,
+                                        (massive_multiply((XSize, YSize),
                                                           DrawingCoefficient)))
-    screen.blit(image_unit_pexota, massive_multiply(position, DrawingCoefficient))
+    screen.blit(image_unit, massive_multiply(position, DrawingCoefficient))
     if unit_side[0] == "order":
         if unit_side[1] == "left":
             pass

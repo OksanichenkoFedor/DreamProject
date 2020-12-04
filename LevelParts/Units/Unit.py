@@ -28,9 +28,12 @@ class Unit(Interactable):
                                            second tell the time of animation
     : field self.damage: Unit damage
     : field self.damage_spread: Shows random error of unit damage
+    : field self.XSize: First coordinate size of unit image
+    : field self.YSize: First coordinate size of unit image
 
     : method __init__(side, life, coord, unit_type, armor): Initialise Unit. Receives side, life, coord, unit_type,
-                                                            armor, range
+                                                                                      image, armor, attack_range, speed,
+                                                                                      cooldown, damage, damage_spread.
     : method update(screen, level): Update unit, and redraw it. Also in this function we analise situation.
                                     Receives screen, level.
     : method reaction(solution): Realise an action determined by the solution
@@ -39,7 +42,7 @@ class Unit(Interactable):
 
     """
 
-    def __init__(self, side, life, coord, unit_type, image, armor, attack_range, speed, cooldown, damage, damage_spread):
+    def __init__(self, side, life, coord, unit_type, image, armor, attack_range, speed, cooldown, damage, damage_spread, XSize, YSize):
         super().__init__(side, life)
         self.coord = []
         self.coord.append(coord[0])
@@ -54,7 +57,8 @@ class Unit(Interactable):
         self.interact_timer = self.cooldown
         self.damage = damage
         self.damage_spread = damage_spread
-
+        self.XSize = XSize
+        self.YSize = YSize
 
     def update(self, screen, level):
         pass
@@ -158,7 +162,6 @@ class Unit(Interactable):
                 road_num = self.coord[1]
                 road_length = level.map.total_length_R[road_num]
                 self.coord[2] += (1.0*solution[1]*self.speed) / road_length
-
 
     def position(self, level):
         """

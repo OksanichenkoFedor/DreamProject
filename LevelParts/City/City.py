@@ -1,7 +1,7 @@
-from random import *
-
 from Const.Units import *
-from LevelParts.City.CityCentre import *
+from LevelParts.City.Districts.CityCentre import *
+from LevelParts.City.Districts.Mine import *
+from LevelParts.City.Districts.ResearchCentre import *
 from LevelParts.Units.LightInfantry import LightInfantry
 
 
@@ -25,13 +25,17 @@ class City(Interactable):
     def __init__(self, side, x, y, image_bruschatka, image_castle, image_square, unit_image):
         super().__init__(side, CityLife)
         self.image_bruschatka = image_bruschatka
+        mine = Mine(side, x + MineX, y + MineY)
         city_centre = CityCentre(side, x + CityCentreX, y + CityCentreY, image_castle, image_square)
+        research_centre = ResearchCentre(side, x + ResearchCentreX, y + ResearchCentreY)
         self.x = x
         self.y = y
         self.money = 100000
         self.Units = []
         self.Districts = []
+        self.Districts.append(mine)
         self.Districts.append(city_centre)
+        self.Districts.append(research_centre)
         self.unit_image = unit_image
 
     def update(self, screen, level):
@@ -51,10 +55,7 @@ class City(Interactable):
             if self.Units[i].life <= 0:
                 self.Units.pop(i)
 
-        if self.side[0] == "order":
-            order_city_draw(self, self.side[1], screen, self.image_bruschatka)
-        else:
-            union_city_draw(self, self.side[1], screen, self.image_bruschatka)
+        city_draw(self, self.side[0], screen, self.image_bruschatka)
 
         for district in self.Districts:
             district.update(screen)

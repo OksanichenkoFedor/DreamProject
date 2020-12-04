@@ -1,12 +1,8 @@
-from Const.Units import LightInfantryType
-from LevelParts.City.District import *
-from LevelParts.Units.Unit import Unit
 from LevelParts.Units.UnitAI.Info import Info
 from Const.Level import *
 from Const.Units import *
 from Const.City import *
 from random import randint
-import math
 
 
 def nearestUnit(info):
@@ -115,7 +111,7 @@ def unitAI(info: Info):
         if enemy_index == 0.1:
             # solution[1] = interactable
             # solution[2] = action
-            solution.append(info.enemy_districts[CityCentreNumber])
+            solution.append(info.enemy_districts[info.unit.coord[1]])
             solution.append(("attacked", info.unit.damage+randint(-info.unit.damage_spread, info.unit.damage_spread) ))
         else:
             if info.unit.coord[0] == "battle_pole":
