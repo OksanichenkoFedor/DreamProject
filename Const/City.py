@@ -6,7 +6,7 @@ Constants for the city
 from pygame import image
 
 CityLife = 2000
-CityCentreLife = 100
+CityCentreLife = 1000
 CityCentreX = 80
 CityCentreY = 350
 CityCentreXSize = 100

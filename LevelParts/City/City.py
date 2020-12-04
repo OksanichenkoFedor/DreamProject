@@ -48,7 +48,7 @@ class City(Interactable):
 
 
         for i in range(len(self.Units)-1, -1, -1):
-            if self.Units[i].life < 0:
+            if self.Units[i].life <= 0:
                 self.Units.pop(i)
 
         if self.side[0] == "order":

@@ -23,7 +23,8 @@ class LightInfantry(Unit):
     """
 
     def __init__(self, side, coord, image):
-        super().__init__(side, LightInfantryLife, coord, LightInfantryType, image)
+        super().__init__(side, LightInfantryLife, coord, LightInfantryType, image, LightInfantryArmor,
+                         LightInfantryRange, LightInfantrySpeed, LightInfantryCooldown)
 
     def update(self, screen, level):
         """
@@ -32,6 +33,8 @@ class LightInfantry(Unit):
         :param level: Level of the game
 
         """
+        if self.interact_timer > 0:
+            self.interact_timer -= 1
         lightinfantry_draw(self, self.side, self.position(level), screen, self.image)
         info = Info(self, level)
         solution = unitAI(info)

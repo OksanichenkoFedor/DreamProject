@@ -21,6 +21,13 @@ class Unit(Interactable):
     : field self.armor: Armor of unit (damage -> max(damage-armor,0))
     : field self.attack_range: Range of unit attack
     : field self.image: Image of unit
+    : field self.speed: Speed of unit
+    : field self.cooldown: Time of recharge
+    : field self.interact_timer: Timer, which check recharging
+    : field self.animation_timer: Massive, first element shows which type of animation this unit have
+                                           second tell the time of animation
+    : field self.damage: Unit damage
+    : field self.damage_spread: Shows random error of unit damage
 
     : method __init__(side, life, coord, unit_type, armor): Initialise Unit. Receives side, life, coord, unit_type,
                                                             armor, range
@@ -32,7 +39,7 @@ class Unit(Interactable):
 
     """
 
-    def __init__(self, side, life, coord, unit_type, image, armor=0, attack_range=10, ):
+    def __init__(self, side, life, coord, unit_type, image, armor, attack_range, speed, cooldown, damage, damage_spread):
         super().__init__(side, life)
         self.coord = []
         self.coord.append(coord[0])
@@ -42,6 +49,12 @@ class Unit(Interactable):
         self.armor = armor
         self.range = attack_range
         self.image = image
+        self.speed = speed
+        self.cooldown = cooldown
+        self.interact_timer = self.cooldown
+        self.damage = damage
+        self.damage_spread = damage_spread
+
 
     def update(self, screen, level):
         pass
@@ -129,20 +142,22 @@ class Unit(Interactable):
 
 
         elif solution[0] == "interact":
-            solution[1].process_interaction(solution[2])
+            if self.interact_timer == 0:
+                solution[1].process_interaction(solution[2])
+                self.interact_timer = self.cooldown
 
         elif solution[0] == "moving to unit":
             if self.coord[0] == "battle_pole":
-                self.coord[1] += solution[1]*LightInfantrySpeed
-                self.coord[2] += solution[2]*LightInfantrySpeed
+                self.coord[1] += solution[1]*self.speed
+                self.coord[2] += solution[2]*self.speed
             elif self.coord[0] == "left":
                 road_num = self.coord[1]
                 road_length = level.map.total_length_L[road_num]
-                self.coord[2] += (1.0*solution[1]*LightInfantrySpeed) / road_length
+                self.coord[2] += (1.0*solution[1]*self.speed) / road_length
             elif self.coord[0] == "right":
                 road_num = self.coord[1]
                 road_length = level.map.total_length_R[road_num]
-                self.coord[2] += (1.0*solution[1]*LightInfantrySpeed) / road_length
+                self.coord[2] += (1.0*solution[1]*self.speed) / road_length
 
 
     def position(self, level):
@@ -190,7 +205,7 @@ class Unit(Interactable):
                                       2.) Parameters, dependent on what we would do
                 """
         if action[0] == "attacked":
-            self.life -= max(action[1]-self.armor,0)
+            self.life -= max(action[1]-self.armor, 0)
 
 
 if __name__ == "__main__":

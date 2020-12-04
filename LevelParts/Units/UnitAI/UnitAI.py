@@ -116,7 +116,7 @@ def unitAI(info: Info):
             # solution[1] = interactable
             # solution[2] = action
             solution.append(info.enemy_districts[CityCentreNumber])
-            solution.append(("attacked", LightInfantryDamage+randint(-LightInfantryDamageSpread,LightInfantryDamageSpread) ))
+            solution.append(("attacked", info.unit.damage+randint(-info.unit.damage_spread, info.unit.damage_spread) ))
         else:
             if info.unit.coord[0] == "battle_pole":
                 if enemy_distance < info.unit.range:
@@ -134,7 +134,7 @@ def unitAI(info: Info):
                 if info.unit.coord[0] == "left":
                     if enemy_distance < info.unit.range/info.total_length_L[info.unit.coord[1]]:
                         solution.append(info.enemies[enemy_index])
-                        solution.append(["attacked", LightInfantryDamage+randint(-LightInfantryDamageSpread,LightInfantryDamageSpread)])
+                        solution.append(["attacked", info.unit.damage+randint(-info.unit.damage_spread,info.unit.damage_spread)])
                     else:
                         solution[0] = "moving to unit"
                         if info.unit.coord[2] < info.enemies[enemy_index].coord[2]:
@@ -145,7 +145,7 @@ def unitAI(info: Info):
                 elif info.unit.coord[0] == "right":
                     if enemy_distance < info.unit.range / info.total_length_R[info.unit.coord[1]]:
                         solution.append(info.enemies[enemy_index])
-                        solution.append(["attacked", LightInfantryDamage+randint(-LightInfantryDamageSpread,LightInfantryDamageSpread)])
+                        solution.append(["attacked", info.unit.damage+randint(-info.unit.damage_spread,info.unit.damage_spread)])
                     else:
                         solution[0] = "moving to unit"
                         if info.unit.coord[2] < info.enemies[enemy_index].coord[2]:
