@@ -36,7 +36,7 @@ class Level:
                                LevelYSize - CityYSize,self.image_bruschatka, self.image_castle_union, self.image_square,self.image_unit_pexota_union)
         self.second_city = City(["order", "right"], LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize, self.image_bruschatka, self.image_castle_order, self.image_square,self.image_unit_pexota_order)
         self.but1 = Button(BLC, 0, 0, 100, 75, 10, "Exit", WHT)
-
+        self.screen = screen
 
     def image_import(self):
         self.image_bruschatka = image.load('images/bruschatka.png').convert_alpha()
@@ -46,22 +46,20 @@ class Level:
         self.image_unit_pexota_order = image.load('images/pekhota_orden.png').convert_alpha()
         self.image_unit_pexota_union = image.load('images/pekhota_soyuz.png').convert_alpha()
 
-
-
-    def update(self, screen):
+    def update(self):
         """
 
         :param screen: Surface, where the picture is rendered
 
         """
-        level_draw(self, screen)
-        map_draw(self.map, screen)
-        self.first_city.update(screen, self)
-        self.second_city.update(screen, self)
-        self.but1.update_button(screen)
-        if self.first_city.life<0:
+        level_draw(self, self.screen)
+        map_draw(self.map, self.screen)
+        self.first_city.update(self.screen, self)
+        self.second_city.update(self.screen, self)
+        self.but1.update_button(self.screen)
+        if self.first_city.life < 0:
             return 1
-        elif self.second_city.life<0:
+        elif self.second_city.life < 0:
             return 2
         else:
             return 0
@@ -73,12 +71,12 @@ class Level:
 
         """
 
-        finished = False
+        answer = ""
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = ((event.pos[0] * 1.0) / (DrawingCoefficient * 1.0),(event.pos[1] * 1.0) / (DrawingCoefficient * 1.0))
             if event.button == 1:
                 if self.but1.is_pressed(pos):
-                    finished = True
+                    answer = "exit"
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_1:
                 self.first_city.add_unit(LightInfantryType, 0)
@@ -92,7 +90,9 @@ class Level:
                 self.second_city.add_unit(LightInfantryType, 1)
             elif event.key == pygame.K_RIGHT:
                 self.second_city.add_unit(LightInfantryType, 2)
-        return finished
+            elif event.key == pygame.K_ESCAPE:
+                answer = "pause"
+        return answer
 
 
 if __name__ == "__main__":
