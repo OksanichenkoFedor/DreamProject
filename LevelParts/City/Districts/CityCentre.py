@@ -21,11 +21,9 @@ class CityCentre(District):
         self.image_castle = image_castle
         self.image_square = image_square
 
-    def update(self, screen):
-        """
+    def update(self):
+        pass
 
-        :param screen: Surface, where the picture is rendered
-
-        """
+    def draw(self, screen):
         city_centre_draw(self, self.side[0], screen, self.image_castle, self.image_square)
 

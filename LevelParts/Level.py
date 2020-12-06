@@ -52,17 +52,23 @@ class Level:
         :param screen: Surface, where the picture is rendered
 
         """
-        level_draw(self, self.screen)
-        map_draw(self.map, self.screen)
+
         self.first_city.update(self.screen, self)
         self.second_city.update(self.screen, self)
-        self.but1.update_button(self.screen)
+        self.but1.update_button()
         if self.first_city.life < 0:
             return 1
         elif self.second_city.life < 0:
             return 2
         else:
             return 0
+
+    def draw(self):
+        level_draw(self, self.screen)
+        map_draw(self.map, self.screen)
+        self.but1.draw_button(self.screen)
+        self.first_city.draw(self.screen)
+        self.second_city.draw(self.screen)
 
     def game_event(self, event):
         """

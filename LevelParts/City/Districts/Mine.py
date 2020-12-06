@@ -15,10 +15,8 @@ class Mine(District):
     def __init__(self, side, x, y):
         super().__init__(side, MineLife, x, y, MineNumber)
 
-    def update(self, screen):
-        """
+    def update(self):
+        pass
 
-        :param screen: Surface, where the picture is rendered
-
-        """
+    def draw(self, screen):
         mine_draw(self, self.side[0], screen)

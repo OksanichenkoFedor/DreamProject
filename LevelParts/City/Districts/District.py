@@ -26,9 +26,6 @@ class District(Interactable):
         self.y = y
         self.number = number
 
-    def under_attack(self, damage):
-        self.life -= damage
-
     def process_interaction(self, action):
         """
 

@@ -4,10 +4,10 @@ Constants for the game level
 
 """
 FPS = 50
-DrawingCoefficient = 1
+DrawingCoefficient = 1.0
 LevelXSize = 1500
 LevelYSize = 850
-MapXSize = 1050
+MapXSize = 850
 MapYSize = 850
 CityXSize = 226
 CityYSize = MapYSize

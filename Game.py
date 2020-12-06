@@ -49,6 +49,7 @@ while not finished:
     clock.tick(FPS)
     Result = 0
     if is_level:
+        Test_Level.draw()
         Result = Test_Level.update()
     elif is_pause:
         Result = Pause_Menu.update()

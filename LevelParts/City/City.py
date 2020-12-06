@@ -50,18 +50,20 @@ class City(Interactable):
         for i in range(len(self.Units)-1, -1, -1):
             self.Units[i].update(screen, level)
 
-
         for i in range(len(self.Units)-1, -1, -1):
             if self.Units[i].life <= 0:
                 self.Units.pop(i)
 
-        city_draw(self, self.side[0], screen, self.image_bruschatka)
-
         for district in self.Districts:
-            district.update(screen)
+            district.update()
             if district.life < 0:
                 self.life += district.life
                 district.life = 0
+
+    def draw(self, screen):
+        city_draw(self, self.side[0], screen, self.image_bruschatka)
+        for district in self.Districts:
+            district.draw(screen)
 
     def add_unit(self, type, road=0):
         """

@@ -33,7 +33,10 @@ class Button:
         self.text_color = text_color
         self.rect = pygame.Rect(self.x, self.y, self.length, self.height)
 
-    def update_button(self, screen):
+    def update_button(self):
+        pass
+
+    def draw_button(self, screen):
         button_draw(screen, self)
         self.rect = pygame.Rect(self.x, self.y, self.length, self.height)
 

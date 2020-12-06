@@ -82,7 +82,7 @@ def city_centre_draw(city_centre, side, screen, image_castle ,image_square):
 
         image_square = transform.scale(image_square,
                                        (massive_multiply((CityCentreXSize / 2, CityCentreYSize / 2),
-                                                         DrawingCoefficient)))
+                                                        DrawingCoefficient)))
         screen.blit(image_square,
                     massive_multiply((city_centre.x, city_centre.y + CityCentreYSize / 2),
                                      DrawingCoefficient))
@@ -120,14 +120,14 @@ def mine_draw(mine, side, screen):
     """
 
     if side == "order":
-        rect(screen, RED, (mine.x, mine.y, MineXSize, MineYSize))
+        rect(screen, RED, massive_multiply((mine.x, mine.y, MineXSize, MineYSize),DrawingCoefficient))
         health_bar(
             massive_multiply((mine.x + MineXSize / 6, mine.y + MineYSize / 10,
                               2 * MineXSize / 3, MineYSize / 20),
                              DrawingCoefficient),
             mine.life, MineLife, screen)
     else:
-        rect(screen, YLW, (mine.x, mine.y, MineXSize, MineYSize))
+        rect(screen, YLW, massive_multiply((mine.x, mine.y, MineXSize, MineYSize),DrawingCoefficient))
         health_bar(
             massive_multiply((mine.x + MineXSize / 6, mine.y + MineYSize / 10,
                               2 * MineXSize / 3, MineYSize / 20),
@@ -146,14 +146,16 @@ def research_centre_draw(research_centre, side, screen):
     """
 
     if side == "order":
-        rect(screen, RED, (research_centre.x, research_centre.y, MineXSize, MineYSize))
+        rect(screen, RED, massive_multiply((research_centre.x, research_centre.y, ResearchCentreXSize,
+                                            ResearchCentreYSize), DrawingCoefficient))
         health_bar(
             massive_multiply((research_centre.x + ResearchCentreXSize / 6, research_centre.y + ResearchCentreYSize / 10,
                               2 * ResearchCentreXSize / 3, ResearchCentreYSize / 20),
                              DrawingCoefficient),
             research_centre.life, ResearchCentreLife, screen)
     else:
-        rect(screen, YLW, (research_centre.x, research_centre.y, ResearchCentreXSize, ResearchCentreYSize))
+        rect(screen, YLW, massive_multiply((research_centre.x, research_centre.y, ResearchCentreXSize,
+                                            ResearchCentreYSize), DrawingCoefficient))
         health_bar(
             massive_multiply((research_centre.x + ResearchCentreXSize / 6, research_centre.y + ResearchCentreYSize / 10,
                               2 * ResearchCentreXSize / 3, ResearchCentreYSize / 20),

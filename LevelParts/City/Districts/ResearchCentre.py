@@ -15,10 +15,8 @@ class ResearchCentre(District):
     def __init__(self, side, x, y):
         super().__init__(side, ResearchCentreLife, x, y, ResearchCentreNumber)
 
-    def update(self, screen):
-        """
+    def update(self):
+        pass
 
-        :param screen: Surface, where the picture is rendered
-
-        """
+    def draw(self, screen):
         research_centre_draw(self, self.side[0], screen)
