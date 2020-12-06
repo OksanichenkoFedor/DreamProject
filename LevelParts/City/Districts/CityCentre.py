@@ -20,6 +20,7 @@ class CityCentre(District):
         super().__init__(side, CityCentreLife, x, y, CityCentreNumber)
         self.image_castle = image_castle
         self.image_square = image_square
+        self.master = 1
 
     def update(self):
         pass

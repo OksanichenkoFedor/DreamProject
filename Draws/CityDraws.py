@@ -1,3 +1,5 @@
+from pygame.font import SysFont
+
 from Const.Level import *
 from Const.City import *
 from pygame import *
@@ -26,6 +28,21 @@ def health_bar(coord, life, full_life, screen):
     rect(screen,(int((255.0*(full_life-max(life,0)))/(full_life*1.0)), int((255.0*(max(life,0)))/(full_life*1.0)),0), (coord[0], coord[1], int((coord[2]*(max(life,0)))/(full_life*1.0)),coord[3]))
     rect(screen, BLC, coord, 1)
 
+def tech_bar(coord, tech, full_tech, screen):
+    """
+    Draw Health Bar
+    :param x: First coordinate of left-up point of bar
+    :param y: Second coordinate of left-up point of bar
+    :param w: Width of bar
+    :param h: Height of bar
+    :param tech: Life of object
+    :param full_tech: Full tech of city, to go on next step
+    :param screen: Surface, where the picture is rendered
+    :return:
+    """
+    rect(screen, LBL, (coord[0], coord[1], int((coord[2]*(max(tech, 0)))/(full_tech*1.0)), coord[3]))
+    rect(screen, BLC, coord, 1)
+
 
 def city_draw(city, side, screen, image_bruschatka):
     """
@@ -49,6 +66,22 @@ def city_draw(city, side, screen, image_bruschatka):
             massive_multiply((city.x + CityXSize / 6, city.y + CityYSize / 10, 2 * CityXSize / 3, CityYSize / 20),
                              DrawingCoefficient),
             city.life, CityLife, screen)
+        tech_bar(
+            massive_multiply((city.x + CityXSize / 6, city.y + CityYSize / 30, 2 * CityXSize / 3, CityYSize / 20),
+                             DrawingCoefficient),
+            city.tech_points, (city.tech_level + 1) * EachTechPoints, screen)
+        font_size = int((CityXSize * DrawingCoefficient) / 6.0)
+        myFont = SysFont("Money: "+str(int(city.money)), font_size)
+        myText = myFont.render("Money: "+str(int(city.money)), 1, YLW)
+        screen.blit(myText, massive_multiply((
+            (city.x + CityXSize / 2) - myText.get_width() / 2,
+            (city.y + CityYSize*(13.0/15.0)) - myText.get_height() / 2), DrawingCoefficient))
+        font_size = int((CityXSize * DrawingCoefficient) / 6.0)
+        myFont = SysFont("Tech Level: " + str(int(city.tech_level)), font_size)
+        myText = myFont.render("Tech Level: " + str(int(city.tech_level)), 1, LBL)
+        screen.blit(myText, massive_multiply((
+            (city.x + CityXSize / 2) - myText.get_width() / 2,
+            (city.y + CityYSize * (14.0 / 15.0)) - myText.get_height() / 2), DrawingCoefficient))
     else:
         image_bruschatka = transform.scale(image_bruschatka,
                                            (massive_multiply((CityXSize, CityYSize), DrawingCoefficient)))
@@ -58,6 +91,22 @@ def city_draw(city, side, screen, image_bruschatka):
             massive_multiply((city.x + CityXSize / 6, city.y + CityYSize / 10, 2 * CityXSize / 3, CityYSize / 20),
                              DrawingCoefficient),
             city.life, CityLife, screen)
+        tech_bar(
+            massive_multiply((city.x + CityXSize / 6, city.y + CityYSize / 30, 2 * CityXSize / 3, CityYSize / 20),
+                             DrawingCoefficient),
+            city.tech_points, (city.tech_level + 1) * EachTechPoints, screen)
+        font_size = int((CityXSize * DrawingCoefficient) / 6.0)
+        myFont = SysFont("Money: " + str(int(city.money)), font_size)
+        myText = myFont.render("Money: " + str(int(city.money)), 1, YLW)
+        screen.blit(myText, massive_multiply((
+            (city.x + CityXSize / 2) - myText.get_width() / 2,
+            (city.y + CityYSize * (13.0 / 15.0)) - myText.get_height() / 2), DrawingCoefficient))
+        font_size = int((CityXSize * DrawingCoefficient) / 6.0)
+        myFont = SysFont("Tech Level: " + str(int(city.tech_level)), font_size)
+        myText = myFont.render("Tech Level: " + str(int(city.tech_level)), 1, LBL)
+        screen.blit(myText, massive_multiply((
+            (city.x + CityXSize / 2) - myText.get_width() / 2,
+            (city.y + CityYSize * (14.0 / 15.0)) - myText.get_height() / 2), DrawingCoefficient))
 
 
 def city_centre_draw(city_centre, side, screen, image_castle ,image_square):

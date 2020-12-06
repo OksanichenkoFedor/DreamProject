@@ -18,6 +18,7 @@ class City(Interactable):
     : field self.Buffered_Units: Massive of units in buffer
     : field self.Districts: Massive of districts of the city
     : field self.pole : Button Pole of this city
+    : field self.tech_level : Level of technologies
 
     : method self.__init__(side, x, y): Initialise City. Receives side, x, y
     : method self.update(screen, level): Update all parts of city (units, districts) and redraw city
@@ -33,15 +34,17 @@ class City(Interactable):
         research_centre = ResearchCentre(side, x + ResearchCentreX, y + ResearchCentreY)
         self.x = x
         self.y = y
-        self.money = 100000
+        self.money = 100.0
         self.Units = []
         self.Buffered_Units = []
         self.Districts = []
-        self.Districts.append(mine)
-        self.Districts.append(city_centre)
         self.Districts.append(research_centre)
+        self.Districts.append(city_centre)
+        self.Districts.append(mine)
         self.unit_image = unit_image
         self.pole = ButtonPole(self.x, self.y)
+        self.tech_level = 0
+        self.tech_points = 0.0
 
     def update(self, level):
         """
@@ -62,10 +65,14 @@ class City(Interactable):
                 self.Units.pop(i)
 
         for district in self.Districts:
-            district.update()
             if district.life < 0:
                 self.life += district.life
                 district.life = 0
+        self.tech_points = self.Districts[ResearchCentreNumber].update(self.tech_points)
+        self.money = self.Districts[MineNumber].update(self.money)
+        if self.tech_points>(self.tech_level+1)*EachTechPoints:
+            self.tech_level += 1
+            self.tech_points -= self.tech_level*EachTechPoints
         self.pole.update()
 
     def draw(self, screen, level):
