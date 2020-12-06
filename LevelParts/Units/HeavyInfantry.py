@@ -28,16 +28,17 @@ class HeavyInfantry(Unit):
                          HeavyInfantryRange, HeavyInfantrySpeed, HeavyInfantryCooldown, HeavyInfantryDamage,
                          HeavyInfantryDamageSpread, HeavyInfantrySideX, HeavyInfantrySideY)
 
-    def update(self, screen, level):
+    def update(self, level):
         """
 
-        :param screen: Surface, where the picture is rendered
         :param level: Level of the game
 
         """
         if self.interact_timer > 0:
             self.interact_timer -= 1
-        unit_draw(self, self.side, self.position(level), screen, self.image, self.XSize, self.YSize)
         info = Info(self, level)
         solution = unitAI(info)
         return self.reaction(solution, level)
+
+    def draw(self, screen, level):
+        unit_draw(self, self.side, self.position(level), screen, self.image, self.XSize, self.YSize)

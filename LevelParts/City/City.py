@@ -3,6 +3,7 @@ from LevelParts.City.Districts.CityCentre import *
 from LevelParts.City.Districts.Mine import *
 from LevelParts.City.Districts.ResearchCentre import *
 from LevelParts.Units.LightInfantry import LightInfantry
+from LevelParts.ButtonPole import *
 
 
 class City(Interactable):
@@ -14,7 +15,9 @@ class City(Interactable):
     : field self.city_centre: District "City Centre" of the city
     : field self.money: Number of money of this city
     : field self.Units: Massive of units of the city
+    : field self.Buffered_Units: Massive of units in buffer
     : field self.Districts: Massive of districts of the city
+    : field self.pole : Button Pole of this city
 
     : method self.__init__(side, x, y): Initialise City. Receives side, x, y
     : method self.update(screen, level): Update all parts of city (units, districts) and redraw city
@@ -32,23 +35,27 @@ class City(Interactable):
         self.y = y
         self.money = 100000
         self.Units = []
+        self.Buffered_Units = []
         self.Districts = []
         self.Districts.append(mine)
         self.Districts.append(city_centre)
         self.Districts.append(research_centre)
         self.unit_image = unit_image
+        self.pole = ButtonPole(self.x, self.y)
 
-    def update(self, screen, level):
+    def update(self, level):
         """
 
         Update city. If life of city district under zero, than this district refill this life to zero,
                      pulling them from city.
-        :param screen: Surface, where the picture is rendered
         :param level: Level of the game
 
         """
         for i in range(len(self.Units)-1, -1, -1):
-            self.Units[i].update(screen, level)
+            self.Units[i].update(level)
+
+        for i in range(len(self.Buffered_Units) - 1, -1, -1):
+            self.Buffered_Units[i].update(level)
 
         for i in range(len(self.Units)-1, -1, -1):
             if self.Units[i].life <= 0:
@@ -59,11 +66,15 @@ class City(Interactable):
             if district.life < 0:
                 self.life += district.life
                 district.life = 0
+        self.pole.update()
 
-    def draw(self, screen):
+    def draw(self, screen, level):
         city_draw(self, self.side[0], screen, self.image_bruschatka)
         for district in self.Districts:
             district.draw(screen)
+        for i in range(len(self.Units)-1, -1, -1):
+            self.Units[i].draw(screen, level)
+        self.pole.draw(screen)
 
     def add_unit(self, type, road=0):
         """

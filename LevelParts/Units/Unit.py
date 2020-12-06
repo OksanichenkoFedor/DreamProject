@@ -11,6 +11,7 @@ class Unit(Interactable):
                                 a.)"left" - unit is located on left road
                                 b.)"battle_pole" - unit is located on battle pole
                                 c.)"right" - unit is located on right road
+                                d.)"Buffer" - unit is in buffer
                             2.) Second element
                                 a.) If unit on roads, say on which from up to down (integer)
                                 b.) If unit on pole, say first coord in map
@@ -30,7 +31,6 @@ class Unit(Interactable):
     : field self.damage_spread: Shows random error of unit damage
     : field self.XSize: First coordinate size of unit image
     : field self.YSize: First coordinate size of unit image
-
     : method __init__(side, life, coord, unit_type, armor): Initialise Unit. Receives side, life, coord, unit_type,
                                                                                       image, armor, attack_range, speed,
                                                                                       cooldown, damage, damage_spread.
@@ -38,6 +38,7 @@ class Unit(Interactable):
                                     Receives screen, level.
     : method reaction(solution): Realise an action determined by the solution
     : method position(): Give position x, y, of this soldier in whole screen
+    : method change_buffer_place(): Change x, y in buffer, when situation is changed
 
 
     """
@@ -60,7 +61,10 @@ class Unit(Interactable):
         self.XSize = XSize
         self.YSize = YSize
 
-    def update(self, screen, level):
+    def update(self, level):
+        pass
+
+    def draw(self, screen, level):
         pass
 
     def reaction(self, solution, level):
@@ -209,6 +213,15 @@ class Unit(Interactable):
                 """
         if action[0] == "attacked":
             self.life -= max(action[1]-self.armor, 0)
+
+    def change_buffer_place(self, total_number, unit_number):
+        """
+
+        :param total_number: Number of units in buffer
+        :param unit_number: Number of self in buffer
+        :return: Change coord of unit
+        """
+        pass
 
 
 if __name__ == "__main__":
