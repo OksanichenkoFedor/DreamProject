@@ -8,6 +8,7 @@ class Interactable:
                             If side=="left", than this is interactable, located in the left side of the level
                             If side=="right", than this is interactable, located in the right side of the level
     : field self.life: Life of the interactable
+    : field self.full_life: Full life of the interactable
 
     : method __init__(side,life): Initialise interactable. Receives side, life
     : method process_interaction(action): Function, which process interaction (action) with self
@@ -17,6 +18,7 @@ class Interactable:
     def __init__(self, side, life):
         self.side = side
         self.life = life
+        self.full_life = life
 
     def process_interaction(self, action):
         """

@@ -5,7 +5,7 @@ Constants for the units
 """
 
 LightInfantrySpeed = 5
-LightInfantryType = "swordsman"
+LightInfantryType = "light infantry"
 LightInfantryLife = 200
 LightInfantryDamage = 50
 LightInfantryDamageSpread = 30
@@ -15,6 +15,7 @@ LightInfantrySideY = 40
 LightInfantryCooldown = 40
 LightInfantryArmor = 1
 LightInfantryRange = 40
+LightInfantryTrainTime = 40
 
 HeavyInfantrySpeed = 3
 HeavyInfantryType = "heavy_unit"

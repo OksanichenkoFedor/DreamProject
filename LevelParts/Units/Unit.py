@@ -31,6 +31,9 @@ class Unit(Interactable):
     : field self.damage_spread: Shows random error of unit damage
     : field self.XSize: First coordinate size of unit image
     : field self.YSize: First coordinate size of unit image
+    : field self.train_timer: Total time of train
+    : field self.train_time: Time, left for train
+
     : method __init__(side, life, coord, unit_type, armor): Initialise Unit. Receives side, life, coord, unit_type,
                                                                                       image, armor, attack_range, speed,
                                                                                       cooldown, damage, damage_spread.
@@ -43,7 +46,8 @@ class Unit(Interactable):
 
     """
 
-    def __init__(self, side, life, coord, unit_type, image, armor, attack_range, speed, cooldown, damage, damage_spread, XSize, YSize):
+    def __init__(self, side, life, coord, unit_type, image, armor, attack_range, speed, cooldown, damage, damage_spread,
+                 XSize, YSize, train_time = LightInfantryTrainTime):
         super().__init__(side, life)
         self.coord = []
         self.coord.append(coord[0])
@@ -60,6 +64,8 @@ class Unit(Interactable):
         self.damage_spread = damage_spread
         self.XSize = XSize
         self.YSize = YSize
+        self.train_timer = train_time
+        self.train_time = train_time
 
     def update(self, level):
         pass
@@ -82,7 +88,7 @@ class Unit(Interactable):
             if self.side[1] == "left":    #Юнит из левого города
                 if self.coord[0] == "left":    #Юнит на левой дороге
                     if self.coord[2] < 1:
-                        road_num  = self.coord[1]
+                        road_num = self.coord[1]
                         road_length = level.map.total_length_L[road_num]
                         self.coord[2] += LightInfantrySpeed/road_length
                         self.coord[2] = min(1, self.coord[2])
@@ -202,6 +208,8 @@ class Unit(Interactable):
                     return (int(x_prev + t * (x_next - x_prev)), int(y_prev + t * (y_next - y_prev)))
         elif self.coord[0] == "battle_pole":
             return (int(self.coord[1] ), int(self.coord[2]))
+        elif self.coord[0] == "buffered":
+            return (int(self.coord[1] ), int(self.coord[2]))
 
     def process_interaction(self, action):
         """
@@ -214,14 +222,16 @@ class Unit(Interactable):
         if action[0] == "attacked":
             self.life -= max(action[1]-self.armor, 0)
 
-    def change_buffer_place(self, total_number, unit_number):
+    def change_buffer_place(self, x, y):
         """
 
-        :param total_number: Number of units in buffer
-        :param unit_number: Number of self in buffer
+        :param x: New first coordinate
+        :param y: New second coordinate
         :return: Change coord of unit
         """
-        pass
+        if self.coord[0] == "buffered":
+            self.coord[1] = x
+            self.coord[2] = y
 
 
 if __name__ == "__main__":
