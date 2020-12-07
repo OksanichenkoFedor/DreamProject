@@ -3,29 +3,29 @@ from LevelParts.Units.UnitAI.UnitAI import *
 from LevelParts.Units.Unit import *
 
 
-class Cavalry(Unit):
+class LongRangeInfantry(Unit):
 
     """
 
     Class of first unit cavalry
 
-    : method __init__(): Initialise Cavalry. Do the super()__init__()
-                                   life = life of cavalry unit
-                                   unit_type = "cavalry"
+    : method __init__(): Initialise LongRangeInfantry. Do the super()__init__()
+                                   life = life of LongRange unit
+                                   unit_type = "long_range_unit"
                                    Receives side, coord
-    : method update(screen, level): Redraw city. Defining the action of the cavalry unit
-    #: method reaction(level): Defining the action of the cavalry unit
+    : method update(screen, level): Redraw city. Defining the action of the long range unit
+    #: method reaction(level): Defining the action of the long range unit
     : method interaction_with_unit(self, unit: Unit, number, action): Method, that process situation, when self interact
-                                                                      with another unit. Cavalry can just attack
+                                                                      with another unit. Long Range Infantry can just attack
     : method interaction_with_district(self, unit: district, number, action): Method, that process situation, when self
-                                                                              interact  with another unit. Cavalry can just attack.
+                                                                              interact  with another unit. Long Range Infantry can just attack.
     : method process_interaction(action):
     """
 
     def __init__(self, side, coord, image):
-        super().__init__(side, CavalryLife, coord, CavalryType, image, CavalryArmor,
-                         CavalryRange, CavalrySpeed, CavalryCooldown, CavalryDamage,
-                         CavalryDamageSpread, CavalrySideX, CavalrySideY)
+        super().__init__(side, LongRangeInfantryLife, coord, LongRangeInfantryType, image, LongRangeInfantryArmor,
+                         LongRangeInfantryRange, LongRangeInfantrySpeed, LongRangeInfantryCooldown, LongRangeInfantryDamage,
+                         LongRangeInfantryDamageSpread, LongRangeInfantrySideX, LongRangeInfantrySideY)
 
     def update(self, level):
         """
