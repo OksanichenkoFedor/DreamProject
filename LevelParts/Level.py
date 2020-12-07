@@ -145,6 +145,20 @@ class Level:
                 action.append("add unit")
                 action.append(self.second_pole.Buttons[self.second_pole.chosen].type)
                 self.second_city.reaction(action)
+            elif event.key == pygame.K_s:
+                action.append("master change")
+                if self.first_city.master == 2:
+                    action.append(0)
+                else:
+                    action.append(self.first_city.master+1)
+                self.first_city.reaction(action)
+            elif event.key == pygame.K_RSHIFT:
+                action.append("master change")
+                if self.second_city.master == 2:
+                    action.append(0)
+                else:
+                    action.append(self.second_city.master + 1)
+                self.second_city.reaction(action)
             elif event.key == pygame.K_ESCAPE:
                 answer = "pause"
             elif event.key == pygame.K_q:

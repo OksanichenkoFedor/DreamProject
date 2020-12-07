@@ -32,10 +32,7 @@ def health_bar(coord, life, full_life, screen):
 def tech_bar(coord, tech, full_tech, screen):
     """
     Draw Health Bar
-    :param x: First coordinate of left-up point of bar
-    :param y: Second coordinate of left-up point of bar
-    :param w: Width of bar
-    :param h: Height of bar
+    :param coord: Massive of x, y, w, h
     :param tech: Life of object
     :param full_tech: Full tech of city, to go on next step
     :param screen: Surface, where the picture is rendered
@@ -43,6 +40,17 @@ def tech_bar(coord, tech, full_tech, screen):
     """
     rect(screen, LBL, (coord[0], coord[1], int((coord[2]*(max(tech, 0)))/(full_tech*1.0)), coord[3]))
     rect(screen, BLC, coord, 1)
+
+
+def master_draw(x,y, screen):
+    """
+
+    :param x: First coordinate of master
+    :param y: Second coordinate of master
+    :param screen: Surface, where the picture is rendered
+    :return:
+    """
+    circle(screen, YLW, massive_multiply((x,y),DrawingCoefficient),int(10*DrawingCoefficient))
 
 
 def city_draw(city, side, screen, image_bruschatka):
@@ -141,6 +149,9 @@ def city_centre_draw(city_centre, side, screen, image_castle ,image_square):
                               2 * CityCentreXSize / 3, CityCentreYSize / 20),
                              DrawingCoefficient),
             city_centre.life, CityCentreLife, screen)
+        if city_centre.master>0:
+            master_draw(city_centre.x + 7.0*CityCentreXSize / 6, city_centre.y + CityCentreYSize / 2, screen)
+
     else:
         image_castle = transform.scale(image_castle,
                                              (massive_multiply((CityCentreXSize / 2, CityCentreYSize / 2),
@@ -157,6 +168,8 @@ def city_centre_draw(city_centre, side, screen, image_castle ,image_square):
                               2 * CityCentreXSize / 3, CityCentreYSize / 20),
                              DrawingCoefficient),
             city_centre.life, CityCentreLife, screen)
+        if city_centre.master>0:
+            master_draw(city_centre.x - (1.0*CityCentreXSize) / 6, city_centre.y + CityCentreYSize / 2, screen)
 
 
 def mine_draw(mine, side, screen):
@@ -176,6 +189,8 @@ def mine_draw(mine, side, screen):
                               2 * MineXSize / 3, MineYSize / 20),
                              DrawingCoefficient),
             mine.life, MineLife, screen)
+        if mine.master>0:
+            master_draw(mine.x + 7.0*CityCentreXSize / 6, mine.y + CityCentreYSize / 2, screen)
     else:
         rect(screen, YLW, massive_multiply((mine.x, mine.y, MineXSize, MineYSize),DrawingCoefficient))
         health_bar(
@@ -183,6 +198,8 @@ def mine_draw(mine, side, screen):
                               2 * MineXSize / 3, MineYSize / 20),
                              DrawingCoefficient),
             mine.life, MineLife, screen)
+        if mine.master>0:
+            master_draw(mine.x - (1.0*MineXSize) / 6, mine.y + MineYSize / 2, screen)
 
 
 def research_centre_draw(research_centre, side, screen):
@@ -203,6 +220,8 @@ def research_centre_draw(research_centre, side, screen):
                               2 * ResearchCentreXSize / 3, ResearchCentreYSize / 20),
                              DrawingCoefficient),
             research_centre.life, ResearchCentreLife, screen)
+        if research_centre.master>0:
+            master_draw(research_centre.x + 7.0*ResearchCentreXSize / 6, research_centre.y + ResearchCentreYSize / 2, screen)
     else:
         rect(screen, YLW, massive_multiply((research_centre.x, research_centre.y, ResearchCentreXSize,
                                             ResearchCentreYSize), DrawingCoefficient))
@@ -211,6 +230,8 @@ def research_centre_draw(research_centre, side, screen):
                               2 * ResearchCentreXSize / 3, ResearchCentreYSize / 20),
                              DrawingCoefficient),
             research_centre.life, ResearchCentreLife, screen)
+        if research_centre.master>0:
+            master_draw(research_centre.x - (1.0*ResearchCentreXSize) / 6, research_centre.y + ResearchCentreYSize / 2, screen)
 
 
 

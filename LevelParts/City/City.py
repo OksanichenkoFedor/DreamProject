@@ -21,6 +21,7 @@ class City(Interactable):
     : field self.Districts: Massive of districts of the city
     : field self.pole : Button Pole of this city
     : field self.tech_level : Level of technologies
+    : field self.master : Number of district with master
 
     : method self.__init__(side, x, y): Initialise City. Receives side, x, y
     : method self.update(screen, level): Update all parts of city (units, districts) and redraw city
@@ -50,6 +51,7 @@ class City(Interactable):
         self.shooter_image = shooter_image
         self.support_image = support_image
         self.cavalry_image = cavalry_image
+        self.master = CityCentreNumber
 
         self.tech_level = 0
         self.tech_points = 0.0
@@ -108,14 +110,24 @@ class City(Interactable):
         :param type: Type of the unit
         :param road: Number of start road from up to down
         """
+        is_new_unit = False
         if type == LightInfantryType:
             if self.money >= LightInfantryCost:
                 self.Queue_Units.append(LightInfantry(self.side, ("queue", 0, 0), self.light_infantry_image))
                 self.money -= LightInfantryCost
-        if type == HeavyInfantryType:
+                is_new_unit = True
+        elif type == HeavyInfantryType:
             if self.money >= HeavyInfantryCost:
                 self.Queue_Units.append(HeavyInfantry(self.side, ("queue", 0, 0), self.heavy_infantry_image))
                 self.money -= HeavyInfantryCost
+                is_new_unit = True
+
+
+        if self.master == CityCentreNumber and is_new_unit:
+            self.Queue_Units[len(self.Queue_Units)-1].train_time = self.Queue_Units[len(self.Queue_Units)-1].train_time / 2
+            self.Queue_Units[len(self.Queue_Units) - 1].train_timer = self.Queue_Units[
+                                                                         len(self.Queue_Units) - 1].train_timer / 2
+
 
     def reaction(self, action):
         if action[0] == "add unit":
@@ -126,6 +138,13 @@ class City(Interactable):
                 self.Units.append(self.Buffered_Units[0])
                 self.Buffered_Units.pop(0)
                 self.buffer_update()
+        elif action[0] == "master change":
+            self.master = action[1]
+            for district in self.Districts:
+                if district.number == action[1]:
+                    district.master = 1
+                else:
+                    district.master = 0
 
     def buffer_update(self):
         for i in range(len(self.Buffered_Units)):

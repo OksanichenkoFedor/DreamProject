@@ -16,7 +16,12 @@ class ResearchCentre(District):
         super().__init__(side, ResearchCentreLife, x, y, ResearchCentreNumber)
 
     def update(self, tech):
-        return tech + ((self.life*1.0)/(ResearchCentreLife*1.0)*ResearchCentreAdditionalSpeed + ResearchCentreDefaultSpeed)
+        if self.master > 0:
+            return tech + ((self.life * 1.0) / (
+                        ResearchCentreLife * 1.0) * ResearchCentreAdditionalSpeed + ResearchCentreDefaultSpeed)*2.0
+        else:
+            return tech + ((self.life * 1.0) / (
+                        ResearchCentreLife * 1.0) * ResearchCentreAdditionalSpeed + ResearchCentreDefaultSpeed)
 
     def draw(self, screen):
         research_centre_draw(self, self.side[0], screen)

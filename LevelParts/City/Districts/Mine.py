@@ -16,7 +16,10 @@ class Mine(District):
         super().__init__(side, MineLife, x, y, MineNumber)
 
     def update(self, money):
-        return money + (((self.life*1.0)/(MineLife*1.0))*MineAdditionalSpeed + MineDefaultSpeed)
+        if self.master > 0:
+            return money + (((self.life * 1.0) / (MineLife * 1.0)) * MineAdditionalSpeed + MineDefaultSpeed)*2.0
+        else:
+            return money + (((self.life * 1.0) / (MineLife * 1.0)) * MineAdditionalSpeed + MineDefaultSpeed)
 
     def draw(self, screen):
         mine_draw(self, self.side[0], screen)
