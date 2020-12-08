@@ -1,7 +1,7 @@
-from LevelParts.Effects.Effect import Effect
+from LevelParts.Effects.StaticEffect import StaticEffect
 
 
-class GunSmoke(Effect):
+class GunSmoke(StaticEffect):
     """
 
     """

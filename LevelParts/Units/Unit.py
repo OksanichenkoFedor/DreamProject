@@ -33,6 +33,9 @@ class Unit(Interactable):
     : field self.YSize: First coordinate size of unit image
     : field self.train_timer: Total time of train
     : field self.train_time: Time, left for train
+    : field self.animation: String, which teel type of current animation
+    : field self.animation_timer: Time, left for animation
+    : field self.animation_total_time: Total time of current animation
 
     : method __init__(side, life, coord, unit_type, armor): Initialise Unit. Receives side, life, coord, unit_type,
                                                                                       image, armor, attack_range, speed,
@@ -66,6 +69,9 @@ class Unit(Interactable):
         self.YSize = YSize
         self.train_timer = train_time
         self.train_time = train_time
+        self.animation = "motionless"
+        self.animation_timer = 1
+        self.animation_time = 0
 
     def update(self, level):
         pass
@@ -233,6 +239,14 @@ class Unit(Interactable):
             self.coord[1] = x
             self.coord[2] = y
 
+    def give_current_image(self):
+        """
+
+        :return: Current image
+
+        """
+        if self.animation == "motionless":
+            return self.image
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

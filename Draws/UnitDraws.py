@@ -1,9 +1,6 @@
-from LevelParts.Level import *
 from Const.Level import *
-from Const.Units import *
 from pygame import *
 from pygame.draw import *
-
 
 
 def massive_multiply(j, a):
@@ -27,6 +24,7 @@ def health_bar(coord, life, full_life, screen):
     """
     rect(screen, (int((255.0*(full_life-max(life,0)))/(full_life*1.0)), int((255.0*(max(life,0)))/(full_life*1.0)),0), (coord[0], coord[1], int((coord[2]*(max(life,0)))/(full_life*1.0)),coord[3]))
     rect(screen, BLC, coord, 1)
+
 
 def unit_draw(unit, unit_side, unit_position, screen, image_unit, XSize, YSize):
     """

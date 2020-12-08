@@ -3,7 +3,6 @@
 Constants for the city
 
 """
-from pygame import image
 
 CityLife = 2000
 CityCentreLife = 1000
@@ -15,7 +14,7 @@ CityCentreNumber = 1
 BufferedAreaX1 = 90
 BufferedAreaX2 = 130
 BufferedAreaY = 435
-EachTechPoints = 300
+EachTechPoints = 4000
 MineLife = 1000
 MineX = 80
 MineY = 550
