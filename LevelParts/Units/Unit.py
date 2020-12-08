@@ -221,6 +221,12 @@ class Unit(Interactable):
                 """
         if action[0] == "attacked":
             self.life -= max(action[1]-self.armor, 0)
+        elif action[0] == "healed":
+            self.life += min(action[1] + self.life, self.full_life)
+        elif action[0] == "increased":
+            self.damage *= action[1]/100 + 1.0
+            self.damage_spread *= action[1]/100 + 1.0
+
 
     def change_buffer_place(self, x, y):
         """
