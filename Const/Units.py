@@ -118,20 +118,20 @@ HealerSideX = 40
 HealerSideY = 40
 HealerCooldown = 40
 HealerArmor = 1
-HealerRange = 100
+HealerRange = 40
 HealerTrainTime = 400
 
 AlchemistSpeed = 3
 AlchemistType = "alchemist"
 AlchemistLife = 200
-AlchemistDamage = 0
-AlchemistDamageSpread = 0
+AlchemistDamage = 40
+AlchemistDamageSpread = 10
 AlchemistCost = 20
 AlchemistSideX = 40
 AlchemistSideY = 40
 AlchemistCooldown = 40
 AlchemistArmor = 1
-AlchemistRange = 100
+AlchemistRange = 40
 AlchemistTrainTime = 400
 
 if __name__ == "__main__":

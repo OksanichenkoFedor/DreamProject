@@ -17,7 +17,7 @@ def nearestUnit(info):
             if info.friends[i].coord[0] == "battle_pole":
                 r = ((info.unit.coord[1] - info.friends[i].coord[1]) ** 2 + (
                             info.unit.coord[2] - info.friends[i].coord[2]) ** 2) ** 0.5
-                if r < friendly_distance:
+                if r < friendly_distance and (info.unit != info.friends[i]):
                     friendly_distance = r
                     friendly_index = i
 
@@ -41,7 +41,7 @@ def nearestUnit(info):
             if friendly_unit.coord[0] == "left":
                 if friendly_unit.coord[1] == road_num:
                     r = abs(info.unit.coord[2] - friendly_unit.coord[2])
-                    if r < friendly_distance:
+                    if r < friendly_distance and (info.unit != friendly_unit):
                         friendly_distance = r
                         friendly_index = info.friends.index(friendly_unit)
 
@@ -65,7 +65,7 @@ def nearestUnit(info):
             if friendly_unit.coord[0] == "right":
                 if friendly_unit.coord[1] == road_num:
                     r = abs(info.unit.coord[2] - friendly_unit.coord[2])
-                    if r < friendly_distance:
+                    if r < friendly_distance and (info.unit != friendly_unit):
                         friendly_distance = r
                         friendly_index = info.friends.index(friendly_unit)
 
