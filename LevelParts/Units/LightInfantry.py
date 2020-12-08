@@ -23,10 +23,17 @@ class LightInfantry(Unit):
     : method process_interaction(action):
     """
 
-    def __init__(self, side, coord, image):
-        super().__init__(side, LightInfantryLife, coord, LightInfantryType, image, LightInfantryArmor,
-                         LightInfantryRange, LightInfantrySpeed, LightInfantryCooldown, LightInfantryDamage,
-                         LightInfantryDamageSpread, LightInfantrySideX, LightInfantrySideY)
+    def __init__(self, side, coord, images):
+        if side[0] == "order":
+            super().__init__(side, LightInfantryOrderLife, coord, LightInfantryType, images, LightInfantryOrderArmor,
+                             LightInfantryOrderRange, LightInfantryOrderSpeed, LightInfantryOrderCooldown,
+                             LightInfantryOrderDamage, LightInfantryOrderDamageSpread, LightInfantryOrderSideX,
+                             LightInfantryOrderSideY, LightInfantryOrderTrainTime, LightInfantryOrderCost)
+        else:
+            super().__init__(side, LightInfantryUnionLife, coord, LightInfantryType, images, LightInfantryUnionArmor,
+                             LightInfantryUnionRange, LightInfantryUnionSpeed, LightInfantryUnionCooldown,
+                             LightInfantryUnionDamage, LightInfantryUnionDamageSpread, LightInfantryUnionSideX,
+                             LightInfantryUnionSideY, LightInfantryUnionTrainTime, LightInfantryUnionCost)
 
     def update(self, level):
         """

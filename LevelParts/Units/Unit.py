@@ -21,7 +21,10 @@ class Unit(Interactable):
     : field self.type: Tell us, which type this unit is. We need this for AI
     : field self.armor: Armor of unit (damage -> max(damage-armor,0))
     : field self.attack_range: Range of unit attack
-    : field self.image: Image of unit
+    : field self.images: Massive of dictionary of images.
+                                                         1.) Key = String, that tell type of images
+                                                         2.) Massive of number of images, massive of images
+
     : field self.speed: Speed of unit
     : field self.cooldown: Time of recharge
     : field self.interact_timer: Timer, which check recharging
@@ -36,6 +39,7 @@ class Unit(Interactable):
     : field self.animation: String, which teel type of current animation
     : field self.animation_timer: Time, left for animation
     : field self.animation_total_time: Total time of current animation
+    : field self.cost: Cost of this unit
 
     : method __init__(side, life, coord, unit_type, armor): Initialise Unit. Receives side, life, coord, unit_type,
                                                                                       image, armor, attack_range, speed,
@@ -49,8 +53,8 @@ class Unit(Interactable):
 
     """
 
-    def __init__(self, side, life, coord, unit_type, image, armor, attack_range, speed, cooldown, damage, damage_spread,
-                 XSize, YSize, train_time = LightInfantryTrainTime):
+    def __init__(self, side, life, coord, unit_type, images, armor, attack_range, speed, cooldown, damage, damage_spread,
+                 XSize, YSize, train_time, cost):
         super().__init__(side, life)
         self.coord = []
         self.coord.append(coord[0])
@@ -59,7 +63,7 @@ class Unit(Interactable):
         self.type = unit_type
         self.armor = armor
         self.range = attack_range
-        self.image = image
+        self.images = images
         self.speed = speed
         self.cooldown = cooldown
         self.interact_timer = self.cooldown
@@ -72,6 +76,7 @@ class Unit(Interactable):
         self.animation = "motionless"
         self.animation_timer = 1
         self.animation_time = 0
+        self.cost = cost
 
     def update(self, level):
         pass
@@ -96,7 +101,7 @@ class Unit(Interactable):
                     if self.coord[2] < 1:
                         road_num = self.coord[1]
                         road_length = level.map.total_length_L[road_num]
-                        self.coord[2] += LightInfantrySpeed/road_length
+                        self.coord[2] += self.speed/road_length
                         self.coord[2] = min(1, self.coord[2])
                     else:
                         self.coord[0] = "battle_pole"
@@ -110,17 +115,17 @@ class Unit(Interactable):
                     if self.coord[2] > 0:
                         road_num = self.coord[1]
                         road_length = level.map.total_length_R[road_num]
-                        self.coord[2] -= LightInfantrySpeed / road_length
+                        self.coord[2] -= self.speed / road_length
                         self.coord[2] = max(0, self.coord[2])
 
 
                 elif self.coord[0] == "battle_pole":
                     road_num, distance = level.map.nearest_road(self.coord[1], self.coord[2], "left")
-                    if (distance - LightInfantrySpeed) > 0:
+                    if (distance - self.speed) > 0:
                         cos = (level.map.Right_Roads[road_num][-1][0] - self.coord[1]) / distance
                         sin = (level.map.Right_Roads[road_num][-1][1] - self.coord[2]) / distance
-                        self.coord[1] += LightInfantrySpeed * cos
-                        self.coord[2] += LightInfantrySpeed * sin
+                        self.coord[1] += self.speed * cos
+                        self.coord[2] += self.speed * sin
                     else:
                         self.coord[0] = "right"
                         self.coord[1] = road_num
@@ -132,7 +137,7 @@ class Unit(Interactable):
                     if self.coord[2] > 0:
                         road_num = self.coord[1]
                         road_length = level.map.total_length_L[road_num]
-                        self.coord[2] -= LightInfantrySpeed/road_length
+                        self.coord[2] -= self.speed/road_length
                         self.coord[2] = max(0, self.coord[2])
 
 
@@ -140,7 +145,7 @@ class Unit(Interactable):
                     if self.coord[2] < 1:
                         road_num = self.coord[1]
                         road_length = level.map.total_length_R[road_num]
-                        self.coord[2] += LightInfantrySpeed/road_length
+                        self.coord[2] += self.speed/road_length
                         self.coord[2] = min(1, self.coord[2])
                     else:
                         self.coord[0] = "battle_pole"
@@ -150,11 +155,11 @@ class Unit(Interactable):
 
                 elif self.coord[0] == "battle_pole":
                     road_num, distance = level.map.nearest_road(self.coord[1], self.coord[2], "right")
-                    if (distance - LightInfantrySpeed) > 0:
+                    if (distance - self.speed) > 0:
                         cos = (+level.map.Left_Roads[road_num][-1][0] - self.coord[1]) / distance
                         sin = (level.map.Left_Roads[road_num][-1][1] - self.coord[2]) / distance
-                        self.coord[1] += LightInfantrySpeed * cos
-                        self.coord[2] += LightInfantrySpeed * sin
+                        self.coord[1] += self.speed * cos
+                        self.coord[2] += self.speed * sin
                     else:
                         self.coord[0] = "left"
                         self.coord[1] = road_num
@@ -228,11 +233,10 @@ class Unit(Interactable):
         if action[0] == "attacked":
             self.life -= max(action[1]-self.armor, 0)
         elif action[0] == "healed":
-            self.life += min(action[1] + self.life, self.full_life)
+            self.life = min(action[1] + self.life, self.full_life)
         elif action[0] == "increased":
             self.damage *= action[1]/100 + 1.0
             self.damage_spread *= action[1]/100 + 1.0
-
 
     def change_buffer_place(self, x, y):
         """
@@ -251,8 +255,10 @@ class Unit(Interactable):
         :return: Current image
 
         """
-        if self.animation == "motionless":
-            return self.image
+        return self.images[self.animation][1][0]
+
+    def __del__(self):
+        pass
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

@@ -23,10 +23,17 @@ class HeavyInfantry(Unit):
     : method process_interaction(action):
     """
 
-    def __init__(self, side, coord, image):
-        super().__init__(side, HeavyInfantryLife, coord, HeavyInfantryType, image, HeavyInfantryArmor,
-                         HeavyInfantryRange, HeavyInfantrySpeed, HeavyInfantryCooldown, HeavyInfantryDamage,
-                         HeavyInfantryDamageSpread, HeavyInfantrySideX, HeavyInfantrySideY)
+    def __init__(self, side, coord, images):
+        if side[0] == "order":
+            super().__init__(side, HeavyInfantryOrderLife, coord, HeavyInfantryType, images, HeavyInfantryOrderArmor,
+                             HeavyInfantryOrderRange, HeavyInfantryOrderSpeed, HeavyInfantryOrderCooldown,
+                             HeavyInfantryOrderDamage, HeavyInfantryOrderDamageSpread, HeavyInfantryOrderSideX,
+                             HeavyInfantryOrderSideY, HeavyInfantryOrderTrainTime, HeavyInfantryOrderCost)
+        else:
+            super().__init__(side, HeavyInfantryUnionLife, coord, HeavyInfantryType, images, HeavyInfantryUnionArmor,
+                             HeavyInfantryUnionRange, HeavyInfantryUnionSpeed, HeavyInfantryUnionCooldown,
+                             HeavyInfantryUnionDamage, HeavyInfantryUnionDamageSpread, HeavyInfantryUnionSideX,
+                             HeavyInfantryUnionSideY, HeavyInfantryUnionTrainTime, HeavyInfantryUnionCost)
 
     def update(self, level):
         """
@@ -41,4 +48,4 @@ class HeavyInfantry(Unit):
         return self.reaction(solution, level)
 
     def draw(self, screen, level):
-        unit_draw(self, self.side, self.position(level), screen, self.image, self.XSize, self.YSize)
+        unit_draw(self, self.side, self.position(level), screen, self.give_current_image(), self.XSize, self.YSize)

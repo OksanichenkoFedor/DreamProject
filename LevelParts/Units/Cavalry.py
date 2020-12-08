@@ -22,10 +22,17 @@ class Cavalry(Unit):
     : method process_interaction(action):
     """
 
-    def __init__(self, side, coord, image):
-        super().__init__(side, CavalryLife, coord, CavalryType, image, CavalryArmor,
-                         CavalryRange, CavalrySpeed, CavalryCooldown, CavalryDamage,
-                         CavalryDamageSpread, CavalrySideX, CavalrySideY)
+    def __init__(self, side, coord, images):
+        if side[0] == "order":
+            super().__init__(side, CavalryOrderLife, coord, CavalryType, images, CavalryOrderArmor,
+                             CavalryOrderRange, CavalryOrderSpeed, CavalryOrderCooldown,
+                             CavalryOrderDamage, CavalryOrderDamageSpread, CavalryOrderSideX,
+                             CavalryOrderSideY, CavalryOrderTrainTime, CavalryOrderCost)
+        else:
+            super().__init__(side, CavalryUnionLife, coord, CavalryType, images, CavalryUnionArmor,
+                             CavalryUnionRange, CavalryUnionSpeed, CavalryUnionCooldown,
+                             CavalryUnionDamage, CavalryUnionDamageSpread, CavalryUnionSideX,
+                             CavalryUnionSideY, CavalryUnionTrainTime, CavalryUnionCost)
 
     def update(self, level):
         """
@@ -40,4 +47,4 @@ class Cavalry(Unit):
         return self.reaction(solution, level)
 
     def draw(self, screen, level):
-        unit_draw(self, self.side, self.position(level), screen, self.image, self.XSize, self.YSize)
+        unit_draw(self, self.side, self.position(level), screen, self.give_current_image(), self.XSize, self.YSize)

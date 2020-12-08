@@ -22,7 +22,7 @@ def health_bar(coord, life, full_life, screen):
     :param screen: Surface, where the picture is rendered
     :return:
     """
-    rect(screen, (int((255.0*(full_life-max(life,0)))/(full_life*1.0)), int((255.0*(max(life,0)))/(full_life*1.0)),0), (coord[0], coord[1], int((coord[2]*(max(life,0)))/(full_life*1.0)),coord[3]))
+    rect(screen, (int((255.0*(full_life-max(life, 0)))/(full_life*1.0)), int((255.0*(max(life,0)))/(full_life*1.0)),0), (coord[0], coord[1], int((coord[2]*(max(life,0)))/(full_life*1.0)),coord[3]))
     rect(screen, BLC, coord, 1)
 
 

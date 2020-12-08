@@ -22,10 +22,10 @@ class Alchemist(Unit):
     : method process_interaction(action):
     """
 
-    def __init__(self, side, coord, image):
-        super().__init__(side, AlchemistLife, coord, AlchemistType, image, AlchemistArmor,
+    def __init__(self, side, coord, images):
+        super().__init__(side, AlchemistLife, coord, AlchemistType, images, AlchemistArmor,
                          AlchemistRange, AlchemistSpeed, AlchemistCooldown, AlchemistDamage,
-                         AlchemistDamageSpread, AlchemistSideX, AlchemistSideY)
+                         AlchemistDamageSpread, AlchemistSideX, AlchemistSideY, AlchemistTrainTime, AlchemistCost)
 
     def update(self, level):
         """
@@ -40,4 +40,4 @@ class Alchemist(Unit):
         return self.reaction(solution, level)
 
     def draw(self, screen, level):
-        unit_draw(self, self.side, self.position(level), screen, self.image, self.XSize, self.YSize)
+        unit_draw(self, self.side, self.position(level), screen, self.give_current_image(), self.XSize, self.YSize)

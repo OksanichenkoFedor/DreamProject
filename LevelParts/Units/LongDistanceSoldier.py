@@ -22,10 +22,21 @@ class LongDistanceSoldier(Unit):
     : method process_interaction(action):
     """
 
-    def __init__(self, side, coord, image):
-        super().__init__(side, LongDistanceSoldierLife, coord, LongDistanceSoldierType, image, LongDistanceSoldierArmor,
-                         LongDistanceSoldierRange, LongDistanceSoldierSpeed, LongDistanceSoldierCooldown, LongDistanceSoldierDamage,
-                         LongDistanceSoldierDamageSpread, LongDistanceSoldierSideX, LongDistanceSoldierSideY)
+    def __init__(self, side, coord, images):
+        if side[0] == "order":
+            super().__init__(side, LongDistanceSoldierOrderLife, coord, LongDistanceSoldierType, images,
+                             LongDistanceSoldierOrderArmor, LongDistanceSoldierOrderRange,
+                             LongDistanceSoldierOrderSpeed, LongDistanceSoldierOrderCooldown,
+                             LongDistanceSoldierOrderDamage, LongDistanceSoldierOrderDamageSpread,
+                             LongDistanceSoldierOrderSideX, LongDistanceSoldierOrderSideY,
+                             LongDistanceSoldierOrderTrainTime, LongDistanceSoldierOrderCost)
+        else:
+            super().__init__(side, LongDistanceSoldierUnionLife, coord, LongDistanceSoldierType, images,
+                             LongDistanceSoldierUnionArmor, LongDistanceSoldierUnionRange,
+                             LongDistanceSoldierUnionSpeed, LongDistanceSoldierUnionCooldown,
+                             LongDistanceSoldierUnionDamage, LongDistanceSoldierUnionDamageSpread,
+                             LongDistanceSoldierUnionSideX, LongDistanceSoldierUnionSideY,
+                             LongDistanceSoldierUnionTrainTime, LongDistanceSoldierUnionCost)
 
     def update(self, level):
         """
@@ -40,4 +51,4 @@ class LongDistanceSoldier(Unit):
         return self.reaction(solution, level)
 
     def draw(self, screen, level):
-        unit_draw(self, self.side, self.position(level), screen, self.image, self.XSize, self.YSize)
+        unit_draw(self, self.side, self.position(level), screen, self.give_current_image(), self.XSize, self.YSize)

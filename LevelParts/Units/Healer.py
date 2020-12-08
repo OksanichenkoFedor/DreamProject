@@ -22,10 +22,10 @@ class Healer(Unit):
     : method process_interaction(action):
     """
 
-    def __init__(self, side, coord, image):
-        super().__init__(side, HealerLife, coord, HealerType, image, HealerArmor,
+    def __init__(self, side, coord, images):
+        super().__init__(side, HealerLife, coord, HealerType, images, HealerArmor,
                          HealerRange, HealerSpeed, HealerCooldown, HealerDamage,
-                         HealerDamageSpread, HealerSideX, HealerSideY)
+                         HealerDamageSpread, HealerSideX, HealerSideY, HealerTrainTime, HealerCost)
 
     def update(self, level):
         """
@@ -40,4 +40,4 @@ class Healer(Unit):
         return self.reaction(solution, level)
 
     def draw(self, screen, level):
-        unit_draw(self, self.side, self.position(level), screen, self.image, self.XSize, self.YSize)
+        unit_draw(self, self.side, self.position(level), screen, self.give_current_image(), self.XSize, self.YSize)

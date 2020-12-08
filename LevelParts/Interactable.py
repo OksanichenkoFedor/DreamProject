@@ -3,7 +3,7 @@ class Interactable:
 
     Abstract class of objects, that the action is applied to
 
-    : field self.side[0]: String, which say, what type of interactable we have: "Order" , "Union"
+    : field self.side[0]: String, which say, what type of interactable we have: "order" , "union"
     : field self.side[1]: A string that tells which side the given interactable is located on.
                             If side=="left", than this is interactable, located in the left side of the level
                             If side=="right", than this is interactable, located in the right side of the level

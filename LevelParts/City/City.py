@@ -2,9 +2,12 @@ from Const.Units import *
 from LevelParts.City.Districts.CityCentre import *
 from LevelParts.City.Districts.Mine import *
 from LevelParts.City.Districts.ResearchCentre import *
+from LevelParts.Units.Alchemist import Alchemist
 from LevelParts.Units.Cavalry import Cavalry
+from LevelParts.Units.Healer import Healer
 from LevelParts.Units.HeavyInfantry import HeavyInfantry
 from LevelParts.Units.LightInfantry import LightInfantry
+from LevelParts.Units.LongDistanceSoldier import LongDistanceSoldier
 from LevelParts.ButtonPole import *
 
 
@@ -22,6 +25,7 @@ class City(Interactable):
     : field self.pole : Button Pole of this city
     : field self.tech_level : Level of technologies
     : field self.master : Number of district with master
+    : field self.Units_Images: Dictionary of unit images dictionary
 
     : method self.__init__(side, x, y): Initialise City. Receives side, x, y
     : method self.update(screen, level): Update all parts of city (units, districts) and redraw city
@@ -29,8 +33,7 @@ class City(Interactable):
 
     """
 
-    def __init__(self, side, x, y, image_bruschatka, image_castle, image_square, light_infantry_image,
-                 heavy_infantry_image, shooter_image, support_image, cavalry_image):
+    def __init__(self, side, x, y, image_bruschatka, image_castle, image_square, Units_Images):
         super().__init__(side, CityLife)
         self.image_bruschatka = image_bruschatka
         mine = Mine(side, x + MineX, y + MineY)
@@ -43,14 +46,10 @@ class City(Interactable):
         self.Queue_Units = []
         self.Buffered_Units = []
         self.Districts = []
+        self.Unit_Images = Units_Images
         self.Districts.append(research_centre)
         self.Districts.append(city_centre)
         self.Districts.append(mine)
-        self.light_infantry_image = light_infantry_image
-        self.heavy_infantry_image = heavy_infantry_image
-        self.shooter_image = shooter_image
-        self.support_image = support_image
-        self.cavalry_image = cavalry_image
         self.master = CityCentreNumber
 
         self.tech_level = 0
@@ -108,25 +107,37 @@ class City(Interactable):
         """
 
         :param type: Type of the unit
-        :param road: Number of start road from up to down
+
         """
         is_new_unit = False
+        unit = 0
         if type == LightInfantryType:
-            if self.money >= LightInfantryCost:
-                self.Queue_Units.append(LightInfantry(self.side, ("queue", 0, 0), self.light_infantry_image))
-                self.money -= LightInfantryCost
-                is_new_unit = True
+            unit = LightInfantry(self.side, ("queue", 0, 0), self.Unit_Images[type])
+            is_new_unit = True
         elif type == HeavyInfantryType:
-            if self.money >= HeavyInfantryCost:
-                self.Queue_Units.append(HeavyInfantry(self.side, ("queue", 0, 0), self.heavy_infantry_image))
-                self.money -= HeavyInfantryCost
-                is_new_unit = True
+            unit = HeavyInfantry(self.side, ("queue", 0, 0), self.Unit_Images[type])
+            is_new_unit = True
+        elif type == CavalryType:
+            unit = Cavalry(self.side, ("queue", 0, 0), self.Unit_Images[type])
+            is_new_unit = True
+        elif type == LongDistanceSoldierType:
+            unit = LongDistanceSoldier(self.side, ("queue", 0, 0), self.Unit_Images[type])
+            is_new_unit = True
+        elif type == HealerType:
+            unit = Healer(self.side, ("queue", 0, 0), self.Unit_Images[type])
+            is_new_unit = True
+        elif type == AlchemistType:
+            unit = Alchemist(self.side, ("queue", 0, 0), self.Unit_Images[type])
+            is_new_unit = True
 
+        if is_new_unit:
+            if self.master == CityCentreNumber:
+                unit.train_time = unit.train_time / 2
+                unit.train_timer = unit.train_timer / 2
+            if self.money >= unit.cost:
+                self.Queue_Units.append(unit)
+                self.money -= unit.cost
 
-        if self.master == CityCentreNumber and is_new_unit:
-            self.Queue_Units[len(self.Queue_Units)-1].train_time = self.Queue_Units[len(self.Queue_Units)-1].train_time / 2
-            self.Queue_Units[len(self.Queue_Units) - 1].train_timer = self.Queue_Units[
-                                                                         len(self.Queue_Units) - 1].train_timer / 2
 
 
     def reaction(self, action):

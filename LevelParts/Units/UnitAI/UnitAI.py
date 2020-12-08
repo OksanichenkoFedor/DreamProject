@@ -91,7 +91,7 @@ def unitAI(info: Info):
 
     """
 
-    if info.unit.type == LightInfantryType or info.unit.type == HeavyInfantryType or info.unit.type == CavalryType or info.unit.type == LongRangeInfantryType or info.unit.type == LongDistanceSoldierType:
+    if info.unit.type == LightInfantryType or info.unit.type == HeavyInfantryType or info.unit.type == CavalryType or info.unit.type == LongDistanceSoldierType:
         friendly_distance, friendly_index, enemy_distance, enemy_index= nearestUnit(info)
         solution = []
         first = " "

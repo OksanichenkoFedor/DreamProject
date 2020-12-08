@@ -35,14 +35,12 @@ class Level:
         self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize - MapYSize, MapXSize, MapYSize)
         self.first_city = City(["union", "left"], LevelXSize / 2 - MapXSize / 2 - CityXSize,
                                LevelYSize - CityYSize, self.image_bruschatka, self.image_castle_union,
-                               self.image_square, self.image_unit_pexota_union, self.image_heavy_infantry_union,
-                               self.image_shooter_union, self.image_support_union, self.image_cavalry_union)
+                               self.image_square, self.Union_Units_Images)
         self.first_pole = ButtonPole(LevelXSize / 2 - MapXSize / 2 - CityXSize - ButtonPoleXSize
                                      , LevelYSize - ButtonPoleYSize, [LightInfantryType, "Light Infantry"])
         self.second_city = City(["order", "right"], LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize,
                                 self.image_bruschatka, self.image_castle_order, self.image_square,
-                                self.image_unit_pexota_order, self.image_heavy_infantry_order,
-                               self.image_shooter_order, self.image_support_order, self.image_cavalry_order)
+                                self.Order_Units_Images)
         self.second_pole = ButtonPole(LevelXSize / 2 + MapXSize / 2 + CityXSize, LevelYSize - ButtonPoleYSize,
                                       [LightInfantryType, "Light Infantry"])
         self.but1 = Button(BLC, 0, 0, 100, 75, 10, "Exit", WHT)
@@ -55,16 +53,68 @@ class Level:
         self.image_castle_order = image.load('images/zdanie_orden.png').convert_alpha()
         self.image_castle_union = image.load('images/zdanie_soyuz.png').convert_alpha()
         self.image_square = image.load('images/ploschad.png').convert_alpha()
-        self.image_unit_pexota_order = image.load('images/pekhota_orden.png').convert_alpha()
-        self.image_unit_pexota_union = image.load('images/pekhota_soyuz.png').convert_alpha()
-        self.image_heavy_infantry_order = image.load('images/heavy_infantry_order.png').convert_alpha()
-        self.image_heavy_infantry_union = image.load('images/heavy_infantry_union.png').convert_alpha()
-        self.image_cavalry_order = image.load('images/konnitsa_orden.png').convert_alpha()
-        self.image_cavalry_union = image.load('images/konnitsa_soyuz.png').convert_alpha()
-        self.image_shooter_order = image.load('images/arbalet.png').convert_alpha()
-        self.image_shooter_union = image.load('images/strelok.png').convert_alpha()
-        self.image_support_order = image.load('images/istselitel.png').convert_alpha()
-        self.image_support_union = image.load('images/alkhimik.png').convert_alpha()
+
+        self.Union_Units_Images = {}
+        self.Union_Units_Images[LightInfantryType] = {}
+        massive = []
+        massive.append(image.load('images/pekhota_soyuz.png').convert_alpha())
+        self.Union_Units_Images[LightInfantryType]["motionless"] = [1, massive]
+        # добавлять в self.Union_Units_Images[LightInfantryType] всё остальное
+
+        self.Union_Units_Images[HeavyInfantryType] = {}
+        massive = []
+        massive.append(image.load('images/heavy_infantry_union.png').convert_alpha())
+        self.Union_Units_Images[HeavyInfantryType]["motionless"] = [1, massive]
+        # добавлять в self.Union_Units_Images[HeavyInfantryType] всё остальное
+
+        self.Union_Units_Images[CavalryType] = {}
+        massive = []
+        massive.append(image.load('images/konnitsa_soyuz.png').convert_alpha())
+        self.Union_Units_Images[CavalryType]["motionless"] = [1, massive]
+        # добавлять в self.Union_Units_Images[CavalryType] всё остальное
+
+        self.Union_Units_Images[LongDistanceSoldierType] = {}
+        massive = []
+        massive.append(image.load('images/strelok.png').convert_alpha())
+        self.Union_Units_Images[LongDistanceSoldierType]["motionless"] = [1, massive]
+        # добавлять в self.Union_Units_Images[LongDistanceSoldierType] всё остальное
+
+        self.Union_Units_Images[AlchemistType] = {}
+        massive = []
+        massive.append(image.load('images/alkhimik.png').convert_alpha())
+        self.Union_Units_Images[AlchemistType]["motionless"] = [1, massive]
+        # добавлять в self.Union_Units_Images[AlchemistType] всё остальное
+
+        self.Order_Units_Images = {}
+        self.Order_Units_Images[LightInfantryType] = {}
+        massive = []
+        massive.append(image.load('images/pekhota_orden.png').convert_alpha())
+        self.Order_Units_Images[LightInfantryType]["motionless"] = [1, massive]
+        # добавлять в self.Order_Units_Images[LightInfantryType] всё остальное
+
+        self.Order_Units_Images[HeavyInfantryType] = {}
+        massive = []
+        massive.append(image.load('images/heavy_infantry_order.png').convert_alpha())
+        self.Order_Units_Images[HeavyInfantryType]["motionless"] = [1, massive]
+        # добавлять в self.Order_Units_Images[HeavyInfantryType] всё остальное
+
+        self.Order_Units_Images[CavalryType] = {}
+        massive = []
+        massive.append(image.load('images/konnitsa_orden.png').convert_alpha())
+        self.Order_Units_Images[CavalryType]["motionless"] = [1, massive]
+        # добавлять в self.Order_Units_Images[CavalryType] всё остальное
+
+        self.Order_Units_Images[LongDistanceSoldierType] = {}
+        massive = []
+        massive.append(image.load('images/arbalet.png').convert_alpha())
+        self.Order_Units_Images[LongDistanceSoldierType]["motionless"] = [1, massive]
+        # добавлять в self.Order_Units_Images[LongDistanceSoldierType] всё остальное
+
+        self.Order_Units_Images[HealerType] = {}
+        massive = []
+        massive.append(image.load('images/istselitel.png').convert_alpha())
+        self.Order_Units_Images[HealerType]["motionless"] = [1, massive]
+        # добавлять в self.Order_Units_Images[HealerType] всё остальное
 
     def update(self):
         """
@@ -75,13 +125,27 @@ class Level:
         if self.first_city.update(self) == "tech up":
             if self.first_city.tech_level == 1:
                 self.first_pole.add_button([HeavyInfantryType, "Heavy Infantry"])
-            else:
-                pass
+            elif self.first_city.tech_level == 2:
+                self.first_pole.add_button([CavalryType, "Cavalry"])
+            elif self.first_city.tech_level == 3:
+                self.first_pole.add_button([LongDistanceSoldierType, "Long Distance Soldier"])
+            elif self.first_city.tech_level == 4:
+                if self.first_city.side[0] == "order":
+                    self.first_pole.add_button([HealerType, "Healer"])
+                else:
+                    self.first_pole.add_button([AlchemistType, "Alchemist"])
         if self.second_city.update(self) == "tech up":
             if self.second_city.tech_level == 1:
                 self.second_pole.add_button([HeavyInfantryType, "Heavy Infantry"])
-            else:
-                pass
+            elif self.second_city.tech_level == 2:
+                self.second_pole.add_button([CavalryType, "Cavalry"])
+            elif self.second_city.tech_level == 3:
+                self.second_pole.add_button([LongDistanceSoldierType, "Long Distance Soldier"])
+            elif self.second_city.tech_level == 4:
+                if self.second_city.side[0] == "order":
+                    self.second_pole.add_button([HealerType, "Healer"])
+                else:
+                    self.second_pole.add_button([AlchemistType, "Alchemist"])
         if self.first_city.life < 0:
             return 1
         elif self.second_city.life < 0:
