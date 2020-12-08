@@ -91,7 +91,7 @@ def unitAI(info: Info):
 
     """
 
-    if info.unit.type == LightInfantryType or info.unit.type == HeavyInfantryType:
+    if info.unit.type == LightInfantryType or info.unit.type == HeavyInfantryType or info.unit.type == CavalryType or info.unit.type == LongRangeInfantryType or info.unit.type == LongDistanceSoldierType:
         friendly_distance, friendly_index, enemy_distance, enemy_index= nearestUnit(info)
         solution = []
         first = " "
@@ -106,48 +106,163 @@ def unitAI(info: Info):
                 first = "interact"
             else:
                 first = "move forward"
-    solution.append(first)
-    if first == "interact":
-        if enemy_index == 0.1:
-            # solution[1] = interactable
-            # solution[2] = action
-            solution.append(info.enemy_districts[info.unit.coord[1]])
-            solution.append(("attacked", info.unit.damage+randint(-info.unit.damage_spread, info.unit.damage_spread) ))
-        else:
+        solution.append(first)
+        if first == "interact":
+            if enemy_index == 0.1:
+                # solution[1] = interactable
+                # solution[2] = action
+                solution.append(info.enemy_districts[info.unit.coord[1]])
+                solution.append(("attacked", info.unit.damage+randint(-info.unit.damage_spread, info.unit.damage_spread) ))
+            else:
+                if info.unit.coord[0] == "battle_pole":
+                    if enemy_distance < info.unit.range:
+                        solution.append(info.enemies[enemy_index])
+                        solution.append(("attacked", info.unit.damage))
+                    else:
+                        solution[0] = "moving to unit"
+                        rast = ((info.enemies[enemy_index].coord[2] - info.unit.coord[2])**2+(info.enemies[enemy_index].coord[1] - info.unit.coord[1])**2)**0.5
+                        sin = (info.enemies[enemy_index].coord[2] - info.unit.coord[2])/rast #nearest_unit[1][0]
+                        cos = (info.enemies[enemy_index].coord[1] - info.unit.coord[1])/rast #nearest_unit[1][0]
+                        solution.append(cos)
+                        solution.append(sin)
+
+                else:
+                    if info.unit.coord[0] == "left":
+                        if enemy_distance < info.unit.range/info.total_length_L[info.unit.coord[1]]:
+                            solution.append(info.enemies[enemy_index])
+                            solution.append(["attacked", info.unit.damage+randint(-info.unit.damage_spread,info.unit.damage_spread)])
+                        else:
+                            solution[0] = "moving to unit"
+                            if info.unit.coord[2] < info.enemies[enemy_index].coord[2]:
+                                solution.append(1)
+                            else:
+                                solution.append(-1)
+
+                    elif info.unit.coord[0] == "right":
+                        if enemy_distance < info.unit.range / info.total_length_R[info.unit.coord[1]]:
+                            solution.append(info.enemies[enemy_index])
+                            solution.append(["attacked", info.unit.damage+randint(-info.unit.damage_spread,info.unit.damage_spread)])
+                        else:
+                            solution[0] = "moving to unit"
+                            if info.unit.coord[2] < info.enemies[enemy_index].coord[2]:
+                                solution.append(1)
+                            else:
+                                solution.append(-1)
+
+
+
+
+    elif info.unit.type == HealerType:
+        friendly_distance, friendly_index, enemy_distance, enemy_index= nearestUnit(info)
+        solution = []
+        first = " "
+
+        if info.unit.side[1] == "left":
+            if (friendly_index != 0.1):
+                first = "interact"
+            else:
+                first = "move forward"
+        elif info.unit.side[1] == "right":
+            if (friendly_index != 0.1):
+                first = "interact"
+            else:
+                first = "move forward"
+        solution.append(first)
+        if first == "interact":
+            #if friendly_index != 0.1:
             if info.unit.coord[0] == "battle_pole":
-                if enemy_distance < info.unit.range:
-                    solution.append(info.enemies[enemy_index])
-                    solution.append(("attacked", LightInfantryDamage))
+                if friendly_distance < info.unit.range:
+                    solution.append(info.friends[friendly_index])
+                    solution.append(("healed", info.unit.damage))
                 else:
                     solution[0] = "moving to unit"
-                    rast = ((info.enemies[enemy_index].coord[2] - info.unit.coord[2])**2+(info.enemies[enemy_index].coord[1] - info.unit.coord[1])**2)**0.5
-                    sin = (info.enemies[enemy_index].coord[2] - info.unit.coord[2])/rast #nearest_unit[1][0]
-                    cos = (info.enemies[enemy_index].coord[1] - info.unit.coord[1])/rast #nearest_unit[1][0]
+                    rast = ((info.friends[friendly_index].coord[2] - info.unit.coord[2])**2+(info.friends[friendly_index].coord[1] - info.unit.coord[1])**2)**0.5
+                    sin = (info.friends[friendly_index].coord[2] - info.unit.coord[2])/rast #nearest_unit[1][0]
+                    cos = (info.friends[friendly_index].coord[1] - info.unit.coord[1])/rast #nearest_unit[1][0]
                     solution.append(cos)
                     solution.append(sin)
 
             else:
                 if info.unit.coord[0] == "left":
-                    if enemy_distance < info.unit.range/info.total_length_L[info.unit.coord[1]]:
-                        solution.append(info.enemies[enemy_index])
-                        solution.append(["attacked", info.unit.damage+randint(-info.unit.damage_spread,info.unit.damage_spread)])
+                    if friendly_distance < info.unit.range/info.total_length_L[info.unit.coord[1]]:
+                        solution.append(info.friends[friendly_index])
+                        solution.append(["healed", info.unit.damage+randint(-info.unit.damage_spread,info.unit.damage_spread)])
                     else:
                         solution[0] = "moving to unit"
-                        if info.unit.coord[2] < info.enemies[enemy_index].coord[2]:
+                        if info.unit.coord[2] < info.friends[friendly_index].coord[2]:
                             solution.append(1)
                         else:
                             solution.append(-1)
 
                 elif info.unit.coord[0] == "right":
-                    if enemy_distance < info.unit.range / info.total_length_R[info.unit.coord[1]]:
-                        solution.append(info.enemies[enemy_index])
-                        solution.append(["attacked", info.unit.damage+randint(-info.unit.damage_spread,info.unit.damage_spread)])
+                    if friendly_distance < info.unit.range / info.total_length_R[info.unit.coord[1]]:
+                        solution.append(info.friends[friendly_index])
+                        solution.append(["healed", info.unit.damage+randint(-info.unit.damage_spread,info.unit.damage_spread)])
                     else:
                         solution[0] = "moving to unit"
-                        if info.unit.coord[2] < info.enemies[enemy_index].coord[2]:
+                        if info.unit.coord[2] < info.friends[friendly_index].coord[2]:
                             solution.append(1)
                         else:
                             solution.append(-1)
+
+    elif info.unit.type == AlchemistType:
+        friendly_distance, friendly_index, enemy_distance, enemy_index = nearestUnit(info)
+        solution = []
+        first = " "
+
+        if info.unit.side[1] == "left":
+            if (friendly_index != 0.1):
+                first = "interact"
+            else:
+                first = "move forward"
+        elif info.unit.side[1] == "right":
+            if (friendly_index != 0.1):
+                first = "interact"
+            else:
+                first = "move forward"
+        solution.append(first)
+        if first == "interact":
+            # if friendly_index != 0.1:
+            if info.unit.coord[0] == "battle_pole":
+                if friendly_distance < info.unit.range:
+                    solution.append(info.friends[friendly_index])
+                    solution.append(("increased", info.unit.damage))
+                else:
+                    solution[0] = "moving to unit"
+                    rast = ((info.friends[friendly_index].coord[2] - info.unit.coord[2]) ** 2 + (
+                                info.friends[friendly_index].coord[1] - info.unit.coord[1]) ** 2) ** 0.5
+                    sin = (info.friends[friendly_index].coord[2] - info.unit.coord[2]) / rast  # nearest_unit[1][0]
+                    cos = (info.friends[friendly_index].coord[1] - info.unit.coord[1]) / rast  # nearest_unit[1][0]
+                    solution.append(cos)
+                    solution.append(sin)
+
+            else:
+                if info.unit.coord[0] == "left":
+                    if friendly_distance < info.unit.range / info.total_length_L[info.unit.coord[1]]:
+                        solution.append(info.friends[friendly_index])
+                        solution.append(
+                            ["increased", info.unit.damage + randint(-info.unit.damage_spread, info.unit.damage_spread)])
+                    else:
+                        solution[0] = "moving to unit"
+                        if info.unit.coord[2] < info.friends[friendly_index].coord[2]:
+                            solution.append(1)
+                        else:
+                            solution.append(-1)
+
+                elif info.unit.coord[0] == "right":
+                    if friendly_distance < info.unit.range / info.total_length_R[info.unit.coord[1]]:
+                        solution.append(info.friends[friendly_index])
+                        solution.append(
+                            ["increased", info.unit.damage + randint(-info.unit.damage_spread, info.unit.damage_spread)])
+                    else:
+                        solution[0] = "moving to unit"
+                        if info.unit.coord[2] < info.friends[friendly_index].coord[2]:
+                            solution.append(1)
+                        else:
+                            solution.append(-1)
+
+
+
     return solution
 
 
