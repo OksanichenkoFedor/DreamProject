@@ -66,7 +66,7 @@ class City(Interactable):
 
         """
         if len(self.Queue_Units) > 0:
-            if self.Queue_Units[0].train_time == 0:
+            if self.Queue_Units[0].train_time <= 0 and len(self.Buffered_Units) <= MaximumBufferVolume:
                 self.Queue_Units[0].XSize /= 2
                 self.Queue_Units[0].YSize /= 2
                 self.Queue_Units[0].coord[0] = "buffered"
@@ -105,8 +105,6 @@ class City(Interactable):
             for i in range(len(self.Buffered_Units) - 1, -1, -1):
                 self.Buffered_Units[i].draw(screen, level)
 
-
-
     def add_unit(self, type):
         """
 
@@ -141,8 +139,6 @@ class City(Interactable):
             if self.money >= unit.cost:
                 self.Queue_Units.append(unit)
                 self.money -= unit.cost
-
-
 
     def reaction(self, action):
         if action[0] == "add unit":

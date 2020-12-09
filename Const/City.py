@@ -14,6 +14,7 @@ CityCentreNumber = 1
 BufferedAreaX1 = 90
 BufferedAreaX2 = 130
 BufferedAreaY = 435
+MaximumBufferVolume = 5
 EachTechPoints = 200
 MineLife = 1000
 MineX = 80

@@ -13,6 +13,7 @@ class Level:
     : field map: Map of the game
     : field first_city: City of first player
     : field second_city: Сity of second player
+    : field Images: Dictionary of unit images dictionaries
 
     : method __init__(map_file): Initialise level. Receives map_file (for the initialisation of map)
     : method update(screen): Update level and its parts. Redraw level and map
