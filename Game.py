@@ -59,68 +59,6 @@ def true_image_import():
                 number += 1
             Order_Units_Images[unit_type][animation] = [animation_duration[animation], massive]
 
-    """Union_Units_Images = {}
-    Union_Units_Images[LightInfantryType] = {}
-    massive = []
-    massive.append(pygame.image.load('images/pekhota_soyuz.png').convert_alpha())
-    Union_Units_Images[LightInfantryType]["Motionless"] = [1, massive]
-    # добавлять в Union_Units_Images[LightInfantryType] всё остальное
-
-    Union_Units_Images[HeavyInfantryType] = {}
-    massive = []
-    massive.append(pygame.image.load('images/heavy_infantry_union.png').convert_alpha())
-    Union_Units_Images[HeavyInfantryType]["Motionless"] = [1, massive]
-    # добавлять в Union_Units_Images[HeavyInfantryType] всё остальное
-
-    Union_Units_Images[CavalryType] = {}
-    massive = []
-    massive.append(pygame.image.load('images/konnitsa_soyuz.png').convert_alpha())
-    Union_Units_Images[CavalryType]["Motionless"] = [1, massive]
-    # добавлять в Union_Units_Images[CavalryType] всё остальное
-
-    Union_Units_Images[LongDistanceSoldierType] = {}
-    massive = []
-    massive.append(pygame.image.load('images/strelok.png').convert_alpha())
-    Union_Units_Images[LongDistanceSoldierType]["Motionless"] = [1, massive]
-    # добавлять в Union_Units_Images[LongDistanceSoldierType] всё остальное
-
-    Union_Units_Images[AlchemistType] = {}
-    massive = []
-    massive.append(pygame.image.load('images/alkhimik.png').convert_alpha())
-    Union_Units_Images[AlchemistType]["Motionless"] = [1, massive]
-    # добавлять в Union_Units_Images[AlchemistType] всё остальное
-
-    Order_Units_Images = {}
-    Order_Units_Images[LightInfantryType] = {}
-    massive = []
-    massive.append(pygame.image.load('images/pekhota_orden.png').convert_alpha())
-    Order_Units_Images[LightInfantryType]["Motionless"] = [1, massive]
-    # добавлять в self.Order_Units_Images[LightInfantryType] всё остальное
-
-    Order_Units_Images[HeavyInfantryType] = {}
-    massive = []
-    massive.append(pygame.image.load('images/heavy_infantry_order.png').convert_alpha())
-    Order_Units_Images[HeavyInfantryType]["Motionless"] = [1, massive]
-    # добавлять в self.Order_Units_Images[HeavyInfantryType] всё остальное
-
-    Order_Units_Images[CavalryType] = {}
-    massive = []
-    massive.append(pygame.image.load('images/konnitsa_orden.png').convert_alpha())
-    Order_Units_Images[CavalryType]["Motionless"] = [1, massive]
-    # добавлять в self.Order_Units_Images[CavalryType] всё остальное
-
-    Order_Units_Images[LongDistanceSoldierType] = {}
-    massive = []
-    massive.append(pygame.image.load('images/arbalet.png').convert_alpha())
-    Order_Units_Images[LongDistanceSoldierType]["Motionless"] = [1, massive]
-    # добавлять в self.Order_Units_Images[LongDistanceSoldierType] всё остальное
-
-    Order_Units_Images[HealerType] = {}
-    massive = []
-    massive.append(pygame.image.load('images/istselitel.png').convert_alpha())
-    Order_Units_Images[HealerType]["Motionless"] = [1, massive]
-    # добавлять в self.Order_Units_Images[HealerType] всё остальное"""
-
     return Another_Images, Union_Units_Images, Order_Units_Images
 
 
