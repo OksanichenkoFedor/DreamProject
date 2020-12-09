@@ -73,7 +73,7 @@ class Unit(Interactable):
         self.YSize = YSize
         self.train_timer = train_time
         self.train_time = train_time
-        self.animation = "motionless"
+        self.animation = MotionlessAnimationType
         self.animation_timer = 1
         self.animation_time = 0
         self.cost = cost
@@ -259,6 +259,7 @@ class Unit(Interactable):
 
     def __del__(self):
         pass
+
 
 if __name__ == "__main__":
     print("This module is not for direct call!")

@@ -26,6 +26,7 @@ class City(Interactable):
     : field self.tech_level : Level of technologies
     : field self.master : Number of district with master
     : field self.Units_Images: Dictionary of unit images dictionary
+    : field self.Another_Images: Dictionary of another images
 
     : method self.__init__(side, x, y): Initialise City. Receives side, x, y
     : method self.update(screen, level): Update all parts of city (units, districts) and redraw city
@@ -33,11 +34,12 @@ class City(Interactable):
 
     """
 
-    def __init__(self, side, x, y, image_bruschatka, image_castle, image_square, Units_Images):
+    def __init__(self, side, x, y, Another_Images, Units_Images):
         super().__init__(side, CityLife)
-        self.image_bruschatka = image_bruschatka
+        self.Another_Images = Another_Images
         mine = Mine(side, x + MineX, y + MineY)
-        city_centre = CityCentre(side, x + CityCentreX, y + CityCentreY, image_castle, image_square)
+        city_centre = CityCentre(side, x + CityCentreX, y + CityCentreY, self.Another_Images["castle "+self.side[0]],
+                                 Another_Images["square"])
         research_centre = ResearchCentre(side, x + ResearchCentreX, y + ResearchCentreY)
         self.x = x
         self.y = y
@@ -63,8 +65,10 @@ class City(Interactable):
         :param level: Level of the game
 
         """
-        if len(self.Queue_Units) > 0 :
+        if len(self.Queue_Units) > 0:
             if self.Queue_Units[0].train_time == 0:
+                self.Queue_Units[0].XSize /= 2
+                self.Queue_Units[0].YSize /= 2
                 self.Queue_Units[0].coord[0] = "buffered"
                 self.Buffered_Units.append(self.Queue_Units[0])
                 self.Queue_Units.pop(0)
@@ -92,7 +96,7 @@ class City(Interactable):
             return "tech up"
 
     def draw(self, screen, level):
-        city_draw(self, self.side[0], screen, self.image_bruschatka)
+        city_draw(self, self.side[0], screen, self.Another_Images["bruschatka"])
         for district in self.Districts:
             district.draw(screen)
         for unit in self.Units:
@@ -146,6 +150,8 @@ class City(Interactable):
         elif action[0] == "throw unit":
             if len(self.Buffered_Units)>0:
                 self.Buffered_Units[0].coord = [self.side[1], action[1], 0]
+                self.Buffered_Units[0].XSize *= 2
+                self.Buffered_Units[0].YSize *= 2
                 self.Units.append(self.Buffered_Units[0])
                 self.Buffered_Units.pop(0)
                 self.buffer_update()

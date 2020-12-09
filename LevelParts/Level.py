@@ -1,14 +1,11 @@
 from Draws.LevelDraws import *
 from LevelParts.City.City import City
 from LevelParts.ButtonPole import *
-from pygame import image
 import pygame
 from Const.Units import *
 
 
 class Level:
-    # TODO Создать класс уровня который будет мониторить ситуацию происходящюю во время игры, инициализируетс я в
-    #  главном меню
     """
 
     Class of game level
@@ -23,7 +20,7 @@ class Level:
 
     """
 
-    def __init__(self, map_file, screen):
+    def __init__(self, map_file, screen, Images):
         """
 
         Initialise of level
@@ -31,15 +28,16 @@ class Level:
         :param screen: Surface, where the picture is rendered
 
         """
-        self.image_import()
+        self.Another_Images = Images[0]
+        self.Union_Units_Images = Images[1]
+        self.Order_Units_Images = Images[2]
         self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize - MapYSize, MapXSize, MapYSize)
         self.first_city = City(["union", "left"], LevelXSize / 2 - MapXSize / 2 - CityXSize,
-                               LevelYSize - CityYSize, self.image_bruschatka, self.image_castle_union,
-                               self.image_square, self.Union_Units_Images)
+                               LevelYSize - CityYSize, self.Another_Images, self.Union_Units_Images)
         self.first_pole = ButtonPole(LevelXSize / 2 - MapXSize / 2 - CityXSize - ButtonPoleXSize
                                      , LevelYSize - ButtonPoleYSize, [LightInfantryType, "Light Infantry"])
         self.second_city = City(["order", "right"], LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize,
-                                self.image_bruschatka, self.image_castle_order, self.image_square,
+                                self.Another_Images,
                                 self.Order_Units_Images)
         self.second_pole = ButtonPole(LevelXSize / 2 + MapXSize / 2 + CityXSize, LevelYSize - ButtonPoleYSize,
                                       [LightInfantryType, "Light Infantry"])
@@ -48,73 +46,7 @@ class Level:
 
 
 
-    def image_import(self):
-        self.image_bruschatka = image.load('images/bruschatka.png').convert_alpha()
-        self.image_castle_order = image.load('images/zdanie_orden.png').convert_alpha()
-        self.image_castle_union = image.load('images/zdanie_soyuz.png').convert_alpha()
-        self.image_square = image.load('images/ploschad.png').convert_alpha()
 
-        self.Union_Units_Images = {}
-        self.Union_Units_Images[LightInfantryType] = {}
-        massive = []
-        massive.append(image.load('images/pekhota_soyuz.png').convert_alpha())
-        self.Union_Units_Images[LightInfantryType]["motionless"] = [1, massive]
-        # добавлять в self.Union_Units_Images[LightInfantryType] всё остальное
-
-        self.Union_Units_Images[HeavyInfantryType] = {}
-        massive = []
-        massive.append(image.load('images/heavy_infantry_union.png').convert_alpha())
-        self.Union_Units_Images[HeavyInfantryType]["motionless"] = [1, massive]
-        # добавлять в self.Union_Units_Images[HeavyInfantryType] всё остальное
-
-        self.Union_Units_Images[CavalryType] = {}
-        massive = []
-        massive.append(image.load('images/konnitsa_soyuz.png').convert_alpha())
-        self.Union_Units_Images[CavalryType]["motionless"] = [1, massive]
-        # добавлять в self.Union_Units_Images[CavalryType] всё остальное
-
-        self.Union_Units_Images[LongDistanceSoldierType] = {}
-        massive = []
-        massive.append(image.load('images/strelok.png').convert_alpha())
-        self.Union_Units_Images[LongDistanceSoldierType]["motionless"] = [1, massive]
-        # добавлять в self.Union_Units_Images[LongDistanceSoldierType] всё остальное
-
-        self.Union_Units_Images[AlchemistType] = {}
-        massive = []
-        massive.append(image.load('images/alkhimik.png').convert_alpha())
-        self.Union_Units_Images[AlchemistType]["motionless"] = [1, massive]
-        # добавлять в self.Union_Units_Images[AlchemistType] всё остальное
-
-        self.Order_Units_Images = {}
-        self.Order_Units_Images[LightInfantryType] = {}
-        massive = []
-        massive.append(image.load('images/pekhota_orden.png').convert_alpha())
-        self.Order_Units_Images[LightInfantryType]["motionless"] = [1, massive]
-        # добавлять в self.Order_Units_Images[LightInfantryType] всё остальное
-
-        self.Order_Units_Images[HeavyInfantryType] = {}
-        massive = []
-        massive.append(image.load('images/heavy_infantry_order.png').convert_alpha())
-        self.Order_Units_Images[HeavyInfantryType]["motionless"] = [1, massive]
-        # добавлять в self.Order_Units_Images[HeavyInfantryType] всё остальное
-
-        self.Order_Units_Images[CavalryType] = {}
-        massive = []
-        massive.append(image.load('images/konnitsa_orden.png').convert_alpha())
-        self.Order_Units_Images[CavalryType]["motionless"] = [1, massive]
-        # добавлять в self.Order_Units_Images[CavalryType] всё остальное
-
-        self.Order_Units_Images[LongDistanceSoldierType] = {}
-        massive = []
-        massive.append(image.load('images/arbalet.png').convert_alpha())
-        self.Order_Units_Images[LongDistanceSoldierType]["motionless"] = [1, massive]
-        # добавлять в self.Order_Units_Images[LongDistanceSoldierType] всё остальное
-
-        self.Order_Units_Images[HealerType] = {}
-        massive = []
-        massive.append(image.load('images/istselitel.png').convert_alpha())
-        self.Order_Units_Images[HealerType]["motionless"] = [1, massive]
-        # добавлять в self.Order_Units_Images[HealerType] всё остальное
 
     def update(self):
         """
