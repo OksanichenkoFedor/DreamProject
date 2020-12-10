@@ -73,7 +73,7 @@ pause_menu_screen = pygame.display.set_mode((int(PauseMenuXSize*DrawingCoefficie
 main_screen.blit(main_menu_screen, (0, 0))
 main_screen.blit(level_screen, (0, 0))
 main_screen.blit(pause_menu_screen, (0, 0))
-Test_Level = Level(map_drawer, level_screen, true_image_import())
+Test_Level = Level(map_drawer, level_screen, true_image_import(),[False, False], [0,0])
 Main_Menu = MainMenu(main_menu_screen)
 Pause_Menu = PauseMenu(pause_menu_screen)
 pygame.display.update()

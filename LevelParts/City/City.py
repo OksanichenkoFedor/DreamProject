@@ -144,7 +144,7 @@ class City(Interactable):
         if action[0] == "add unit":
             self.add_unit(action[1])
         elif action[0] == "throw unit":
-            if len(self.Buffered_Units)>0:
+            if len(self.Buffered_Units) > 0:
                 self.Buffered_Units[0].coord = [self.side[1], action[1], 0]
                 self.Buffered_Units[0].XSize *= 2
                 self.Buffered_Units[0].YSize *= 2

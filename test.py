@@ -1,6 +1,4 @@
+import numpy as np
 
-
-A = []
-
-for i in range(len(A)):
+for i in range(10, 0, -1):
     print(i)

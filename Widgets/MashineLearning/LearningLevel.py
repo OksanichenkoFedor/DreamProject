@@ -47,6 +47,8 @@ class LearningLevel():
         running = True
         while running:
             timer += 1
+            self.union_score -= TimeCost
+            self.order_score -= TimeCost
             self.update()
             if self.first_city.life<0:
                 running = False
@@ -168,6 +170,9 @@ class LearningLevel():
 
         union_info.append(len(self.first_city.Buffered_Units))
 
+        union_info.append(self.first_city.money)
+        union_info.append(self.first_city.tech_level)
+
         union_info = np.array(union_info, dtype=float)
 
         order_info = []
@@ -198,9 +203,9 @@ class LearningLevel():
 
         order_info.append(len(self.second_city.Buffered_Units))
 
-        order_info = np.array(order_info, dtype=float)
+        order_info.append(self.second_city.money)
+        order_info.append(self.second_city.tech_level)
 
-        print(union_info.shape)
-        print(order_info.shape)
+        order_info = np.array(order_info, dtype=float)
 
         return union_info, order_info

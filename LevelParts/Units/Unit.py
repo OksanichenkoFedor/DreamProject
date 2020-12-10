@@ -257,7 +257,7 @@ class Unit(Interactable):
         """
         return self.images[self.animation][1][0]
 
-    def __del__(self):
+    def changing_animation(self, animation):
         pass
 
 
