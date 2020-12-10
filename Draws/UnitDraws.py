@@ -50,16 +50,6 @@ def unit_draw(unit, unit_side, unit_position, screen, image_unit, XSize, YSize):
                                         (massive_multiply((XSize, YSize),
                                                           DrawingCoefficient)))
     screen.blit(image_unit, massive_multiply(position, DrawingCoefficient))
-    if unit_side[0] == "order":
-        if unit_side[1] == "left":
-            pass
-        else:
-            pass
-    else:
-        if unit_side[1] == "left":
-            pass
-        else:
-            pass
 
 
 if __name__ == "__main__":

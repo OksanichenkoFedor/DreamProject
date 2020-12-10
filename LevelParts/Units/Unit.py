@@ -40,6 +40,7 @@ class Unit(Interactable):
     : field self.animation_timer: Time, left for animation
     : field self.animation_total_time: Total time of current animation
     : field self.cost: Cost of this unit
+    : field self.is_buffed: Boolean, which is true if unit buffed
 
     : method __init__(side, life, coord, unit_type, armor): Initialise Unit. Receives side, life, coord, unit_type,
                                                                                       image, armor, attack_range, speed,
@@ -77,6 +78,7 @@ class Unit(Interactable):
         self.animation_timer = 1
         self.animation_time = 0
         self.cost = cost
+        self.is_buffed = False
 
     def update(self, level):
         pass
@@ -95,7 +97,7 @@ class Unit(Interactable):
         """
         # Написать нормальное перемещение по дорогам
         if solution[0] == "move forward":
-
+            self.change_animation(MovementAnimationType)
             if self.side[1] == "left":    #Юнит из левого города
                 if self.coord[0] == "left":    #Юнит на левой дороге
                     if self.coord[2] < 1:
@@ -168,10 +170,12 @@ class Unit(Interactable):
 
         elif solution[0] == "interact":
             if self.interact_timer == 0:
+                self.change_animation(DealinDamageAnimationType)
                 solution[1].process_interaction(solution[2])
                 self.interact_timer = self.cooldown
 
         elif solution[0] == "moving to unit":
+            self.change_animation(MovementAnimationType)
             if self.coord[0] == "battle_pole":
                 self.coord[1] += solution[1]*self.speed
                 self.coord[2] += solution[2]*self.speed
@@ -231,10 +235,15 @@ class Unit(Interactable):
                                       2.) Parameters, dependent on what we would do
                 """
         if action[0] == "attacked":
+            self.change_animation(TakingDamageAnimationType)
             self.life -= max(action[1]-self.armor, 0)
         elif action[0] == "healed":
             self.life = min(action[1] + self.life, self.full_life)
         elif action[0] == "increased":
+            if not self.is_buffed:
+                self.XSize *= BuffSizeIncreasing
+                self.YSize *= BuffSizeIncreasing
+                self.is_buffed = True
             self.damage *= action[1]/100 + 1.0
             self.damage_spread *= action[1]/100 + 1.0
 
@@ -255,9 +264,11 @@ class Unit(Interactable):
         :return: Current image
 
         """
+        image_number = animation_duration[self.animation]
+
         return self.images[self.animation][1][0]
 
-    def changing_animation(self, animation):
+    def change_animation(self, animation):
         pass
 
 

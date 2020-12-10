@@ -16,12 +16,14 @@ ButtonPoleYSize = CityYSize
 ButtonAnimationTime = 50
 ButtonPoleButtonXSize = ButtonPoleXSize*3.0/4.0
 ButtonPoleButtonYSize = ButtonPoleButtonXSize*1.4
+BuffSizeIncreasing = 1.1
 TakingDamageAnimationType = "TakeDamage"
 DealinDamageAnimationType = "DealDamage"
 DeathAnimationType = "Death"
 MovementAnimationType = "Movement"
 MotionlessAnimationType = "Motionless"
-
+animation_duration = {MotionlessAnimationType: 1, MovementAnimationType: 0, DealinDamageAnimationType: 0,
+                      TakingDamageAnimationType: 0, DeathAnimationType: 0}
 
 WHT = (255, 255, 255)
 BLC = (0, 0, 0)

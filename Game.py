@@ -16,13 +16,6 @@ def true_image_import():
     order_unit_types = [LightInfantryType, HeavyInfantryType, CavalryType, LongDistanceSoldierType, HealerType]
     animation_types = [MotionlessAnimationType, MovementAnimationType, DealinDamageAnimationType,
                        TakingDamageAnimationType, DeathAnimationType]
-    animation_duration = {}
-    animation_duration[MotionlessAnimationType] = 1
-    animation_duration[MovementAnimationType] = 0
-    animation_duration[DealinDamageAnimationType] = 0
-    animation_duration[TakingDamageAnimationType] = 0
-    animation_duration[DeathAnimationType] = 0
-
     number = 0
 
     Another_Images = {}
