@@ -79,10 +79,11 @@ def learning_iteration(learning_rate, union_parents, order_parents):
         for j in range(ParentsNumber):
             for i in range(len(NNLayers) - 1):
                 matrix[i] = matrix[i] + shares[j]*order_parents[j][0][i] + \
-                            learning_rate*np.random.sample((NNLayers[i + 1], NNLayers[i]))
+                            learning_rate*(2.0*np.random.sample((NNLayers[i + 1], NNLayers[i])) -
+                                           np.ones((NNLayers[i + 1], NNLayers[i]), dtype=float))
             for i in range(len(NNLayers) - 1):
                 shift[i] = shift[i] + shares[j]*order_parents[j][1][i] + \
-                           learning_rate*np.random.sample((NNLayers[i + 1], 1))
+                           learning_rate*(2.0*np.random.sample((NNLayers[i + 1], 1))-np.ones((NNLayers[i + 1], 1)))
         order_childs.append([matrix, shift])
 
     for i in range(ParentsNumber):
