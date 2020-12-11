@@ -43,6 +43,7 @@ def input_Neural_Network(file_name):
         shift.append(np.zeros((NNLayers[i + 1], 1), dtype=float))
         for j in range(NNLayers[i+1]):
             shift[i][j][0] = float(file_obj.readline())
+    file_obj.close()
     return matrix, shift
 
 
@@ -53,10 +54,11 @@ def output_Neural_Network(NN, file_name):
     for i in range(len(NNLayers)-1):
         for j in range(NNLayers[i+1]):
             for k in range(NNLayers[i]):
-                file_obj.writeline(str(matrix[i][j][k]) + '\n')
+                file_obj.write(str(matrix[i][j][k]) + '\n')
     for i in range(len(NNLayers)-1):
         for j in range(NNLayers[i+1]):
-            file_obj.writeline(str(shift[i][j][0]) + '\n')
+            file_obj.write(str(shift[i][j][0]) + '\n')
+    file_obj.close()
 
 
 def learning_iteration(learning_rate, union_parents, order_parents):
@@ -180,7 +182,7 @@ union_parents, order_parents = generate_random_parents()
 
 number = 0
 
-while number < 100:
+while number < 1000:
     number += 1
     start_time = time.process_time()
     union_parents, order_parents = learning_iteration(LearningRate, union_parents, order_parents)
@@ -193,8 +195,8 @@ while number < 100:
     print(" ")
     print("-----------")
     if number % 10 == 0:
-        file_name = "Widgets/MashineLearning/differentAI" + "UnionNN" + str(number) + ".txt"
+        file_name = "Widgets/MashineLearning/differentAI/" + "UnionNN" + str(number) + ".txt"
         output_Neural_Network(union_parents[0], file_name)
-        file_name = "Widgets/MashineLearning/differentAI" + "OrderNN" + str(number) + ".txt"
+        file_name = "Widgets/MashineLearning/differentAI/" + "OrderNN" + str(number) + ".txt"
         output_Neural_Network(order_parents[0], file_name)
         print("Saved")

@@ -1,8 +1,8 @@
-import pygame
 import os
 from LevelParts.Level import *
 from LevelParts.Menu.MainMenu import *
 from LevelParts.Menu.PauseMenu import *
+from Widgets.MashineLearning.NeuralNetwork import *
 """
 
 Do the whole program
@@ -10,6 +10,7 @@ Do the whole program
 """
 
 #Импорт картинок
+
 
 def true_image_import():
     union_unit_types = [LightInfantryType, HeavyInfantryType, CavalryType, LongDistanceSoldierType, AlchemistType]
@@ -55,6 +56,26 @@ def true_image_import():
     return Another_Images, Union_Units_Images, Order_Units_Images
 
 
+# Импорт нейросети
+
+
+def input_Neural_Network(file_name):
+    file_obj = open(file_name, 'r')
+    matrix = []
+    shift = []
+    for i in range(len(NNLayers)-1):
+        matrix.append(np.zeros((NNLayers[i + 1], NNLayers[i]), dtype=float))
+        for j in range(NNLayers[i+1]):
+            for k in range(NNLayers[i]):
+                matrix[i][j][k] = float(file_obj.readline())
+    for i in range(len(NNLayers)-1):
+        shift.append(np.zeros((NNLayers[i + 1], 1), dtype=float))
+        for j in range(NNLayers[i+1]):
+            shift[i][j][0] = float(file_obj.readline())
+    file_obj.close()
+    return matrix, shift
+
+
 # файл запуска программы
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
@@ -66,11 +87,12 @@ pause_menu_screen = pygame.display.set_mode((int(PauseMenuXSize*DrawingCoefficie
 main_screen.blit(main_menu_screen, (0, 0))
 main_screen.blit(level_screen, (0, 0))
 main_screen.blit(pause_menu_screen, (0, 0))
-Test_Level = Level(map_drawer, level_screen, true_image_import(),[False, False], [0,0])
+#Order_Network = NeuralNetwork(input_Neural_Network("smth"), "order")
+#Union_Network = NeuralNetwork(input_Neural_Network("smth"), "union")
+Test_Level = Level(map_drawer, level_screen, true_image_import(), [False, False], [0, 0])
 Main_Menu = MainMenu(main_menu_screen)
 Pause_Menu = PauseMenu(pause_menu_screen)
 pygame.display.update()
-clock = pygame.time.Clock()
 finished = False
 flag = False
 is_level = True
@@ -90,7 +112,7 @@ def activate_pause_menu():
 
 
 
-
+number = 0
 
 while not finished:
     clock.tick(FPS)
@@ -98,6 +120,9 @@ while not finished:
     if is_level:
         Test_Level.draw()
         Result = Test_Level.update()
+        number += 1
+        if number % 200 == 0:
+            print(number)
     elif is_pause:
         Result = Pause_Menu.update()
     elif is_main_menu:

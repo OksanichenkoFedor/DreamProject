@@ -43,7 +43,7 @@ class City(Interactable):
         research_centre = ResearchCentre(side, x + ResearchCentreX, y + ResearchCentreY)
         self.x = x
         self.y = y
-        self.money = 100.0
+        self.money = 0.0
         self.Units = []
         self.Queue_Units = []
         self.Buffered_Units = []

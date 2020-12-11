@@ -17,13 +17,13 @@ WinCost = 1000
 
 TimeCost = 0.05
 
-MaxGameTime = 5000
+MaxGameTime = 20000
 
 NNLayers = [81, 100, 11]
 
-ParentsNumber = 10
+ParentsNumber = 5
 
-ChildsNumber = 100
+ChildsNumber = 20
 
 StartRate = 1
 
