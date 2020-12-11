@@ -61,6 +61,7 @@ class Level:
         """
         if self.is_bot_exist:
             info = self.info_parameters()
+            print(info[0].shape)
             if self.is_bots[0]:
                 self.first_city.reaction(self.NeuralNetworks[0].reaction(info[0]))
             if self.is_bots[1]:
@@ -206,18 +207,18 @@ class Level:
             elif unit.coord[0] == "battle_pole":
                 union_info[50 + UnitNumber[unit.type]] += 1
 
-        union_info.append(self.first_city.life)
+        union_info.append(self.first_city.life/1000.0)
         for i in range(3):
-            union_info.append(self.first_city.Districts[i].life)
+            union_info.append(self.first_city.Districts[i].life/1000.0)
 
-        union_info.append(self.second_city.life)
+        union_info.append(self.second_city.life/1000.0)
         for i in range(3):
-            union_info.append(self.second_city.Districts[i].life)
+            union_info.append(self.second_city.Districts[i].life/1000.0)
 
         union_info.append(len(self.first_city.Buffered_Units))
 
-        union_info.append(self.first_city.money)
-        union_info.append(self.first_city.tech_level)
+        union_info.append(self.first_city.money/1000.0)
+        union_info.append(self.first_city.tech_level/10)
 
         union_info = np.array(union_info, dtype=float)
 
@@ -239,18 +240,18 @@ class Level:
             elif unit.coord[0] == "battle_pole":
                 order_info[50 + UnitNumber[unit.type]] += 1
 
-        order_info.append(self.second_city.life)
+        order_info.append(self.second_city.life/1000.0)
         for i in range(3):
-            order_info.append(self.second_city.Districts[i].life)
+            order_info.append(self.second_city.Districts[i].life/1000.0)
 
-        order_info.append(self.first_city.life)
+        order_info.append(self.first_city.life/1000.0)
         for i in range(3):
-            order_info.append(self.first_city.Districts[i].life)
+            order_info.append(self.first_city.Districts[i].life/1000.0)
 
-        order_info.append(len(self.second_city.Buffered_Units))
+        order_info.append(len(self.second_city.Buffered_Units)/1000.0)
 
-        order_info.append(self.second_city.money)
-        order_info.append(self.second_city.tech_level)
+        order_info.append(self.second_city.money/1000.0)
+        order_info.append(self.second_city.tech_level/1000.0)
 
         order_info = np.array(order_info, dtype=float)
 

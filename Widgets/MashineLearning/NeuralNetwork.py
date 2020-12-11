@@ -17,6 +17,8 @@ class NeuralNetwork():
     def __init__(self, NN, side):
         self.matrix = NN[0]
         self.shift = NN[1]
+        for i in range(len(NNLayers)-1):
+            self.shift[i] = np.reshape(self.shift[i], (NNLayers[i+1],))
         self.unit_types = 0
         if side == "union":
             self.unit_types = UnitTypeUnion
@@ -25,29 +27,28 @@ class NeuralNetwork():
 
     def reaction(self, city_info):
         for i in range(len(NNLayers)-1):
-            city_info = np.dot(self.matrix[i], city_info) + self.shift[i]
+            city_info = self.matrix[i].dot(city_info) + self.shift[i]
             city_info = self.activation_function(NNFunctions[i], city_info)
-
 
         Anwser = city_info
         add_unit = 0
-        z = Anwser[0][0]
+        z = Anwser[0]
         for i in range(5):
-            if z < Anwser[i+1][0]:
+            if z < Anwser[i+1]:
                 add_unit = i + 1
-                z = Anwser[i+1][0]
+                z = Anwser[i+1]
         if add_unit != 0:
             return ["add unit", self.unit_types[add_unit-1]]
         throw_unit = 6
-        z = Anwser[6][0]
+        z = Anwser[6]
         for i in range(3):
-            if z < Anwser[i+7][0]:
+            if z < Anwser[i+7]:
                 throw_unit = i + 7
-                z = Anwser[i+7][0]
+                z = Anwser[i+7]
         if throw_unit != 6:
             road = throw_unit - 7
             return ["throw unit", road]
-        z = Anwser[10][0]
+        z = Anwser[10]
         new_master = 1
         if z > 0.5:
             new_master = 2
@@ -57,7 +58,7 @@ class NeuralNetwork():
 
     def activation_function(self, function, vector):
         if function == ReluF:
-            return np.array([u if u[0] > 0 else [0] for u in vector])
+            return np.array([u if u > 0 else 0 for u in vector])
         elif function == Tanh:
             return np.tanh(vector)
         else:

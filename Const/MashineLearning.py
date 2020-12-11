@@ -1,7 +1,7 @@
 from Const.Units import LightInfantryType, HeavyInfantryType, CavalryType, LongDistanceSoldierType, HealerType, \
     AlchemistType
 
-DamageCost = [10.0, 5.0, 5.0, 5.0]
+DamageCost = [50.0, 5.0, 5.0, 5.0]
 TrainUnitCost = {LightInfantryType: 1, HeavyInfantryType: 1, CavalryType: 1, LongDistanceSoldierType: 1, HealerType: 1,
                  AlchemistType: 1}
 UnitNumber = {LightInfantryType: 0, HeavyInfantryType: 1, CavalryType: 2, LongDistanceSoldierType: 3, HealerType: 4,
@@ -11,7 +11,7 @@ UnitTypeUnion = {0: LightInfantryType, 1: HeavyInfantryType, 2: CavalryType, 3: 
                  4: AlchemistType}
 
 
-ThrowUnitCost = 2
+ThrowUnitCost = 20
 
 WinCost = 1000
 
@@ -33,5 +33,5 @@ ReluF = "relu"
 
 Tanh = "tanh"
 
-NNFunctions = [ReluF, Tanh]
+NNFunctions = [ReluF, ReluF]
 

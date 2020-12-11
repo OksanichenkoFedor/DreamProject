@@ -77,6 +77,8 @@ def input_Neural_Network(file_name):
 
 
 # файл запуска программы
+
+
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
 clock = pygame.time.Clock()
@@ -87,9 +89,9 @@ pause_menu_screen = pygame.display.set_mode((int(PauseMenuXSize*DrawingCoefficie
 main_screen.blit(main_menu_screen, (0, 0))
 main_screen.blit(level_screen, (0, 0))
 main_screen.blit(pause_menu_screen, (0, 0))
-#Order_Network = NeuralNetwork(input_Neural_Network("smth"), "order")
-#Union_Network = NeuralNetwork(input_Neural_Network("smth"), "union")
-Test_Level = Level(map_drawer, level_screen, true_image_import(), [False, False], [0, 0])
+Order_Network = NeuralNetwork(input_Neural_Network("Widgets/MashineLearning/differentAI/OrderNN0.txt"), "order")
+Union_Network = NeuralNetwork(input_Neural_Network("Widgets/MashineLearning/differentAI/UnionNN0.txt"), "union")
+Test_Level = Level(map_drawer, level_screen, true_image_import(), [False, True], [0, Union_Network])
 Main_Menu = MainMenu(main_menu_screen)
 Pause_Menu = PauseMenu(pause_menu_screen)
 pygame.display.update()
@@ -121,8 +123,6 @@ while not finished:
         Test_Level.draw()
         Result = Test_Level.update()
         number += 1
-        if number % 200 == 0:
-            print(number)
     elif is_pause:
         Result = Pause_Menu.update()
     elif is_main_menu:

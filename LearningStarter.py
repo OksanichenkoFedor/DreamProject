@@ -40,9 +40,9 @@ def input_Neural_Network(file_name):
             for k in range(NNLayers[i]):
                 matrix[i][j][k] = float(file_obj.readline())
     for i in range(len(NNLayers)-1):
-        shift.append(np.zeros((NNLayers[i + 1], 1), dtype=float))
+        shift.append(np.zeros((NNLayers[i + 1],), dtype=float))
         for j in range(NNLayers[i+1]):
-            shift[i][j][0] = float(file_obj.readline())
+            shift[i][j] = float(file_obj.readline())
     file_obj.close()
     return matrix, shift
 
@@ -57,7 +57,7 @@ def output_Neural_Network(NN, file_name):
                 file_obj.write(str(matrix[i][j][k]) + '\n')
     for i in range(len(NNLayers)-1):
         for j in range(NNLayers[i+1]):
-            file_obj.write(str(shift[i][j][0]) + '\n')
+            file_obj.write(str(shift[i][j]) + '\n')
     file_obj.close()
 
 
@@ -74,16 +74,19 @@ def learning_iteration(learning_rate, union_parents, order_parents):
         for i in range(len(NNLayers)-1):
             matrix.append(np.zeros((NNLayers[i + 1], NNLayers[i]), dtype=float))
         for i in range(len(NNLayers) - 1):
-            shift.append(np.zeros((NNLayers[i + 1], 1), dtype=float))
+            shift.append(np.zeros((NNLayers[i + 1],), dtype=float))
+
         shares = generate_shares(ParentsNumber)
-        for j in range(ParentsNumber):
-            for i in range(len(NNLayers) - 1):
-                matrix[i] = matrix[i] + shares[j]*order_parents[j][0][i] + \
-                            learning_rate*(2.0*np.random.sample((NNLayers[i + 1], NNLayers[i])) -
+
+        for i in range(len(NNLayers) - 1):
+            for j in range(ParentsNumber):
+                matrix[i] = matrix[i] + shares[j] * order_parents[j][0][i]
+                shift[i] = shift[i] + shares[j] * order_parents[j][1][i]
+            matrix[i] = matrix[i] + learning_rate*(2.0*np.random.sample((NNLayers[i + 1], NNLayers[i])) -
                                            np.ones((NNLayers[i + 1], NNLayers[i]), dtype=float))
-            for i in range(len(NNLayers) - 1):
-                shift[i] = shift[i] + shares[j]*order_parents[j][1][i] + \
-                           learning_rate*(2.0*np.random.sample((NNLayers[i + 1], 1))-np.ones((NNLayers[i + 1], 1)))
+            shift[i] = shift[i] + learning_rate * (2.0 * np.random.sample((NNLayers[i + 1],))
+                                                   - np.ones((NNLayers[i + 1],)))
+
         order_childs.append([matrix, shift])
 
     for i in range(ParentsNumber):
@@ -98,15 +101,19 @@ def learning_iteration(learning_rate, union_parents, order_parents):
         for i in range(len(NNLayers)-1):
             matrix.append(np.zeros((NNLayers[i + 1], NNLayers[i]), dtype=float))
         for i in range(len(NNLayers) - 1):
-            shift.append(np.zeros((NNLayers[i + 1], 1), dtype=float))
+            shift.append(np.zeros((NNLayers[i + 1],), dtype=float))
+
         shares = generate_shares(ParentsNumber)
-        for j in range(ParentsNumber):
-            for i in range(len(NNLayers) - 1):
-                matrix[i] = matrix[i] + shares[j]*union_parents[j][0][i] + \
-                            learning_rate*np.random.sample((NNLayers[i + 1], NNLayers[i]))
-            for i in range(len(NNLayers) - 1):
-                shift[i] = shift[i] + shares[j]*order_parents[j][1][i] + \
-                           learning_rate*np.random.sample((NNLayers[i + 1], 1))
+
+        for i in range(len(NNLayers) - 1):
+            for j in range(ParentsNumber):
+                matrix[i] = matrix[i] + shares[j] * union_parents[j][0][i]
+                shift[i] = shift[i] + shares[j] * union_parents[j][1][i]
+            matrix[i] = matrix[i] + learning_rate * (2.0 * np.random.sample((NNLayers[i + 1], NNLayers[i])) -
+                                                     np.ones((NNLayers[i + 1], NNLayers[i]), dtype=float))
+            shift[i] = shift[i] + learning_rate * (2.0 * np.random.sample((NNLayers[i + 1],))
+                                                   - np.ones((NNLayers[i + 1],)))
+
         union_childs.append([matrix, shift])
 
 
@@ -144,7 +151,7 @@ def learning_iteration(learning_rate, union_parents, order_parents):
         new_union_parents.append(union_childs[i])
         new_order_parents.append(order_childs[i])
 
-    return new_union_parents, new_order_parents
+    return new_union_parents, new_order_parents, union_results[0], order_results[0]
 
 
 def generate_shares(number):
@@ -165,28 +172,36 @@ def generate_random_parents():
         matrix = []
         shift = []
         for i in range(len(NNLayers) - 1):
-            matrix.append(StartRate*np.random.sample((NNLayers[i + 1], NNLayers[i])))
+            matrix.append(StartRate*(2.0 * np.random.sample((NNLayers[i + 1], NNLayers[i]))
+                                                   - np.ones((NNLayers[i + 1], NNLayers[i]))))
         for i in range(len(NNLayers) - 1):
-            shift.append(StartRate*np.random.sample((NNLayers[i + 1], 1)))
+            shift.append(StartRate*(2.0 * np.random.sample((NNLayers[i + 1],))
+                                                   - np.ones((NNLayers[i + 1],))))
         order_parents.append([matrix, shift])
     for i in range(ParentsNumber):
         matrix = []
         shift = []
         for i in range(len(NNLayers) - 1):
-            matrix.append(StartRate*np.random.sample((NNLayers[i + 1], NNLayers[i])))
+            matrix.append(StartRate * (2.0 * np.random.sample((NNLayers[i + 1], NNLayers[i]))
+                                       - np.ones((NNLayers[i + 1], NNLayers[i]))))
         for i in range(len(NNLayers) - 1):
-            shift.append(StartRate*np.random.sample((NNLayers[i + 1], 1)))
+            shift.append(StartRate * (2.0 * np.random.sample((NNLayers[i + 1],))
+                                      - np.ones((NNLayers[i + 1],))))
         union_parents.append([matrix, shift])
     return order_parents, union_parents
 
 union_parents, order_parents = generate_random_parents()
 
-number = 0
 
-while number < 1000:
+number = 0
+file_name = "Widgets/MashineLearning/differentAI/" + "UnionNN" + str(number) + ".txt"
+output_Neural_Network(union_parents[0], file_name)
+file_name = "Widgets/MashineLearning/differentAI/" + "OrderNN" + str(number) + ".txt"
+output_Neural_Network(order_parents[0], file_name)
+while True:
     number += 1
     start_time = time.process_time()
-    union_parents, order_parents = learning_iteration(LearningRate, union_parents, order_parents)
+    union_parents, order_parents, union_result, order_result = learning_iteration(LearningRate, union_parents, order_parents)
     end_time = time.process_time()
     print("-----------")
     print(" ")
@@ -195,6 +210,10 @@ while number < 1000:
     print("Time: " + str(it_time))
     print(" ")
     print("-----------")
+    file_obj = open("Widgets/MashineLearning/differentAI/results.txt", 'a')
+    file_obj.write(str(union_result) + "\n")
+    file_obj.write(str(order_result) + "\n")
+    file_obj.close()
     if number % 10 == 0:
         file_name = "Widgets/MashineLearning/differentAI/" + "UnionNN" + str(number) + ".txt"
         output_Neural_Network(union_parents[0], file_name)

@@ -119,9 +119,9 @@ class LearningLevel():
 
             if is_addable:
                 self.order_score += TrainUnitCost[order_action[1]]
-                self.second_city.reaction(union_action)
+                self.second_city.reaction(order_action)
         else:
-            self.second_city.reaction(union_action)
+            self.second_city.reaction(order_action)
 
         if order_action[0] == "throw unit":
             self.order_score += ThrowUnitCost
@@ -136,7 +136,7 @@ class LearningLevel():
 
         for i in range(4):
             if prev_order_life[i] - curr_order_life[i] > 0:
-                self.order_score += DamageCost[i] * (prev_union_life[i] - curr_union_life[i])
+                self.union_score += DamageCost[i] * (prev_order_life[i] - curr_order_life[i])
         for i in range(4):
             if prev_union_life[i] - curr_union_life[i] > 0:
                 self.order_score += DamageCost[i] * (prev_union_life[i] - curr_union_life[i])
@@ -147,31 +147,31 @@ class LearningLevel():
             union_info.append(0)
         for unit in self.first_city.Units:
             if unit.coord[0] == "left":
-                union_info[5*unit.coord[1] + UnitNumber[unit.type]] += 1
+                union_info[5 * unit.coord[1] + UnitNumber[unit.type]] += 1
             elif unit.coord[0] == "right":
-                union_info[5*(unit.coord[1]+4) + UnitNumber[unit.type]] += 1
+                union_info[5 * (unit.coord[1] + 4) + UnitNumber[unit.type]] += 1
             elif unit.coord[0] == "battle_pole":
                 union_info[15 + UnitNumber[unit.type]] += 1
         for unit in self.second_city.Units:
             if unit.coord[0] == "left":
-                union_info[5*(unit.coord[1]+7) + UnitNumber[unit.type]] += 1
+                union_info[5 * (unit.coord[1] + 7) + UnitNumber[unit.type]] += 1
             elif unit.coord[0] == "right":
-                union_info[5*(unit.coord[1]+11) + UnitNumber[unit.type]] += 1
+                union_info[5 * (unit.coord[1] + 11) + UnitNumber[unit.type]] += 1
             elif unit.coord[0] == "battle_pole":
                 union_info[50 + UnitNumber[unit.type]] += 1
 
-        union_info.append(self.first_city.life)
+        union_info.append(self.first_city.life / 1000.0)
         for i in range(3):
-            union_info.append(self.first_city.Districts[i].life)
+            union_info.append(self.first_city.Districts[i].life / 1000.0)
 
-        union_info.append(self.second_city.life)
+        union_info.append(self.second_city.life / 1000.0)
         for i in range(3):
-            union_info.append(self.second_city.Districts[i].life)
+            union_info.append(self.second_city.Districts[i].life / 1000.0)
 
         union_info.append(len(self.first_city.Buffered_Units))
 
-        union_info.append(self.first_city.money)
-        union_info.append(self.first_city.tech_level)
+        union_info.append(self.first_city.money / 1000.0)
+        union_info.append(self.first_city.tech_level / 10)
 
         union_info = np.array(union_info, dtype=float)
 
@@ -193,18 +193,18 @@ class LearningLevel():
             elif unit.coord[0] == "battle_pole":
                 order_info[50 + UnitNumber[unit.type]] += 1
 
-        order_info.append(self.second_city.life)
+        order_info.append(self.second_city.life / 1000.0)
         for i in range(3):
-            order_info.append(self.second_city.Districts[i].life)
+            order_info.append(self.second_city.Districts[i].life / 1000.0)
 
-        order_info.append(self.first_city.life)
+        order_info.append(self.first_city.life / 1000.0)
         for i in range(3):
-            order_info.append(self.first_city.Districts[i].life)
+            order_info.append(self.first_city.Districts[i].life / 1000.0)
 
-        order_info.append(len(self.second_city.Buffered_Units))
+        order_info.append(len(self.second_city.Buffered_Units) / 1000.0)
 
-        order_info.append(self.second_city.money)
-        order_info.append(self.second_city.tech_level)
+        order_info.append(self.second_city.money / 1000.0)
+        order_info.append(self.second_city.tech_level / 1000.0)
 
         order_info = np.array(order_info, dtype=float)
 
