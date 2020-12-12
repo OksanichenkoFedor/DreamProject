@@ -2,7 +2,7 @@ from LevelParts.Units.UnitAI.Info import Info
 from Const.Level import *
 from Const.Units import *
 from Const.City import *
-from random import randint
+from random import uniform
 
 
 def nearestUnit(info):
@@ -113,8 +113,7 @@ def unitAI(info: Info):
                 # solution[1] = interactable
                 # solution[2] = action
                 solution.append(info.enemy_districts[info.unit.coord[1]])
-                solution.append(("attacked", info.unit.damage+randint(-int(info.unit.damage_spread),
-                                                                      int(info.unit.damage_spread))))
+                solution.append(["attacked", info.unit.damage + uniform(-info.unit.damage_spread, info.unit.damage_spread)])
             else:
                 if info.unit.coord[0] == "battle_pole":
                     if enemy_distance < info.unit.range:
@@ -133,8 +132,7 @@ def unitAI(info: Info):
                     if info.unit.coord[0] == "left":
                         if enemy_distance < info.unit.range/info.total_length_L[info.unit.coord[1]]:
                             solution.append(info.enemies[enemy_index])
-                            solution.append(["attacked", info.unit.damage+randint(-int(info.unit.damage_spread),
-                                                                                  int(info.unit.damage_spread))])
+                            solution.append(["attacked", info.unit.damage + uniform(-info.unit.damage_spread, info.unit.damage_spread)])
                         else:
                             solution[0] = "moving to unit"
                             if info.unit.coord[2] < info.enemies[enemy_index].coord[2]:
@@ -145,8 +143,7 @@ def unitAI(info: Info):
                     elif info.unit.coord[0] == "right":
                         if enemy_distance < info.unit.range / info.total_length_R[info.unit.coord[1]]:
                             solution.append(info.enemies[enemy_index])
-                            solution.append(["attacked", info.unit.damage+randint(-int(info.unit.damage_spread),
-                                                                                  int(info.unit.damage_spread))])
+                            solution.append(["attacked", info.unit.damage + uniform(-info.unit.damage_spread, info.unit.damage_spread)])
                         else:
                             solution[0] = "moving to unit"
                             if info.unit.coord[2] < info.enemies[enemy_index].coord[2]:
@@ -158,7 +155,7 @@ def unitAI(info: Info):
 
 
     elif info.unit.type == HealerType:
-        friendly_distance, friendly_index, enemy_distance, enemy_index= nearestUnit(info)
+        friendly_distance, friendly_index, enemy_distance, enemy_index = nearestUnit(info)
         solution = []
         first = " "
 
@@ -192,8 +189,7 @@ def unitAI(info: Info):
                 if info.unit.coord[0] == "left":
                     if friendly_distance < info.unit.range/info.total_length_L[info.unit.coord[1]]:
                         solution.append(info.friends[friendly_index])
-                        solution.append(["healed", info.unit.damage+randint(-info.unit.damage_spread,
-                                                                            info.unit.damage_spread)])
+                        solution.append(["healed", info.unit.damage + uniform(-info.unit.damage_spread, info.unit.damage_spread)])
                     else:
                         solution[0] = "moving to unit"
                         if info.unit.coord[2] < info.friends[friendly_index].coord[2]:
@@ -204,8 +200,7 @@ def unitAI(info: Info):
                 elif info.unit.coord[0] == "right":
                     if friendly_distance < info.unit.range / info.total_length_R[info.unit.coord[1]]:
                         solution.append(info.friends[friendly_index])
-                        solution.append(["healed", info.unit.damage+randint(-info.unit.damage_spread,
-                                                                            info.unit.damage_spread)])
+                        solution.append(["healed", info.unit.damage + uniform(-info.unit.damage_spread, info.unit.damage_spread)])
                     else:
                         solution[0] = "moving to unit"
                         if info.unit.coord[2] < info.friends[friendly_index].coord[2]:
@@ -249,7 +244,7 @@ def unitAI(info: Info):
                     if friendly_distance < info.unit.range / info.total_length_L[info.unit.coord[1]]:
                         solution.append(info.friends[friendly_index])
                         solution.append(
-                            ["increased", info.unit.damage + randint(-info.unit.damage_spread, info.unit.damage_spread)])
+                            ["increased", info.unit.damage + uniform(info.unit.damage_spread, info.unit.damage_spread)])
                     else:
                         solution[0] = "moving to unit"
                         if info.unit.coord[2] < info.friends[friendly_index].coord[2]:
@@ -261,7 +256,7 @@ def unitAI(info: Info):
                     if friendly_distance < info.unit.range / info.total_length_R[info.unit.coord[1]]:
                         solution.append(info.friends[friendly_index])
                         solution.append(
-                            ["increased", info.unit.damage + randint(-info.unit.damage_spread, info.unit.damage_spread)])
+                            ["increased", info.unit.damage + uniform(-info.unit.damage_spread, info.unit.damage_spread)])
                     else:
                         solution[0] = "moving to unit"
                         if info.unit.coord[2] < info.friends[friendly_index].coord[2]:

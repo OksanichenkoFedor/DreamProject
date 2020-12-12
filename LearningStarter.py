@@ -1,12 +1,8 @@
 from random import random
-from Const.Units import *
-from Const.Level import *
-from Const.MashineLearning import *
-import numpy as np
-from Widgets.MashineLearning.NeuralNetwork import *
 from Widgets.MashineLearning.LearningLevel import *
 import time
-import pygame
+
+
 
 
 def fake_image_import():
@@ -192,7 +188,6 @@ def generate_random_parents():
 
 union_parents, order_parents = generate_random_parents()
 
-
 number = 0
 file_name = "Widgets/MashineLearning/differentAI/" + "UnionNN" + str(number) + ".txt"
 output_Neural_Network(union_parents[0], file_name)
@@ -210,7 +205,7 @@ while True:
     print("Time: " + str(it_time))
     print(" ")
     print("-----------")
-    file_obj = open("Widgets/MashineLearning/differentAI/results.txt", 'a')
+    file_obj = open("Widgets/MashineLearning/differentAI/results1.txt", 'a')
     file_obj.write(str(union_result) + "\n")
     file_obj.write(str(order_result) + "\n")
     file_obj.close()

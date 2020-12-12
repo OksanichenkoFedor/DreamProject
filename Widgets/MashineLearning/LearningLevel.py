@@ -99,7 +99,7 @@ class LearningLevel():
         if union_action[0] == "throw unit":
                 self.union_score += ThrowUnitCost
 
-        order_action = self.NN_Order.reaction(info[0])
+        order_action = self.NN_Order.reaction(info[1])
         if order_action[0] == "add unit":
             is_addable = False
             if order_action[1] == LightInfantryType:
@@ -185,7 +185,7 @@ class LearningLevel():
                 order_info[5 * (unit.coord[1] + 4) + UnitNumber[unit.type]] += 1
             elif unit.coord[0] == "battle_pole":
                 order_info[15 + UnitNumber[unit.type]] += 1
-        for unit in self.second_city.Units:
+        for unit in self.first_city.Units:
             if unit.coord[0] == "right":
                 order_info[5 * (unit.coord[1] + 7) + UnitNumber[unit.type]] += 1
             elif unit.coord[0] == "left":

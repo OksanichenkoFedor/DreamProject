@@ -69,9 +69,9 @@ def input_Neural_Network(file_name):
             for k in range(NNLayers[i]):
                 matrix[i][j][k] = float(file_obj.readline())
     for i in range(len(NNLayers)-1):
-        shift.append(np.zeros((NNLayers[i + 1], 1), dtype=float))
+        shift.append(np.zeros((NNLayers[i + 1],), dtype=float))
         for j in range(NNLayers[i+1]):
-            shift[i][j][0] = float(file_obj.readline())
+            shift[i][j] = float(file_obj.readline())
     file_obj.close()
     return matrix, shift
 
@@ -89,9 +89,9 @@ pause_menu_screen = pygame.display.set_mode((int(PauseMenuXSize*DrawingCoefficie
 main_screen.blit(main_menu_screen, (0, 0))
 main_screen.blit(level_screen, (0, 0))
 main_screen.blit(pause_menu_screen, (0, 0))
-Order_Network = NeuralNetwork(input_Neural_Network("Widgets/MashineLearning/differentAI/OrderNN0.txt"), "order")
-Union_Network = NeuralNetwork(input_Neural_Network("Widgets/MashineLearning/differentAI/UnionNN0.txt"), "union")
-Test_Level = Level(map_drawer, level_screen, true_image_import(), [False, True], [0, Union_Network])
+Order_Network = NeuralNetwork(input_Neural_Network("Widgets/MashineLearning/differentAI/OrderNN20.txt"), "order")
+Union_Network = NeuralNetwork(input_Neural_Network("Widgets/MashineLearning/differentAI/UnionNN20.txt"), "union")
+Test_Level = Level(map_drawer, level_screen, true_image_import(), [False, True], [0, Order_Network])
 Main_Menu = MainMenu(main_menu_screen)
 Pause_Menu = PauseMenu(pause_menu_screen)
 pygame.display.update()
