@@ -31,7 +31,7 @@ def health_bar(coord, life, full_life, screen):
 
 def tech_bar(coord, tech, full_tech, screen):
     """
-    Draw Health Bar
+    Draw Tech Bar
     :param coord: Massive of x, y, w, h
     :param tech: Life of object
     :param full_tech: Full tech of city, to go on next step

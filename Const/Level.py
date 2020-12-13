@@ -15,7 +15,7 @@ ButtonPoleXSize = 150
 ButtonPoleYSize = CityYSize
 ButtonAnimationTime = 50
 ButtonPoleButtonXSize = ButtonPoleXSize*3.0/4.0
-ButtonPoleButtonYSize = ButtonPoleButtonXSize*1.4
+ButtonPoleButtonYSize = ButtonPoleButtonXSize*1.2
 BuffSizeIncreasing = 1.1
 TakingDamageAnimationType = "TakeDamage"
 DealinDamageAnimationType = "DealDamage"
@@ -24,11 +24,13 @@ MovementAnimationType = "Movement"
 MotionlessAnimationType = "Motionless"
 animation_duration = {MotionlessAnimationType: 1, MovementAnimationType: 0, DealinDamageAnimationType: 0,
                       TakingDamageAnimationType: 0, DeathAnimationType: 0}
-
+total_image_number = 14
 WHT = (255, 255, 255)
 BLC = (0, 0, 0)
 RED = (255, 0, 0)
 BLU = (0, 0, 255)
+GRY = (144, 144, 144)
+GRN = (0, 255, 0)
 map_drawer = "Widgets/MapEditor/map2.txt"
 NumberOfRoads = 3
 

@@ -16,6 +16,7 @@ class Button:
     :field text: String, that we will draw on button
     :field text_color: Color of button text
     :field chosen: Boolean, which tell is this button is chosen button
+    :field number: Number of units in queue of button
 
     :method __init__: Initialise Button. Receives color, x, y, length, height, width, text, text_color.
     :method update(): Update the button and draw it
@@ -39,6 +40,7 @@ class Button:
         self.rect = pygame.Rect(self.x, self.y, self.length, self.height)
         self.chosen = False
         self.type = unit_type
+        self.number = 0
 
     def update_button(self, x, y):
         self.x = x
@@ -53,7 +55,6 @@ class Button:
             if mouse[1] > self.rect.topleft[1]:
                 if mouse[0] < self.rect.bottomright[0]:
                     if mouse[1] < self.rect.bottomright[1]:
-                        print("Some button was pressed!")
                         return True
                     else:
                         return False

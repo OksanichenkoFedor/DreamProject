@@ -43,7 +43,7 @@ class City(Interactable):
         research_centre = ResearchCentre(side, x + ResearchCentreX, y + ResearchCentreY)
         self.x = x
         self.y = y
-        self.money = 0.0
+        self.money = 100.0
         self.Units = []
         self.Queue_Units = []
         self.Buffered_Units = []
@@ -139,10 +139,12 @@ class City(Interactable):
             if self.money >= unit.cost:
                 self.Queue_Units.append(unit)
                 self.money -= unit.cost
+                return True
+        return False
 
     def reaction(self, action):
         if action[0] == "add unit":
-            self.add_unit(action[1])
+            return self.add_unit(action[1])
         elif action[0] == "throw unit":
             if len(self.Buffered_Units) > 0:
                 self.Buffered_Units[0].coord = [self.side[1], action[1], 0]
@@ -158,7 +160,6 @@ class City(Interactable):
                     district.master = 1
                 else:
                     district.master = 0
-
     def buffer_update(self):
         for i in range(len(self.Buffered_Units)):
             if self.side[1] == "right":

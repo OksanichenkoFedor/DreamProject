@@ -51,7 +51,6 @@ class Level:
                                 self.Order_Units_Images)
         self.second_pole = ButtonPole(LevelXSize / 2 + MapXSize / 2 + CityXSize, LevelYSize - ButtonPoleYSize,
                                       [LightInfantryType, "Light Infantry"])
-        self.but1 = Button(BLC, 0, 0, 100, 75, 10, "Exit", WHT)
         self.screen = screen
 
     def update(self):
@@ -101,7 +100,6 @@ class Level:
     def draw(self):
         level_draw(self, self.screen)
         map_draw(self.map, self.screen)
-        self.but1.draw_button(self.screen)
         if not self.is_bots[0]:
             self.first_pole.update(self.screen)
         if not self.is_bots[1]:
@@ -117,11 +115,6 @@ class Level:
         """
 
         answer = ""
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = ((event.pos[0] * 1.0) / (DrawingCoefficient * 1.0),(event.pos[1] * 1.0) / (DrawingCoefficient * 1.0))
-            if event.button == 1:
-                if self.but1.is_pressed(pos):
-                    answer = "exit"
         if event.type == pygame.KEYDOWN:
             action = []
             if not self.is_bots[0]:
@@ -140,7 +133,10 @@ class Level:
                 elif event.key == pygame.K_w:
                     action.append("add unit")
                     action.append(self.first_pole.Buttons[self.first_pole.chosen].type)
-                    self.first_city.reaction(action)
+                    if self.first_city.reaction(action):
+                        self.first_pole.Buttons[self.first_pole.chosen].number += 1
+                        unit = self.first_city.Queue_Units[len(self.first_city.Queue_Units) - 1]
+                        self.first_pole.Training.append([self.first_pole.chosen, unit.train_time, unit.train_time])
                 elif event.key == pygame.K_s:
                     action.append("master change")
                     if self.first_city.master == 2:
@@ -169,7 +165,10 @@ class Level:
                 elif event.key == pygame.K_UP:
                     action.append("add unit")
                     action.append(self.second_pole.Buttons[self.second_pole.chosen].type)
-                    self.second_city.reaction(action)
+                    if self.second_city.reaction(action):
+                        self.second_pole.Buttons[self.second_pole.chosen].number += 1
+                        unit = self.second_city.Queue_Units[len(self.second_city.Queue_Units)-1]
+                        self.second_pole.Training.append([self.second_pole.chosen, unit.train_time, unit.train_time])
                 elif event.key == pygame.K_RSHIFT:
                     action.append("master change")
                     if self.second_city.master == 2:
