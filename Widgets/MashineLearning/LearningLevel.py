@@ -137,9 +137,11 @@ class LearningLevel():
         for i in range(4):
             if prev_order_life[i] - curr_order_life[i] > 0:
                 self.union_score += DamageCost[i] * (prev_order_life[i] - curr_order_life[i])
+                self.order_score -= DamageCost[i] * (prev_order_life[i] - curr_order_life[i])
         for i in range(4):
             if prev_union_life[i] - curr_union_life[i] > 0:
                 self.order_score += DamageCost[i] * (prev_union_life[i] - curr_union_life[i])
+                self.union_score -= DamageCost[i] * (prev_union_life[i] - curr_union_life[i])
 
     def info_parameters(self):
         union_info = []
