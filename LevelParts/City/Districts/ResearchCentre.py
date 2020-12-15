@@ -12,8 +12,9 @@ class ResearchCentre(District):
     : method update(screen): Update district and redraw it
 
     """
-    def __init__(self, side, x, y):
-        super().__init__(side, ResearchCentreLife, x, y, ResearchCentreNumber)
+    def __init__(self, side, x, y, image_research_centre, image_master):
+        super().__init__(side, ResearchCentreLife, x, y, ResearchCentreNumber, image_master)
+        self.image_research_centre = image_research_centre
 
     def update(self, tech):
         if self.master > 0:
@@ -24,4 +25,4 @@ class ResearchCentre(District):
                         ResearchCentreLife * 1.0) * ResearchCentreAdditionalSpeed + ResearchCentreDefaultSpeed)
 
     def draw(self, screen):
-        research_centre_draw(self, self.side[0], screen)
+        research_centre_draw(self, screen, self.image_research_centre, self.image_master)

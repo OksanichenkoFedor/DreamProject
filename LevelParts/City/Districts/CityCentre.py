@@ -16,8 +16,8 @@ class CityCentre(District):
     : method update(screen): Update district and redraw it
 
     """
-    def __init__(self, side, x, y, image_castle, image_square):
-        super().__init__(side, CityCentreLife, x, y, CityCentreNumber)
+    def __init__(self, side, x, y, image_castle, image_square, image_master):
+        super().__init__(side, CityCentreLife, x, y, CityCentreNumber, image_master)
         self.image_castle = image_castle
         self.image_square = image_square
         self.master = 1
@@ -26,5 +26,5 @@ class CityCentre(District):
         pass
 
     def draw(self, screen):
-        city_centre_draw(self, self.side[0], screen, self.image_castle, self.image_square)
+        city_centre_draw(self, screen, self.image_castle, self.image_square, self.image_master)
 

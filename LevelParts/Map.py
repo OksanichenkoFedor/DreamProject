@@ -22,12 +22,15 @@ class Map:
     :field self.total_coords_R: Massive of coordinate of each node on its road. For right roads
                                 First argument - number of road
                                 Second argument - number of node
+    :field bush: Picture of bush
+    "field tree: Picture of tree
+
     :method __init__: Initialise level map. Receives file_name, x, y, w, h
 
     """
 
     # TODO Создать класс, который будет по файлу строить карту, а так же её рисовать
-    def __init__(self, file_name, x, y, w, h):
+    def __init__(self, file_name, x, y, w, h, bush, tree, bushes, trees):
         """
 
         :param file_name: Name of the file where we will get information about the map
@@ -42,6 +45,10 @@ class Map:
         self.y = y
         self.width = w
         self.height = h
+        self.bush = bush
+        self.tree = tree
+        self.trees = trees
+        self.bushes = bushes
         file_obj = open(file_name, "r")
 
         self.number_of_left_roads = int(file_obj.readline())

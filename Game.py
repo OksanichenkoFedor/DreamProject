@@ -6,6 +6,7 @@ from LevelParts.Menu.PauseMenu import *
 from LevelParts.Menu.Settings import *
 from Widgets.MashineLearning.NeuralNetwork import *
 from Draws.MenuDraws import *
+from random import random
 
 class Game:
     """
@@ -33,6 +34,7 @@ class Game:
     :field is_bots: Massive of boolean, which are true if current player is bot
     :field Images: Massive of images dictionaries
     :field difficulties: String, which show difficult of current player
+    :field sides: List of strings, which tell type of left and right city
 
     """
 
@@ -54,19 +56,27 @@ class Game:
         self.main_screen.blit(self.pause_menu_screen, (0, 0))
         self.main_screen.blit(self.settings_screen, (0, 0))
 
+        self.trees = []
+        self.bushes = []
+        for i in range(number_of_trees):
+            self.trees.append((random(), random()))
+        for i in range(number_of_bushes):
+            self.bushes.append((random(), random()))
+
         self.EasyNetworks = [NeuralNetwork(self.input_Neural_Network(EasyNN[0]), "union"),
                          NeuralNetwork(self.input_Neural_Network(EasyNN[1]), "order")]
         self.NormalNetworks = [NeuralNetwork(self.input_Neural_Network(NormalNN[0]), "union"),
                              NeuralNetwork(self.input_Neural_Network(NormalNN[1]), "order")]
         self.HardNetworks = [NeuralNetwork(self.input_Neural_Network(HardNN[0]), "union"),
                              NeuralNetwork(self.input_Neural_Network(HardNN[1]), "order")]
+        self.sides = ["union", "order"]
 
         self.clock = pygame.time.Clock()
         self.is_bots = [False, False]
         self.difficulties = "easy"
         self.Images = self.true_image_import(self.level_screen)
-        self.level = Level(map_drawer, self.level_screen, self.Images, self.is_bots,
-                           self.EasyNetworks)
+        self.level = Level(map_drawer, self.trees, self.bushes, self.level_screen, self.sides, self.Images,
+                           self.is_bots, self.EasyNetworks,)
         self.finished = False
         self.is_level = False
         self.is_pause = False
@@ -79,14 +89,14 @@ class Game:
     def true_image_import(self, screen):
         union_unit_types = [LightInfantryType, HeavyInfantryType, CavalryType, LongDistanceSoldierType, AlchemistType]
         order_unit_types = [LightInfantryType, HeavyInfantryType, CavalryType, LongDistanceSoldierType, HealerType]
-        animation_types = [MotionlessAnimationType, MovementAnimationType, DealinDamageAnimationType,
+        animation_types = [MotionlessAnimationType, MovementAnimationType, DealingDamageAnimationType,
                            TakingDamageAnimationType, DeathAnimationType]
         number = 0
 
         pygame.display.update()
         draw_download_menu(screen, number, total_image_number)
         Another_Images = {}
-        Another_Images["castle union"] = pygame.image.load('images/zdanie_soyuz.png').convert_alpha()
+        Another_Images["castle union"] = pygame.image.load('images/union_castle.png').convert_alpha()
         number += 1
         pygame.display.update()
         draw_download_menu(screen, number, total_image_number)
@@ -94,43 +104,100 @@ class Game:
         number += 1
         pygame.display.update()
         draw_download_menu(screen, number, total_image_number)
-        Another_Images["castle order"] = pygame.image.load('images/zdanie_orden.png').convert_alpha()
+        Another_Images["castle order"] = pygame.image.load('images/order_castle.png').convert_alpha()
         number += 1
         pygame.display.update()
         draw_download_menu(screen, number, total_image_number)
-        Another_Images["bruschatka"] = pygame.image.load('images/bruschatka.png').convert_alpha()
+        Another_Images["bruschatka"] = pygame.image.load('images/bruschatka.jpg').convert_alpha()
+        number += 1
+        pygame.display.update()
+        draw_download_menu(screen, number, total_image_number)
+        Another_Images["bush"] = pygame.image.load('images/bush.png').convert_alpha()
+        number += 1
+        pygame.display.update()
+        draw_download_menu(screen, number, total_image_number)
+        Another_Images["master"] = pygame.image.load('images/master.png').convert_alpha()
+        number += 1
+        pygame.display.update()
+        draw_download_menu(screen, number, total_image_number)
+        Another_Images["research centre"] = pygame.image.load('images/research_centre.png').convert_alpha()
+        number += 1
+        pygame.display.update()
+        draw_download_menu(screen, number, total_image_number)
+        Another_Images["mine"] = pygame.image.load('images/mine.png').convert_alpha()
+        number += 1
+        pygame.display.update()
+        draw_download_menu(screen, number, total_image_number)
+        Another_Images["tree"] = pygame.image.load('images/tree.png').convert_alpha()
         number += 1
         pygame.display.update()
         draw_download_menu(screen, number, total_image_number)
 
-        Union_Units_Images = {}
+
+
+        Left_Union_Units_Images = {}
         for unit_type in union_unit_types:
-            Union_Units_Images[unit_type] = {}
+            Left_Union_Units_Images[unit_type] = {}
             for animation in animation_types:
                 massive = []
                 for i in range(animation_duration[animation]):
-                    file_name = "images/" + "Union" + unit_type + animation + str(i) + ".png"
+                    file_name = "images/Unionleft/" + "Union" + unit_type + animation + str(i) + ".png"
                     current_image = pygame.image.load(file_name).convert_alpha()
                     massive.append(current_image)
                     number += 1
                     pygame.display.update()
-                    draw_download_menu(screen, number, total_image_number)
-                Union_Units_Images[unit_type][animation] = [animation_duration[animation], massive]
+                    draw_download_menu(screen, number, total_image_number, file_name)
+                Left_Union_Units_Images[unit_type][animation] = [animation_duration[animation], massive]
+        pygame.display.update()
+        Right_Union_Units_Images = {}
+        for unit_type in union_unit_types:
+            Right_Union_Units_Images[unit_type] = {}
+            for animation in animation_types:
+                massive = []
+                for i in range(animation_duration[animation]):
+                    file_name = "images/Unionright/" + "Union" + unit_type + animation + str(i) + ".png"
+                    current_image = pygame.image.load(file_name).convert_alpha()
+                    massive.append(current_image)
+                    number += 1
+                    pygame.display.update()
+                    draw_download_menu(screen, number, total_image_number, file_name)
+                Right_Union_Units_Images[unit_type][animation] = [animation_duration[animation], massive]
 
-        Order_Units_Images = {}
+        Union_Units_Images = {"left": Left_Union_Units_Images, "right": Right_Union_Units_Images}
+        pygame.display.update()
+        Left_Order_Units_Images = {}
         for unit_type in order_unit_types:
-            Order_Units_Images[unit_type] = {}
+            Left_Order_Units_Images[unit_type] = {}
             for animation in animation_types:
                 massive = []
                 for i in range(animation_duration[animation]):
-                    file_name = "images/" + "Order" + unit_type + animation + str(i) + ".png"
+                    file_name = "images/Orderleft/" + "Order" + unit_type + animation + str(i) + ".png"
                     current_image = pygame.image.load(file_name).convert_alpha()
                     massive.append(current_image)
                     number += 1
                     pygame.display.update()
-                    draw_download_menu(screen, number, total_image_number)
-                Order_Units_Images[unit_type][animation] = [animation_duration[animation], massive]
-        return Another_Images, Union_Units_Images, Order_Units_Images
+                    draw_download_menu(screen, number, total_image_number, file_name)
+                Left_Order_Units_Images[unit_type][animation] = [animation_duration[animation], massive]
+        pygame.display.update()
+        Right_Order_Units_Images = {}
+        for unit_type in order_unit_types:
+            Right_Order_Units_Images[unit_type] = {}
+            for animation in animation_types:
+                massive = []
+                for i in range(animation_duration[animation]):
+                    file_name = "images/Orderright/" + "Order" + unit_type + animation + str(i) + ".png"
+                    current_image = pygame.image.load(file_name).convert_alpha()
+                    massive.append(current_image)
+                    number += 1
+                    pygame.display.update()
+                    draw_download_menu(screen, number, total_image_number, file_name)
+                Right_Order_Units_Images[unit_type][animation] = [animation_duration[animation], massive]
+        pygame.display.update()
+        Order_Units_Images = {"left": Left_Order_Units_Images, "right": Right_Order_Units_Images}
+
+        Units_Images = {"order": Order_Units_Images, "union": Union_Units_Images}
+
+        return Another_Images, Units_Images
 
     def activate_pause_menu(self):
         self.pause_menu_screen.set_alpha(255)
@@ -210,8 +277,9 @@ class Game:
         elif answer == "pause":
             self.activate_pause_menu()
         elif answer == "main menu":
+            print(self.sides)
+            self.restart()
             self.activate_main_menu()
-            print(self.is_pause)
         elif answer == "start":
             self.restart()
         elif answer == "main settings":
@@ -238,14 +306,22 @@ class Game:
             self.restart()
             self.level.draw()
             self.activate_pause_menu()
+        elif answer == "first union":
+            self.sides[0] = "union"
+        elif answer == "first order":
+            self.sides[0] = "order"
+        elif answer == "second union":
+            self.sides[1] = "union"
+        elif answer == "second order":
+            self.sides[1] = "order"
         else:
             pass
         if curr_event.type == pygame.QUIT:
             self.finished = True
 
     def restart(self):
-        self.level = Level(map_drawer, self.level_screen, self.Images, self.is_bots,
-                           self.current_network())
+        self.level = Level(map_drawer, self.trees, self.bushes, self.level_screen, self.sides, self.Images,
+                           self.is_bots, self.current_network())
         self.activate_level()
 
     def current_network(self):

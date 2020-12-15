@@ -42,7 +42,7 @@ def tech_bar(coord, tech, full_tech, screen):
     rect(screen, BLC, coord, 1)
 
 
-def master_draw(x,y, screen):
+def master_draw(x, y, screen, master):
     """
 
     :param x: First coordinate of master
@@ -50,7 +50,8 @@ def master_draw(x,y, screen):
     :param screen: Surface, where the picture is rendered
     :return:
     """
-    circle(screen, YLW, massive_multiply((x,y),DrawingCoefficient),int(10*DrawingCoefficient))
+    mast_im = transform.scale(master, (massive_multiply((MasterXSize, MasterYSize), DrawingCoefficient)))
+    screen.blit(mast_im, massive_multiply((x - MasterXSize / 2, y - MasterYSize/2), DrawingCoefficient))
 
 
 def city_draw(city, side, screen, image_bruschatka):
@@ -118,7 +119,7 @@ def city_draw(city, side, screen, image_bruschatka):
             (city.y + CityYSize * (14.0 / 15.0)) - myText.get_height() / 2), DrawingCoefficient))
 
 
-def city_centre_draw(city_centre, side, screen, image_castle ,image_square):
+def city_centre_draw(city_centre, screen, image_castle,image_square, master):
     """
 
     Function, which draw the order city centre. Have to draw two variants: left side and right side
@@ -131,48 +132,31 @@ def city_centre_draw(city_centre, side, screen, image_castle ,image_square):
     :param screen: Surface, where the picture is rendered
 
     """
-    if side == "order":
-        image_castle = transform.scale(image_castle,
-                                             (massive_multiply((CityCentreXSize / 2, CityCentreYSize / 2),
-                                                               DrawingCoefficient)))
-        screen.blit(image_castle,
-                    massive_multiply((city_centre.x + CityCentreXSize / 2, city_centre.y), DrawingCoefficient))
+    image_castle = transform.scale(image_castle,
+                                   (massive_multiply((CityCentreXSize*1.0, CityCentreYSize*0.66),
+                                                     DrawingCoefficient)))
+    screen.blit(image_castle,
+                massive_multiply((city_centre.x - CityCentreXSize*0.2, city_centre.y), DrawingCoefficient))
 
-        image_square = transform.scale(image_square,
-                                       (massive_multiply((CityCentreXSize / 2, CityCentreYSize / 2),
-                                                        DrawingCoefficient)))
-        screen.blit(image_square,
-                    massive_multiply((city_centre.x, city_centre.y + CityCentreYSize / 2),
-                                     DrawingCoefficient))
-        health_bar(
-            massive_multiply((city_centre.x + CityCentreXSize / 6, city_centre.y + CityCentreYSize / 10,
-                              2 * CityCentreXSize / 3, CityCentreYSize / 20),
-                             DrawingCoefficient),
-            city_centre.life, CityCentreLife, screen)
-        if city_centre.master>0:
-            master_draw(city_centre.x + 7.0*CityCentreXSize / 6, city_centre.y + CityCentreYSize / 2, screen)
-
-    else:
-        image_castle = transform.scale(image_castle,
-                                             (massive_multiply((CityCentreXSize / 2, CityCentreYSize / 2),
-                                                               DrawingCoefficient)))
-        screen.blit(image_castle, massive_multiply((city_centre.x, city_centre.y), DrawingCoefficient))
-        image_square = transform.scale(image_square,
-                                       (massive_multiply((CityCentreXSize / 2, CityCentreYSize / 2),
-                                                         DrawingCoefficient)))
-        screen.blit(image_square,
-                    massive_multiply((city_centre.x, city_centre.y + CityCentreYSize / 2),
-                                     DrawingCoefficient))
-        health_bar(
-            massive_multiply((city_centre.x + CityCentreXSize / 6, city_centre.y + CityCentreYSize / 10,
-                              2 * CityCentreXSize / 3, CityCentreYSize / 20),
-                             DrawingCoefficient),
-            city_centre.life, CityCentreLife, screen)
-        if city_centre.master>0:
-            master_draw(city_centre.x - (1.0*CityCentreXSize) / 6, city_centre.y + CityCentreYSize / 2, screen)
+    image_square = transform.scale(image_square,
+                                   (massive_multiply((CityCentreXSize / 2, CityCentreYSize / 3),
+                                                     DrawingCoefficient)))
+    screen.blit(image_square,
+                massive_multiply((city_centre.x, city_centre.y + CityCentreYSize*0.66),
+                                 DrawingCoefficient))
+    health_bar(
+        massive_multiply((city_centre.x - CityCentreXSize*0.25, city_centre.y + CityCentreYSize / 10,
+                          CityCentreXSize, CityCentreYSize / 20),
+                         DrawingCoefficient),
+        city_centre.life, CityCentreLife, screen)
+    if city_centre.master > 0:
+        if city_centre.side[1] == "left":
+            master_draw(city_centre.x - 3.0 * CityCentreXSize / 6, city_centre.y + CityCentreYSize / 2, screen, master)
+        else:
+            master_draw(city_centre.x + 7.0 * CityCentreXSize / 6, city_centre.y + CityCentreYSize / 2, screen, master)
 
 
-def mine_draw(mine, side, screen):
+def mine_draw(mine, screen, image_mine, master):
     """
     Function, which draw the mine
     :param mine: Object Mine, which we want to draw
@@ -182,27 +166,24 @@ def mine_draw(mine, side, screen):
     :param screen: Surface, where the picture is rendered
     """
 
-    if side == "order":
-        rect(screen, RED, massive_multiply((mine.x, mine.y, MineXSize, MineYSize),DrawingCoefficient))
-        health_bar(
-            massive_multiply((mine.x + MineXSize / 6, mine.y + MineYSize / 10,
-                              2 * MineXSize / 3, MineYSize / 20),
-                             DrawingCoefficient),
-            mine.life, MineLife, screen)
-        if mine.master>0:
-            master_draw(mine.x + 7.0*CityCentreXSize / 6, mine.y + CityCentreYSize / 2, screen)
-    else:
-        rect(screen, YLW, massive_multiply((mine.x, mine.y, MineXSize, MineYSize),DrawingCoefficient))
-        health_bar(
-            massive_multiply((mine.x + MineXSize / 6, mine.y + MineYSize / 10,
-                              2 * MineXSize / 3, MineYSize / 20),
-                             DrawingCoefficient),
-            mine.life, MineLife, screen)
-        if mine.master>0:
-            master_draw(mine.x - (1.0*MineXSize) / 6, mine.y + MineYSize / 2, screen)
+    im_mine = transform.scale(image_mine,
+                                   (massive_multiply((MineXSize, MineYSize),
+                                                     DrawingCoefficient)))
+    screen.blit(im_mine,
+                massive_multiply((mine.x - MineXSize*0.1, mine.y), DrawingCoefficient))
+    health_bar(
+        massive_multiply((mine.x + MineXSize / 6 - MineXSize*0.1, mine.y + MineYSize / 10,
+                          2 * MineXSize / 3, MineYSize / 20),
+                         DrawingCoefficient),
+        mine.life, MineLife, screen)
+    if mine.master > 0:
+        if mine.side[1] == "left":
+            master_draw(mine.x - (3.0 * MineXSize) / 6, mine.y + MineYSize / 2, screen, mine.image_master)
+        else:
+            master_draw(mine.x + (7.0 * MineXSize) / 6, mine.y + MineYSize / 2, screen, mine.image_master)
 
 
-def research_centre_draw(research_centre, side, screen):
+def research_centre_draw(research_centre, screen, image_research_centre, master):
     """
     Function, which draw the research centre
     :param research_centre: Object Research Centre, which we want to draw
@@ -212,27 +193,25 @@ def research_centre_draw(research_centre, side, screen):
     :param screen: Surface, where the picture is rendered
     """
 
-    if side == "order":
-        rect(screen, RED, massive_multiply((research_centre.x, research_centre.y, ResearchCentreXSize,
-                                            ResearchCentreYSize), DrawingCoefficient))
-        health_bar(
-            massive_multiply((research_centre.x + ResearchCentreXSize / 6, research_centre.y + ResearchCentreYSize / 10,
-                              2 * ResearchCentreXSize / 3, ResearchCentreYSize / 20),
-                             DrawingCoefficient),
-            research_centre.life, ResearchCentreLife, screen)
-        if research_centre.master>0:
-            master_draw(research_centre.x + 7.0*ResearchCentreXSize / 6, research_centre.y + ResearchCentreYSize / 2, screen)
-    else:
-        rect(screen, YLW, massive_multiply((research_centre.x, research_centre.y, ResearchCentreXSize,
-                                            ResearchCentreYSize), DrawingCoefficient))
-        health_bar(
-            massive_multiply((research_centre.x + ResearchCentreXSize / 6, research_centre.y + ResearchCentreYSize / 10,
-                              2 * ResearchCentreXSize / 3, ResearchCentreYSize / 20),
-                             DrawingCoefficient),
-            research_centre.life, ResearchCentreLife, screen)
-        if research_centre.master>0:
-            master_draw(research_centre.x - (1.0*ResearchCentreXSize) / 6, research_centre.y + ResearchCentreYSize / 2, screen)
-
+    im_rc = transform.scale(image_research_centre,
+                              (massive_multiply((ResearchCentreXSize, ResearchCentreYSize),
+                                                DrawingCoefficient)))
+    screen.blit(im_rc,
+                massive_multiply((research_centre.x - ResearchCentreXSize*0.25, research_centre.y -
+                                  ResearchCentreYSize*0.5), DrawingCoefficient))
+    health_bar(
+        massive_multiply((research_centre.x + ResearchCentreXSize*((1.0/6.0) - 0.25),
+                          research_centre.y + ResearchCentreYSize / 10 - ResearchCentreYSize*0.5,
+                          2 * ResearchCentreXSize / 3, ResearchCentreYSize / 20),
+                          DrawingCoefficient),
+        research_centre.life, ResearchCentreLife, screen)
+    if research_centre.master > 0:
+        if research_centre.side[1] == "left":
+            master_draw(research_centre.x - 2.0 * ResearchCentreXSize / 6, research_centre.y + ResearchCentreYSize*0.2,
+                        screen, master)
+        else:
+            master_draw(research_centre.x + 4.5 * ResearchCentreXSize / 6, research_centre.y + ResearchCentreYSize*0.2,
+                        screen, master)
 
 
 if __name__ == "__main__":

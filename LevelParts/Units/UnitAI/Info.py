@@ -25,7 +25,7 @@ class Info:
         self.enemy_districts = []
         self.total_length_L = level.map.total_length_L
         self.total_length_R = level.map.total_length_R
-        if level.first_city.side[0] == self.unit.side[0]:
+        if level.first_city.side[1] == self.unit.side[1]:
             self.friends = level.first_city.Units
             self.enemies = level.second_city.Units
             self.friendly_districts = level.first_city.Districts

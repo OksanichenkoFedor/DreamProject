@@ -18,13 +18,14 @@ class District(Interactable):
 
     """
 
-    def __init__(self, side, life, x, y, number):
+    def __init__(self, side, life, x, y, number, image_master):
         super().__init__(side, life)
         self.level = 1
         self.master = 0
         self.x = x
         self.y = y
         self.number = number
+        self.image_master = image_master
 
     def process_interaction(self, action):
         """

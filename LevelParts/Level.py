@@ -24,7 +24,7 @@ class Level:
 
     """
 
-    def __init__(self, map_file, screen, Images, is_bots, NeuralNetworks):
+    def __init__(self, map_file, trees, bushes, screen, sides, Images, is_bots, NeuralNetworks):
         """
 
         Initialise of level
@@ -39,16 +39,16 @@ class Level:
                 self.is_bot_exist = True
         self.NeuralNetworks = NeuralNetworks
         self.Another_Images = Images[0]
-        self.Union_Units_Images = Images[1]
-        self.Order_Units_Images = Images[2]
-        self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize - MapYSize, MapXSize, MapYSize)
-        self.first_city = City(["union", "left"], LevelXSize / 2 - MapXSize / 2 - CityXSize,
-                               LevelYSize - CityYSize, self.Another_Images, self.Union_Units_Images)
+        self.Units_Images = Images[1]
+        self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize - MapYSize, MapXSize, MapYSize,
+                       self.Another_Images["bush"], self.Another_Images["tree"], bushes, trees)
+        self.first_city = City([sides[0], "left"], LevelXSize / 2 - MapXSize / 2 - CityXSize,
+                               LevelYSize - CityYSize, self.Another_Images, self.Units_Images[sides[0]]["left"])
         self.first_pole = ButtonPole(LevelXSize / 2 - MapXSize / 2 - CityXSize - ButtonPoleXSize
                                      , LevelYSize - ButtonPoleYSize, [LightInfantryType, "Light Infantry"])
-        self.second_city = City(["order", "right"], LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize,
+        self.second_city = City([sides[1], "right"], LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize,
                                 self.Another_Images,
-                                self.Order_Units_Images)
+                                self.Units_Images[sides[1]]["right"])
         self.second_pole = ButtonPole(LevelXSize / 2 + MapXSize / 2 + CityXSize, LevelYSize - ButtonPoleYSize,
                                       [LightInfantryType, "Light Infantry"])
         self.screen = screen
@@ -185,7 +185,6 @@ class Level:
                 answer = "pause"
 
         return answer
-
 
     def info_parameters(self):
         union_info = []

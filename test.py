@@ -1,2 +1,2 @@
 import os
-print(os.getcwd())
+print(int(-0.1))

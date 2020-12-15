@@ -170,7 +170,7 @@ class Unit(Interactable):
 
         elif solution[0] == "interact":
             if self.interact_timer == 0:
-                self.change_animation(DealinDamageAnimationType)
+                self.animation = DealingDamageAnimationType
                 solution[1].process_interaction(solution[2])
                 self.interact_timer = self.cooldown
 
@@ -264,9 +264,15 @@ class Unit(Interactable):
         :return: Current image
 
         """
-        image_number = animation_duration[self.animation]
+        if self.animation == DealingDamageAnimationType:
+            fase = (self.interact_timer * 1.0) / (self.cooldown * 1.0) - 0.001
+            image_number = int(fase * (animation_duration[self.animation] - 1.0))
+            return self.images[DealingDamageAnimationType][1][image_number]
+        else:
+            return self.images[MotionlessAnimationType][1][0]
 
-        return self.images[self.animation][1][0]
+
+
 
     def change_animation(self, animation):
         pass

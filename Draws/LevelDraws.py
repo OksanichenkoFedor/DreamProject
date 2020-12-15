@@ -4,6 +4,7 @@ from LevelParts.Map import *
 from pygame.draw import *
 from pygame.font import *
 from math import atan, cos, tan, pi
+import pygame
 
 
 def massive_multiply(j, a):
@@ -30,15 +31,34 @@ def map_draw(level_map: Map, screen):
     :param screen: Surface, where the picture is rendered
 
     """
-    rect(screen, WHT,
+    rect(screen, DGR,
          massive_multiply((level_map.x, level_map.y, level_map.width, level_map.height), DrawingCoefficient))
+    bush = pygame.transform.scale(level_map.bush,
+                                  (massive_multiply((BushXSize, BushYSize),
+                                                    DrawingCoefficient)))
+
+    tree = pygame.transform.scale(level_map.tree,
+                                  (massive_multiply((TreeXSize, TreeYSize),
+                                                    DrawingCoefficient)))
+
+    for curr_bush in level_map.bushes:
+        pos = (curr_bush[0] * (MapXSize - BushXSize) + level_map.x, curr_bush[1] * (MapYSize - BushYSize) + level_map.y)
+        screen.blit(bush, massive_multiply(pos, DrawingCoefficient))
+
+    for curr_tree in level_map.trees:
+        pos = (curr_tree[0] * (MapXSize - TreeXSize) + level_map.x, curr_tree[1] * (MapYSize - TreeYSize) + level_map.y)
+        screen.blit(tree, massive_multiply(pos, DrawingCoefficient))
+
     for i in level_map.Left_Roads:
         for j in i:
             circle(screen, BLC, massive_multiply(j, DrawingCoefficient), int(20 * DrawingCoefficient))
+
     for i in level_map.Right_Roads:
         for j in i:
             circle(screen, BLC, massive_multiply(j, DrawingCoefficient), int(20 * DrawingCoefficient))
+
     polygon(screen, BLC, Two_D_massive_multiply(level_map.Pole_Points, DrawingCoefficient))
+
 
 
 def level_draw(level, screen):

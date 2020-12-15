@@ -37,13 +37,14 @@ class City(Interactable):
     def __init__(self, side, x, y, Another_Images, Units_Images):
         super().__init__(side, CityLife)
         self.Another_Images = Another_Images
-        mine = Mine(side, x + MineX, y + MineY)
+        mine = Mine(side, x + MineX, y + MineY, self.Another_Images["mine"], self.Another_Images["master"])
         city_centre = CityCentre(side, x + CityCentreX, y + CityCentreY, self.Another_Images["castle "+self.side[0]],
-                                 Another_Images["square"])
-        research_centre = ResearchCentre(side, x + ResearchCentreX, y + ResearchCentreY)
+                                 Another_Images["square"], self.Another_Images["master"])
+        research_centre = ResearchCentre(side, x + ResearchCentreX, y + ResearchCentreY,
+                                         self.Another_Images["research centre"], self.Another_Images["master"])
         self.x = x
         self.y = y
-        self.money = 100.0
+        self.money = 0.0
         self.Units = []
         self.Queue_Units = []
         self.Buffered_Units = []

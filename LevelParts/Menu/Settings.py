@@ -36,16 +36,27 @@ class Settings:
                              int((SettingsYSize*0.2 - SettingsHardYSize / 2) * DrawingCoefficient),
                              int(SettingsHardXSize * DrawingCoefficient),
                              int(SettingsHardYSize * DrawingCoefficient), 10, "Hard", WHT, RED)
-        self.FirstPlayerType = Button(BLC, int((SettingsXSize*0.43 - SettingsFirstPlayerTypeXSize / 2) *
+        self.FirstPlayerTypeAI = Button(BLC, int((SettingsXSize*0.43 - SettingsFirstPlayerTypeXSize / 2) *
                                                DrawingCoefficient),
-                                      int((SettingsYSize*0.55 - SettingsFirstPlayerTypeYSize / 2) *
+                                      int((SettingsYSize*0.50 - SettingsFirstPlayerTypeYSize / 2) *
                                           DrawingCoefficient), int(SettingsFirstPlayerTypeXSize * DrawingCoefficient),
                                       int(SettingsFirstPlayerTypeYSize * DrawingCoefficient), 10, "Player", WHT)
-        self.SecondPlayerType = Button(BLC, int((SettingsXSize*0.57 - SettingsSecondPlayerTypeXSize / 2) *
+        self.SecondPlayerTypeAI = Button(BLC, int((SettingsXSize*0.57 - SettingsSecondPlayerTypeXSize / 2) *
                                                DrawingCoefficient),
-                                      int((SettingsYSize*0.55 - SettingsSecondPlayerTypeYSize / 2) *
+                                      int((SettingsYSize*0.50 - SettingsSecondPlayerTypeYSize / 2) *
                                           DrawingCoefficient), int(SettingsSecondPlayerTypeXSize * DrawingCoefficient),
                                       int(SettingsSecondPlayerTypeYSize * DrawingCoefficient), 10, "Player", WHT)
+        self.FirstPlayerTypeSide = Button(BLC, int((SettingsXSize * 0.43 - SettingsFirstPlayerTypeXSize / 2) *
+                                                 DrawingCoefficient),
+                                        int((SettingsYSize * 0.6 - SettingsFirstPlayerTypeYSize / 2) *
+                                            DrawingCoefficient), int(SettingsFirstPlayerTypeXSize * DrawingCoefficient),
+                                        int(SettingsFirstPlayerTypeYSize * DrawingCoefficient), 10, "Union", GRN)
+        self.SecondPlayerTypeSide = Button(BLC, int((SettingsXSize * 0.57 - SettingsSecondPlayerTypeXSize / 2) *
+                                                  DrawingCoefficient),
+                                         int((SettingsYSize * 0.6 - SettingsSecondPlayerTypeYSize / 2) *
+                                             DrawingCoefficient),
+                                         int(SettingsSecondPlayerTypeXSize * DrawingCoefficient),
+                                         int(SettingsSecondPlayerTypeYSize * DrawingCoefficient), 10, "Order", RED)
         self.screen = screen
         self.Easy.chosen = True
         self.returned = "main"
@@ -57,8 +68,10 @@ class Settings:
         self.Easy.draw_button(self.screen)
         self.Normal.draw_button(self.screen)
         self.Hard.draw_button(self.screen)
-        self.FirstPlayerType.draw_button(self.screen)
-        self.SecondPlayerType.draw_button(self.screen)
+        self.FirstPlayerTypeAI.draw_button(self.screen)
+        self.SecondPlayerTypeAI.draw_button(self.screen)
+        self.FirstPlayerTypeSide.draw_button(self.screen)
+        self.SecondPlayerTypeSide.draw_button(self.screen)
 
     def game_event(self, event):
         answer = ""
@@ -84,21 +97,38 @@ class Settings:
                 self.Easy.chosen = False
                 self.Normal.chosen = False
                 self.Hard.chosen = True
-            elif self.FirstPlayerType.is_pressed(pos):
-                if self.FirstPlayerType.text == "Player":
-                    self.FirstPlayerType.text = "Bot"
+            elif self.FirstPlayerTypeAI.is_pressed(pos):
+                if self.FirstPlayerTypeAI.text == "Player":
+                    self.FirstPlayerTypeAI.text = "Bot"
                     answer = "first bot"
                 else:
-                    self.FirstPlayerType.text = "Player"
+                    self.FirstPlayerTypeAI.text = "Player"
                     answer = "first player"
-            elif self.SecondPlayerType.is_pressed(pos):
-                if self.SecondPlayerType.text == "Player":
-                    self.SecondPlayerType.text = "Bot"
+            elif self.SecondPlayerTypeAI.is_pressed(pos):
+                if self.SecondPlayerTypeAI.text == "Player":
+                    self.SecondPlayerTypeAI.text = "Bot"
                     answer = "second bot"
                 else:
-                    self.SecondPlayerType.text = "Player"
+                    self.SecondPlayerTypeAI.text = "Player"
                     answer = "second player"
-        print(answer)
+            elif self.FirstPlayerTypeSide.is_pressed(pos):
+                if self.FirstPlayerTypeSide.text == "Order":
+                    self.FirstPlayerTypeSide.text = "Union"
+                    self.FirstPlayerTypeSide.text_color = GRN
+                    answer = "first union"
+                else:
+                    self.FirstPlayerTypeSide.text = "Order"
+                    self.FirstPlayerTypeSide.text_color = RED
+                    answer = "first order"
+            elif self.SecondPlayerTypeSide.is_pressed(pos):
+                if self.SecondPlayerTypeSide.text == "Order":
+                    self.SecondPlayerTypeSide.text = "Union"
+                    self.SecondPlayerTypeSide.text_color = GRN
+                    answer = "second union"
+                else:
+                    self.SecondPlayerTypeSide.text = "Order"
+                    self.SecondPlayerTypeSide.text_color = RED
+                    answer = "second order"
         return answer
 
 

@@ -21,9 +21,9 @@ MaxGameTime = 20000
 
 NNLayers = [81, 100, 11]
 
-ParentsNumber = 5
+ParentsNumber = 10
 
-ChildsNumber = 20
+ChildsNumber = 50
 
 StartRate = 1
 
