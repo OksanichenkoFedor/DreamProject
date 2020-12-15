@@ -40,17 +40,27 @@ class Level:
         self.NeuralNetworks = NeuralNetworks
         self.Another_Images = Images[0]
         self.Units_Images = Images[1]
+        self.Button_Images = Images[2]
+        self.sides = sides
         self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize - MapYSize, MapXSize, MapYSize,
                        self.Another_Images["bush"], self.Another_Images["tree"], bushes, trees)
         self.first_city = City([sides[0], "left"], LevelXSize / 2 - MapXSize / 2 - CityXSize,
                                LevelYSize - CityYSize, self.Another_Images, self.Units_Images[sides[0]]["left"])
+        cost = LightInfantryOrderCost
+        image = self.Button_Images["left"][self.sides[0]][LightInfantryType]
+        if self.sides[0] == "union":
+            cost = LightInfantryUnionCost
         self.first_pole = ButtonPole(LevelXSize / 2 - MapXSize / 2 - CityXSize - ButtonPoleXSize
-                                     , LevelYSize - ButtonPoleYSize, [LightInfantryType, "Light Infantry"])
+                                     , LevelYSize - ButtonPoleYSize, [LightInfantryType, "Light Infantry", cost, image])
         self.second_city = City([sides[1], "right"], LevelXSize / 2 + MapXSize / 2, LevelYSize - CityYSize,
                                 self.Another_Images,
                                 self.Units_Images[sides[1]]["right"])
+        cost = LightInfantryOrderCost
+        image = self.Button_Images["right"][self.sides[1]][LightInfantryType]
+        if self.sides[0] == "union":
+            cost = LightInfantryUnionCost
         self.second_pole = ButtonPole(LevelXSize / 2 + MapXSize / 2 + CityXSize, LevelYSize - ButtonPoleYSize,
-                                      [LightInfantryType, "Light Infantry"])
+                                      [LightInfantryType, "Light Infantry", cost, image])
         self.screen = screen
 
     def update(self):
@@ -68,28 +78,64 @@ class Level:
 
         if self.first_city.update(self) == "tech up":
             if self.first_city.tech_level == 1:
-                self.first_pole.add_button([HeavyInfantryType, "Heavy Infantry"])
+                cost = HeavyInfantryOrderCost
+                image = self.Button_Images["left"][self.sides[0]][HeavyInfantryType]
+                if self.sides[0] == "union":
+                    cost = HeavyInfantryUnionCost
+                self.first_pole.add_button([HeavyInfantryType, "Heavy Infantry", cost, image])
             elif self.first_city.tech_level == 2:
-                self.first_pole.add_button([CavalryType, "Cavalry"])
+                cost = CavalryOrderCost
+                image = self.Button_Images["left"][self.sides[0]][CavalryType]
+                if self.sides[0] == "union":
+                    cost = CavalryUnionCost
+                self.first_pole.add_button([CavalryType, "Cavalry", cost, image])
             elif self.first_city.tech_level == 3:
-                self.first_pole.add_button([LongDistanceSoldierType, "Long Distance Soldier"])
+                cost = LongDistanceSoldierOrderCost
+                image = self.Button_Images["left"][self.sides[0]][LongDistanceSoldierType]
+                if self.sides[0] == "union":
+                    cost = LongDistanceSoldierUnionCost
+                self.first_pole.add_button([LongDistanceSoldierType, "Long Distance Soldier", cost, image])
             elif self.first_city.tech_level == 4:
+                cost = HealerCost
+                unit_type = HealerType
+                if self.sides[0] == "union":
+                    cost = AlchemistCost
+                    unit_type = AlchemistType
+                image = self.Button_Images["left"][self.sides[0]][unit_type]
                 if self.first_city.side[0] == "order":
-                    self.first_pole.add_button([HealerType, "Healer"])
+                    self.first_pole.add_button([HealerType, "Healer", cost, image])
                 else:
-                    self.first_pole.add_button([AlchemistType, "Alchemist"])
+                    self.first_pole.add_button([AlchemistType, "Alchemist", cost, image])
         if self.second_city.update(self) == "tech up":
             if self.second_city.tech_level == 1:
-                self.second_pole.add_button([HeavyInfantryType, "Heavy Infantry"])
+                cost = HeavyInfantryOrderCost
+                image = self.Button_Images["right"][self.sides[1]][HeavyInfantryType]
+                if self.sides[1] == "union":
+                    cost = HeavyInfantryUnionCost
+                self.second_pole.add_button([HeavyInfantryType, "Heavy Infantry", cost, image])
             elif self.second_city.tech_level == 2:
-                self.second_pole.add_button([CavalryType, "Cavalry"])
+                cost = CavalryOrderCost
+                image = self.Button_Images["right"][self.sides[1]][CavalryType]
+                if self.sides[1] == "union":
+                    cost = CavalryUnionCost
+                self.second_pole.add_button([CavalryType, "Cavalry", cost, image])
             elif self.second_city.tech_level == 3:
-                self.second_pole.add_button([LongDistanceSoldierType, "Long Distance Soldier"])
+                cost = LongDistanceSoldierOrderCost
+                image = self.Button_Images["right"][self.sides[1]][LongDistanceSoldierType]
+                if self.sides[1] == "union":
+                    cost = LongDistanceSoldierUnionCost
+                self.second_pole.add_button([LongDistanceSoldierType, "Long Distance Soldier", cost, image])
             elif self.second_city.tech_level == 4:
+                cost = HealerCost
+                unit_type = HealerType
+                if self.sides[1] == "union":
+                    cost = AlchemistCost
+                    unit_type = AlchemistType
+                image = self.Button_Images["right"][self.sides[1]][unit_type]
                 if self.second_city.side[0] == "order":
-                    self.second_pole.add_button([HealerType, "Healer"])
+                    self.second_pole.add_button([HealerType, "Healer", cost, image])
                 else:
-                    self.second_pole.add_button([AlchemistType, "Alchemist"])
+                    self.second_pole.add_button([AlchemistType, "Alchemist", cost, image])
         if self.first_city.life < 0:
             return 1
         elif self.second_city.life < 0:

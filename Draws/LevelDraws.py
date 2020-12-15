@@ -60,7 +60,6 @@ def map_draw(level_map: Map, screen):
     polygon(screen, BLC, Two_D_massive_multiply(level_map.Pole_Points, DrawingCoefficient))
 
 
-
 def level_draw(level, screen):
     """
 
@@ -80,20 +79,21 @@ def button_draw(screen, button):
     :return:
     """
 
-    # Вид кнопки. Переделать
-    """for i in range(1, 10):
-                            s = pygame.Surface((length + (i * 2), height + (i * 2)))
-                            s.fill(color)
-                            alpha = (255 / (i + 2))
-                            if alpha <= 0:
-                                alpha = 1
-                            s.set_alpha(alpha)
-                            pygame.draw.rect(s, color, (x - i, y - i, length + i, height + i), width)
-                            surface.blit(s, (x - i, y - i))"""
     if button.chosen:
         color = button.chosen_color
     else:
         color = button.color
+    # Вид кнопки. Переделать
+    for i in range(1, 10):
+        s = pygame.Surface((button.length + (i * 2), button.height + (i * 2)))
+        s.fill(color)
+        alpha = (255.0 / (i + 2.0))
+        if alpha <= 0:
+            alpha = 1
+        s.set_alpha(int(alpha))
+        pygame.draw.rect(s, color, (button.x - i, button.y - i, button.length + i, button.height + i), button.width)
+        screen.blit(s, (button.x - i, button.y - i))
+
     rect(screen, color, massive_multiply((button.x, button.y, button.length, button.height), DrawingCoefficient), 0)
     rect(screen, (190, 190, 190),
          massive_multiply((button.x, button.y, button.length, button.height), DrawingCoefficient), 1)
@@ -107,7 +107,7 @@ def button_draw(screen, button):
         (button.y + button.height / 2) - myText.get_height() / 2), DrawingCoefficient))
 
 
-def unit_button_draw(screen, button, alpha, number):
+def unit_button_draw(screen, button, alpha, number, cost, image):
     """
 
         :param screen: Surface, where the picture is rendered
@@ -117,16 +117,6 @@ def unit_button_draw(screen, button, alpha, number):
         :return:
         """
 
-    # Вид кнопки. Переделать
-    """for i in range(1, 10):
-                            s = pygame.Surface((length + (i * 2), height + (i * 2)))
-                            s.fill(color)
-                            alpha = (255 / (i + 2))
-                            if alpha <= 0:
-                                alpha = 1
-                            s.set_alpha(alpha)
-                            pygame.draw.rect(s, color, (x - i, y - i, length + i, height + i), width)
-                            surface.blit(s, (x - i, y - i))"""
     if button.chosen:
         number -= 1
         color = button.chosen_color
@@ -136,6 +126,10 @@ def unit_button_draw(screen, button, alpha, number):
     rect(screen, (190, 190, 190),
          massive_multiply((button.x, button.y, button.length, button.height), DrawingCoefficient), 1)
 
+    curr_im = pygame.transform.scale(image,
+                                  (massive_multiply((button.length, button.length),
+                                                    DrawingCoefficient)))
+    screen.blit(curr_im, massive_multiply( (button.x, button.y + button.height-button.length), DrawingCoefficient))
     if alpha>0:
         alpha = 2.0*pi - alpha
         alpha0 = atan((button.length * 1.0) / (button.height * 1.0))
@@ -176,12 +170,12 @@ def unit_button_draw(screen, button, alpha, number):
         polygon(screen, GRY, pol)
 
     # Текст
-    font_size = int(int(2.0 * button.length * DrawingCoefficient) // len(button.text))
+    font_size = int(int(1.9 * button.length * DrawingCoefficient) // len(button.text))
     myFont = SysFont("Calibri", font_size)
     myText = myFont.render(button.text, 1, button.text_color)
     screen.blit(myText, massive_multiply((
         (button.x + button.length / 2) - myText.get_width() / 2,
-        (button.y + button.height / 2) - myText.get_height() / 2), DrawingCoefficient))
+        (button.y + button.height*0.12) - myText.get_height() / 2), DrawingCoefficient))
 
 
     if number > 0:
@@ -193,6 +187,14 @@ def unit_button_draw(screen, button, alpha, number):
             (button.x + button.length) - myText.get_width() * 1.5,
             (button.y + button.height) - myText.get_height() * 1.0), DrawingCoefficient))
 
+    text = str(cost)
+    font_size = int(int(0.3 * button.length * DrawingCoefficient) // len(text))
+    myFont = SysFont("Calibri", font_size)
+    myText = myFont.render(text, 1, button.text_color)
+    screen.blit(myText, massive_multiply((
+        (button.x + button.length*0.25) - myText.get_width() * 1.5,
+        (button.y + button.height) - myText.get_height() * 1.0), DrawingCoefficient))
+
 
 def button_pole_draw(screen, button_pole):
     """
@@ -203,6 +205,18 @@ def button_pole_draw(screen, button_pole):
     """
     rect(screen, BLU, massive_multiply((button_pole.x, button_pole.y, button_pole.width, button_pole.height),
                                        DrawingCoefficient))
+
+
+def win_draw(screen, text):
+
+    rect(screen, WHT,
+         massive_multiply((0, 0, LevelXSize, LevelYSize), DrawingCoefficient))
+    font_size = int(int(0.6 * LevelYSize * DrawingCoefficient) // len(text))
+    myFont = SysFont("Calibri", font_size)
+    myText = myFont.render(text, 1, BLC)
+    screen.blit(myText, massive_multiply((
+        (LevelXSize*0.5) - myText.get_width() * 0.5,
+        (LevelYSize*0.5) - myText.get_height() * .5), DrawingCoefficient))
 
 
 if __name__ == "__main__":

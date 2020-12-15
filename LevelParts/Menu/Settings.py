@@ -48,12 +48,12 @@ class Settings:
                                       int(SettingsSecondPlayerTypeYSize * DrawingCoefficient), 10, "Player", WHT)
         self.FirstPlayerTypeSide = Button(BLC, int((SettingsXSize * 0.43 - SettingsFirstPlayerTypeXSize / 2) *
                                                  DrawingCoefficient),
-                                        int((SettingsYSize * 0.6 - SettingsFirstPlayerTypeYSize / 2) *
+                                        int((SettingsYSize * 0.63 - SettingsFirstPlayerTypeYSize / 2) *
                                             DrawingCoefficient), int(SettingsFirstPlayerTypeXSize * DrawingCoefficient),
                                         int(SettingsFirstPlayerTypeYSize * DrawingCoefficient), 10, "Union", GRN)
         self.SecondPlayerTypeSide = Button(BLC, int((SettingsXSize * 0.57 - SettingsSecondPlayerTypeXSize / 2) *
                                                   DrawingCoefficient),
-                                         int((SettingsYSize * 0.6 - SettingsSecondPlayerTypeYSize / 2) *
+                                         int((SettingsYSize * 0.63 - SettingsSecondPlayerTypeYSize / 2) *
                                              DrawingCoefficient),
                                          int(SettingsSecondPlayerTypeXSize * DrawingCoefficient),
                                          int(SettingsSecondPlayerTypeYSize * DrawingCoefficient), 10, "Order", RED)

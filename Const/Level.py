@@ -24,7 +24,7 @@ MovementAnimationType = "Movement"
 MotionlessAnimationType = "Motionless"
 animation_duration = {MotionlessAnimationType: 1, MovementAnimationType: 0, DealingDamageAnimationType: 4,
                       TakingDamageAnimationType: 0, DeathAnimationType: 0}
-total_image_number = 109
+total_image_number = 129
 number_of_bushes = 15
 number_of_trees = 15
 TreeXSize = 70
@@ -40,6 +40,7 @@ GRN = (0, 255, 0)
 DGR = (74, 141, 85)
 map_drawer = "Widgets/MapEditor/map2.txt"
 NumberOfRoads = 3
+Win_Screen_Time = 200
 
 
 if __name__ == "__main__":

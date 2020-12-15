@@ -11,15 +11,15 @@ class PauseMenu:
         self.Resume = Button(BLC, int((PauseMenuXSize/2-PauseResumeXSize/2)*DrawingCoefficient),
                              int((PauseMenuYSize*0.3-PauseResumeYSize/2)*DrawingCoefficient),
                              int(PauseResumeXSize*DrawingCoefficient),
-                             int(PauseResumeYSize*DrawingCoefficient), 10, "Resume", WHT)
+                             int(PauseResumeYSize*DrawingCoefficient), 0, "Resume", WHT)
         self.Restart = Button(BLC, int((PauseMenuXSize / 2 - PauseRestartXSize / 2) * DrawingCoefficient),
                              int((PauseMenuYSize*0.5 - PauseRestartYSize / 2) * DrawingCoefficient),
                              int(PauseRestartXSize * DrawingCoefficient),
-                             int(PauseRestartYSize * DrawingCoefficient), 10, "Restart", WHT)
+                             int(PauseRestartYSize * DrawingCoefficient), 0, "Restart", WHT)
         self.SettingsButton = Button(BLC, int((PauseMenuXSize / 2 - PauseSettingsXSize / 2) * DrawingCoefficient),
                               int((PauseMenuYSize * 0.7 - PauseSettingsYSize / 2) * DrawingCoefficient),
                               int(PauseSettingsXSize * DrawingCoefficient),
-                              int(PauseSettingsYSize * DrawingCoefficient), 10, "Settings", WHT)
+                              int(PauseSettingsYSize * DrawingCoefficient), 0, "Settings", WHT)
         self.screen = screen
 
     def update(self):

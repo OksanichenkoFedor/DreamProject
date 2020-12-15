@@ -35,6 +35,9 @@ class Game:
     :field Images: Massive of images dictionaries
     :field difficulties: String, which show difficult of current player
     :field sides: List of strings, which tell type of left and right city
+    :field is_win: Boolean, which is true if now we showing win screen
+    :field win_timer: Timer of win screen
+    :field win_text: Win screen text
 
     """
 
@@ -76,7 +79,7 @@ class Game:
         self.difficulties = "easy"
         self.Images = self.true_image_import(self.level_screen)
         self.level = Level(map_drawer, self.trees, self.bushes, self.level_screen, self.sides, self.Images,
-                           self.is_bots, self.EasyNetworks,)
+                           self.is_bots, self.EasyNetworks)
         self.finished = False
         self.is_level = False
         self.is_pause = False
@@ -85,6 +88,9 @@ class Game:
         self.main_menu = MainMenu(self.main_menu_screen)
         self.pause_menu = PauseMenu(self.pause_menu_screen)
         self.settings = Settings(self.settings_screen)
+        self.is_win = False
+        self.win_timer = 0
+        self.win_text = ""
 
     def true_image_import(self, screen):
         union_unit_types = [LightInfantryType, HeavyInfantryType, CavalryType, LongDistanceSoldierType, AlchemistType]
@@ -149,6 +155,7 @@ class Game:
                     draw_download_menu(screen, number, total_image_number, file_name)
                 Left_Union_Units_Images[unit_type][animation] = [animation_duration[animation], massive]
         pygame.display.update()
+
         Right_Union_Units_Images = {}
         for unit_type in union_unit_types:
             Right_Union_Units_Images[unit_type] = {}
@@ -162,9 +169,11 @@ class Game:
                     pygame.display.update()
                     draw_download_menu(screen, number, total_image_number, file_name)
                 Right_Union_Units_Images[unit_type][animation] = [animation_duration[animation], massive]
+        pygame.display.update()
 
         Union_Units_Images = {"left": Left_Union_Units_Images, "right": Right_Union_Units_Images}
         pygame.display.update()
+
         Left_Order_Units_Images = {}
         for unit_type in order_unit_types:
             Left_Order_Units_Images[unit_type] = {}
@@ -179,6 +188,7 @@ class Game:
                     draw_download_menu(screen, number, total_image_number, file_name)
                 Left_Order_Units_Images[unit_type][animation] = [animation_duration[animation], massive]
         pygame.display.update()
+
         Right_Order_Units_Images = {}
         for unit_type in order_unit_types:
             Right_Order_Units_Images[unit_type] = {}
@@ -193,11 +203,49 @@ class Game:
                     draw_download_menu(screen, number, total_image_number, file_name)
                 Right_Order_Units_Images[unit_type][animation] = [animation_duration[animation], massive]
         pygame.display.update()
+
         Order_Units_Images = {"left": Left_Order_Units_Images, "right": Right_Order_Units_Images}
+        pygame.display.update()
+
+        Left_Order_Buttons = {}
+        for unit_type in order_unit_types:
+            file_name = "images/Buttons/left/order/" + unit_type + ".png"
+            Left_Order_Buttons[unit_type] = pygame.image.load(file_name).convert_alpha()
+            number += 1
+            pygame.display.update()
+            draw_download_menu(screen, number, total_image_number, file_name)
+
+        Right_Order_Buttons = {}
+        for unit_type in order_unit_types:
+            file_name = "images/Buttons/right/order/" + unit_type + ".png"
+            Right_Order_Buttons[unit_type] = pygame.image.load(file_name).convert_alpha()
+            number += 1
+            pygame.display.update()
+            draw_download_menu(screen, number, total_image_number, file_name)
+
+        Left_Union_Buttons = {}
+        for unit_type in union_unit_types:
+            file_name = "images/Buttons/left/union/" + unit_type + ".png"
+            Left_Union_Buttons[unit_type] = pygame.image.load(file_name).convert_alpha()
+            number += 1
+            pygame.display.update()
+            draw_download_menu(screen, number, total_image_number, file_name)
+
+        Right_Union_Buttons = {}
+        for unit_type in union_unit_types:
+            file_name = "images/Buttons/right/union/" + unit_type + ".png"
+            Right_Union_Buttons[unit_type] = pygame.image.load(file_name).convert_alpha()
+            number += 1
+            pygame.display.update()
+            draw_download_menu(screen, number, total_image_number, file_name)
+
+        Left_Buttons = {"order": Left_Order_Buttons, "union": Left_Union_Buttons}
+        Right_Buttons = {"order": Right_Order_Buttons, "union": Right_Union_Buttons}
+        Buttons_Images = {"left": Left_Buttons, "right": Right_Buttons}
 
         Units_Images = {"order": Order_Units_Images, "union": Union_Units_Images}
 
-        return Another_Images, Units_Images
+        return Another_Images, Units_Images, Buttons_Images
 
     def activate_pause_menu(self):
         self.pause_menu_screen.set_alpha(255)
@@ -243,8 +291,16 @@ class Game:
         self.clock.tick(FPS)
         Result = 0
         if self.is_level:
-            self.level.draw()
-            Result = self.level.update()
+            if self.is_win:
+                Result = 0
+                self.win_timer -= 1
+                win_draw(self.level_screen, self.win_text)
+                if self.win_timer <= 0:
+                    self.is_win = False
+                    self.activate_main_menu()
+            else:
+                self.level.draw()
+                Result = self.level.update()
         elif self.is_pause:
             Result = self.pause_menu.update()
         elif self.is_main_menu:
@@ -253,11 +309,13 @@ class Game:
             Result = self.settings.update()
 
         if Result == 1:
-            self.finished = True
-            print("Победил первый город")
+            self.is_win = True
+            self.win_timer = Win_Screen_Time
+            self.win_text = "1 Player wins!"
         elif Result == 2:
-            self.finished = True
-            print("Победил второй город")
+            self.is_win = True
+            self.win_timer = Win_Screen_Time
+            self.win_text = "2 Player wins!"
         pygame.display.update()
 
     def game_event(self, curr_event):

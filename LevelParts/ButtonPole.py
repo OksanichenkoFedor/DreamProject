@@ -19,7 +19,7 @@ class ButtonPole():
                                           1.) Number of unit, which we want to train
                                           2.) Time, left for train
                                           3.) Total time
-
+    : field self.Cost: List of units cost
     """
 
     def __init__(self, x, y, first):
@@ -36,6 +36,10 @@ class ButtonPole():
         self.Cash_Button = []
         self.animation_timer = -1
         self.changeChosen(0)
+        self.Cost = []
+        self.Cost.append(first[2])
+        self.Images = []
+        self.Images.append(first[3])
 
     def update(self, screen):
         button_pole_draw(screen, self)
@@ -52,24 +56,22 @@ class ButtonPole():
             self.Buttons.append(self.Cash_Button)
             self.Cash_Button = 0
         if len(self.Training) == 0:
-            for button in self.Buttons:
-                unit_button_draw(screen, button, 0, button.number)
-            if button.number > 0:
-                print("Error")
+            for i in range(len(self.Buttons)):
+                unit_button_draw(screen, self.Buttons[i], 0, self.Buttons[i].number, self.Cost[i], self.Images[i])
         else:
             for i in range(len(self.Buttons)):
                 if i != self.Training[0][0]:
-                    unit_button_draw(screen, self.Buttons[i], 0, self.Buttons[i].number)
+                    unit_button_draw(screen, self.Buttons[i], 0, self.Buttons[i].number, self.Cost[i], self.Images[i])
             j = self.Training[0][0]
             if self.Training[0][1] <= 0:
                 self.Training.pop(0)
                 self.Buttons[j].number -= 1
-                unit_button_draw(screen, self.Buttons[j], 0, self.Buttons[j].number)
+                unit_button_draw(screen, self.Buttons[j], 0, self.Buttons[j].number, self.Cost[j], self.Images[j])
             else:
                 self.Training[0][1] -= 1
                 unit_button_draw(screen, self.Buttons[j],
                                  2.0 * pi * ((1.0 * self.Training[0][1]) / (1.0 * self.Training[0][2])),
-                                 self.Buttons[j].number)
+                                 self.Buttons[j].number, self.Cost[j], self.Images[j])
 
 
     def add_button(self, new):
@@ -79,6 +81,8 @@ class ButtonPole():
         :param new: Massive:
                     First element: Unit type
                     Second element: Button text
+                    Third element: Cost of unit
+                    Forth element: Image of unit button
         :return:
         """
         self.animation_timer = ButtonAnimationTime
@@ -86,6 +90,8 @@ class ButtonPole():
                                   self.y + (self.height * 1.0) * ((len(self.Buttons) + 1.0) / (len(self.Buttons) + 2.0))
                                   - ButtonPoleButtonYSize / 2, ButtonPoleButtonXSize,
                                   ButtonPoleButtonYSize, 0, new[1], WHT, RED, new[0])
+        self.Cost.append(new[2])
+        self.Images.append(new[3])
 
     def changeChosen(self, number):
         for i in range(len(self.Buttons)):
