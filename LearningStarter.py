@@ -14,6 +14,11 @@ def fake_image_import():
     Another_Images["square"] = 0
     Another_Images["castle order"] = 0
     Another_Images["bruschatka"] = 0
+    Another_Images["bush"] = 0
+    Another_Images["mine"] = 0
+    Another_Images["master"] = 0
+    Another_Images["research centre"] = 0
+    Another_Images["tree"] = 0
 
     Union_Units_Images = {}
     for unit_type in union_unit_types:

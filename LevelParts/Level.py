@@ -70,7 +70,6 @@ class Level:
         """
         if self.is_bot_exist:
             info = self.info_parameters()
-            print(info[0].shape)
             if self.is_bots[0]:
                 self.first_city.reaction(self.NeuralNetworks[0].reaction(info[0]))
             if self.is_bots[1]:

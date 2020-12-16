@@ -35,7 +35,7 @@ class LearningLevel():
         self.union_score = 0
         self.order_score = 0
 
-        self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize - MapYSize, MapXSize, MapYSize)
+        self.map = Map(map_file, LevelXSize / 2 - MapXSize / 2, LevelYSize - MapYSize, MapXSize, MapYSize, 0, 0, [], [])
 
     def game(self):
         """

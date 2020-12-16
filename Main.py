@@ -31,8 +31,10 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
 
 
-EasyNN = ["Widgets/MashineLearning/differentAI/UnionNN1750.txt", "Widgets/MashineLearning/differentAI/OrderNN1750.txt"]
-test_game = Game(EasyNN, EasyNN, EasyNN)
+EasyNN = ["Widgets/MashineLearning/differentAI/UnionNN200.txt", "Widgets/MashineLearning/differentAI/OrderNN200.txt"]
+NormalNN = ["Widgets/MashineLearning/differentAI/UnionNN400.txt", "Widgets/MashineLearning/differentAI/OrderNN400.txt"]
+HardNN = ["Widgets/MashineLearning/differentAI/UnionNN700.txt", "Widgets/MashineLearning/differentAI/OrderNN700.txt"]
+test_game = Game(EasyNN, NormalNN, HardNN)
 
 while not test_game.finished:
     test_game.update()
